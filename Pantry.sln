@@ -1,9 +1,21 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pantry.Mobile", "src\Pantry.Mobile\Pantry.Mobile.csproj", "{893C5AFA-DD88-40C3-8CF9-2A455DDA27FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{31D7FAA1-CEB3-4BF8-AF10-661DB6BC6E7B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pantry.Mobile.Tests.Core", "tests\Pantry.Mobile.Tests.Core\Pantry.Mobile.Tests.Core.csproj", "{16A3226E-149F-4AFC-B9BF-AD89201D94E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pantry.Mobile.Core", "src\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj", "{70494087-3300-4C41-9C66-CC5391BF42CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D3302262-9609-411F-B632-B59886534BF0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		README.md = README.md
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +29,20 @@ Global
 		{893C5AFA-DD88-40C3-8CF9-2A455DDA27FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{893C5AFA-DD88-40C3-8CF9-2A455DDA27FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{893C5AFA-DD88-40C3-8CF9-2A455DDA27FD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{16A3226E-149F-4AFC-B9BF-AD89201D94E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A3226E-149F-4AFC-B9BF-AD89201D94E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A3226E-149F-4AFC-B9BF-AD89201D94E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A3226E-149F-4AFC-B9BF-AD89201D94E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70494087-3300-4C41-9C66-CC5391BF42CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70494087-3300-4C41-9C66-CC5391BF42CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70494087-3300-4C41-9C66-CC5391BF42CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70494087-3300-4C41-9C66-CC5391BF42CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{16A3226E-149F-4AFC-B9BF-AD89201D94E7} = {31D7FAA1-CEB3-4BF8-AF10-661DB6BC6E7B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

@@ -1,15 +1,29 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="Pantry.AppShell"
+    x:Class="Pantry.Mobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Pantry"
+    xmlns:local="clr-namespace:Pantry.Mobile"
+    xmlns:view="clr-namespace:Pantry.Mobile.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellItem Route="OnboardingPage">
+        <ShellContent ContentTemplate="{DataTemplate view:OnboardingPage}" SemanticProperties.Description="Onboarding page" />
+    </ShellItem>
 
+    <ShellItem Route="LoginPage">
+        <ShellContent ContentTemplate="{DataTemplate view:LoginPage}" SemanticProperties.Description="Login page" />
+    </ShellItem>
+
+    <TabBar Route="TabBarPage">
+        <ShellContent
+            ContentTemplate="{DataTemplate view:MainPage}"
+            Icon="home.svg"
+            SemanticProperties.Description="Main page" />
+
+        <ShellContent
+            ContentTemplate="{DataTemplate view:SettingsPage}"
+            Icon="settings.svg"
+            SemanticProperties.Description="Settings page" />
+    </TabBar>
 </Shell>
-

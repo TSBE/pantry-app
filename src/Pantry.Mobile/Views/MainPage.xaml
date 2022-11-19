@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Pantry"
+    x:DataType="vm:MainViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25"
+            VerticalOptions="Center">
+            <StackLayout x:Name="HomeView">
+                <Image
+                    HeightRequest="200"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Description="Pantry assortment icon"
+                    Source="assortment" />
+
+                <Label
+                    FontSize="32"
+                    HorizontalOptions="Center"
+                    SemanticProperties.HeadingLevel="Level1"
+                    Text="Hello, World!" />
+
+                <Label
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Description="Welcome to Pantry"
+                    SemanticProperties.HeadingLevel="Level2"
+                    Text="Welcome to Pantry" />
+
+                <Button
+                    x:Name="CounterBtn"
+                    Margin="0,20"
+                    Command="{Binding CounterCommand}"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Hint="Counts the number of times you click"
+                    Text="{Binding CountButtonText}" />
+            </StackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

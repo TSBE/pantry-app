@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="Pantry.Mobile.Views.OnboardingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -49,14 +49,20 @@
         </CarouselView>
         <StackLayout
             Grid.Row="1"
-            Margin="20,0"
+            Padding="20,0"
             Orientation="Horizontal">
+            <Frame 
+                   BorderColor="Transparent"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand">
             <IndicatorView
                 x:Name="indicatorView"
                 IndicatorColor="LightGray"
                 IndicatorSize="10"
                 SelectedIndicatorColor="{x:StaticResource Primary}"
+                HorizontalOptions="StartAndExpand"
                 VerticalOptions="Center" />
+            </Frame>
             <Button
                 x:Name="NextBtn"
                 Command="{Binding NextCommand}"

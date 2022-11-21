@@ -1,82 +1,69 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-   <PropertyGroup>
-      <TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
-      <OutputType>Exe</OutputType>
-      <UseMaui>true</UseMaui>
-      <SingleProject>true</SingleProject>
-      <ImplicitUsings>enable</ImplicitUsings>
-      <Nullable>enable</Nullable>
-      <!-- Display name -->
-      <ApplicationTitle>Pantry</ApplicationTitle>
-      <!-- App Identifier -->
-      <ApplicationId>com.vorash.pantry</ApplicationId>
-      <ApplicationIdGuid>f1f4ea3f-a2d8-4c3f-9e88-79ebec2941eb</ApplicationIdGuid>
-      <!-- Versions -->
-      <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
-      <ApplicationVersion>1</ApplicationVersion>
-      <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
-      <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
-   </PropertyGroup>
-
-   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-      <WarningLevel>4</WarningLevel>
-   </PropertyGroup>
-
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-      <CreatePackage>false</CreatePackage>
-      <CodesignKey>iPhone Developer</CodesignKey>
-      <MtouchDebug>true</MtouchDebug>
-      <CodesignProvision>Automatic</CodesignProvision>
-   </PropertyGroup>
-
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-      <AndroidKeyStore>False</AndroidKeyStore>
-   </PropertyGroup>
-
-   <PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
-      <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
-      <CreatePackage>false</CreatePackage>
-      <CodesignProvision>Automatic</CodesignProvision>
-      <CodesignKey>iPhone Distribution</CodesignKey>
-      <BuildIpa>true</BuildIpa>
-   </PropertyGroup>
-
-   <PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
-      <AndroidKeyStore>True</AndroidKeyStore>
-      <AndroidSigningKeyAlias>appcenter</AndroidSigningKeyAlias>
-   </PropertyGroup>
-
-   <ItemGroup>
-      <!-- App Icon -->
-      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#6FBF72" />
-      <!-- Splash Screen -->
-      <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#6FBF72" BaseSize="128,128" />
-      <!-- Images -->
-      <MauiImage Include="Resources\Images\*" />
-      <MauiFont Include="Resources\Fonts\*" />
-      <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-      <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-   </ItemGroup>
-   <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-      <PackageReference Include="IdentityModel.OidcClient" Version="5.1.0" />
-      <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.0-preview.1" />
-      <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.0-preview.1" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-   </ItemGroup>
-   <ItemGroup>
-     <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />
-   </ItemGroup>
-   <ItemGroup>
-     <Compile Update="Views\LoginPage.xaml.cs">
-       <DependentUpon>LoginPage.xaml</DependentUpon>
-     </Compile>
-   </ItemGroup>
-   <ItemGroup>
-     <MauiXaml Update="Views\LoginPage.xaml">
-       <Generator>MSBuild:Compile</Generator>
-     </MauiXaml>
-   </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!-- Display name -->
+		<ApplicationTitle>Pantry</ApplicationTitle>
+		<!-- App Identifier -->
+		<ApplicationId>com.vorash.pantry</ApplicationId>
+		<ApplicationIdGuid>f1f4ea3f-a2d8-4c3f-9e88-79ebec2941eb</ApplicationIdGuid>
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<WarningLevel>4</WarningLevel>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+		<CreatePackage>false</CreatePackage>
+		<CodesignKey>iPhone Developer</CodesignKey>
+		<MtouchDebug>true</MtouchDebug>
+		<CodesignProvision>Automatic</CodesignProvision>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
+		<AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
+		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+		<CreatePackage>false</CreatePackage>
+		<CodesignProvision>Automatic</CodesignProvision>
+		<CodesignKey>iPhone Distribution</CodesignKey>
+		<BuildIpa>true</BuildIpa>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
+		<AndroidKeyStore>True</AndroidKeyStore>
+		<AndroidSigningKeyAlias>appcenter</AndroidSigningKeyAlias>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#6FBF72" />
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#6FBF72" BaseSize="128,128" />
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<!-- Images Tabbar workaround https://github.com/dotnet/maui/issues/8609 -->
+		<MauiImage Include="Resources\Images\TabIcons\**" BaseSize="20,20" />
+		<!-- Images Tabbar workaround end-->
+		<MauiFont Include="Resources\Fonts\*" />
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="3.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+		<PackageReference Include="IdentityModel.OidcClient" Version="5.1.0" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.0-preview.1" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.0-preview.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />
+	</ItemGroup>
 </Project>

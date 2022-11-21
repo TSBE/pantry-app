@@ -16,14 +16,15 @@
     </ShellItem>
 
     <TabBar Route="TabBarPage">
-        <ShellContent
+        <ShellContent Title="Home"
             ContentTemplate="{DataTemplate view:MainPage}"
-            Icon="home.svg"
+            Icon="home"
+            
             SemanticProperties.Description="Main page" />
 
-        <ShellContent
+        <ShellContent Title="Settings"
             ContentTemplate="{DataTemplate view:SettingsPage}"
-            Icon="settings.svg"
+            Icon="settings"
             SemanticProperties.Description="Settings page" />
     </TabBar>
 </Shell>

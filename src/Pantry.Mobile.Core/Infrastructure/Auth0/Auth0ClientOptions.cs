@@ -12,4 +12,3 @@ public class Auth0ClientOptions
 
     public IdentityModel.OidcClient.Browser.IBrowser Browser { get; set; } = new WebBrowserAuthenticator();
 }
-

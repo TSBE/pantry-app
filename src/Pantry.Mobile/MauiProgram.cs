@@ -31,7 +31,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<INavigationService, ShellNavigationWrapper>();
         builder.Services.AddSingleton<IDialogService, ToolkitDialogService>();
 
-
         // Register pages
         builder.Services.AddSingleton<OnboardingPage>();
         builder.Services.AddSingleton<LoginPage>();

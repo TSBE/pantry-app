@@ -32,7 +32,6 @@
                             MaximumHeightRequest="220"
                             MinimumHeightRequest="100"
                             Source="{Binding Image}" />
-
                         <VerticalStackLayout Grid.Row="1" Spacing="10">
                             <Label
                                 FontAttributes="Bold"
@@ -51,17 +50,18 @@
             Grid.Row="1"
             Padding="20,0"
             Orientation="Horizontal">
-            <Frame 
-                   BorderColor="Transparent"
-                   VerticalOptions="FillAndExpand"
-                   HorizontalOptions="FillAndExpand">
-            <IndicatorView
-                x:Name="indicatorView"
-                IndicatorColor="LightGray"
-                IndicatorSize="10"
-                SelectedIndicatorColor="{x:StaticResource Primary}"
-                HorizontalOptions="StartAndExpand"
-                VerticalOptions="Center" />
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <IndicatorView
+                    x:Name="indicatorView"
+                    HorizontalOptions="StartAndExpand"
+                    IndicatorColor="LightGray"
+                    IndicatorSize="10"
+                    SelectedIndicatorColor="{x:StaticResource Primary}"
+                    VerticalOptions="Center" />
             </Frame>
             <Button
                 x:Name="NextBtn"

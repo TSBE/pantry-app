@@ -11,35 +11,39 @@ namespace Pantry.Mobile.Core.ViewModels
 
         private readonly IDialogService _dialogService;
 
+        private readonly ISettingsService _settingsService;
+
         private readonly Auth0Client _auth0Client;
 
-        public LoginViewModel(INavigationService navigation, IDialogService dialogService, Auth0Client client)
+        public LoginViewModel(INavigationService navigation, IDialogService dialogService, ISettingsService settingsService, Auth0Client client)
         {
             _navigation = navigation;
             _dialogService = dialogService;
+            _settingsService = settingsService;
             _auth0Client = client;
         }
+
+        [ObservableProperty]
+        public string errorMessage = string.Empty;
 
         [RelayCommand]
         public async Task Login()
         {
             try
             {
-                var loginResult = await _auth0Client.LoginAsync();
-                if (!loginResult.IsError)
+                var credentials = await _auth0Client.LoginAsync();
+                if (!credentials.HasError)
                 {
-                    await _dialogService.ShowMessage(loginResult?.User.Identity.Name ?? string.Empty);
+                    await _settingsService.SetCredentials(credentials);
+                    await _dialogService.ShowMessage(credentials.AccessToken);
                     await _navigation.GoToAsync($"//{PageConstants.TABBAR_PAGE}", false);
                 }
                 else
                 {
-                    await _dialogService.ShowMessage(loginResult.ErrorDescription);
+                    ErrorMessage = credentials.Error;
                 }
             }
-            catch (InvalidOperationException iex)
-            {
-            }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }
@@ -49,20 +53,19 @@ namespace Pantry.Mobile.Core.ViewModels
         {
             try
             {
-                var loginResult = await _auth0Client.SignupAsync();
-                if (!loginResult.IsError)
+                var credentials = await _auth0Client.SignupAsync();
+                if (!credentials.HasError)
                 {
-                    await _dialogService.ShowMessage(loginResult?.User.Identity.Name ?? string.Empty);
+                    await _settingsService.SetCredentials(credentials);
+                    await _dialogService.ShowMessage(credentials.AccessToken);
+                    await _navigation.GoToAsync($"//{PageConstants.TABBAR_PAGE}", false);
                 }
                 else
                 {
-                    await _dialogService.ShowMessage(loginResult.ErrorDescription);
+                    ErrorMessage = credentials.Error;
                 }
             }
-            catch (InvalidOperationException iex)
-            {
-            }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
         }

@@ -1,15 +1,18 @@
 ﻿using IdentityModel.OidcClient;
 using IdentityModel.OidcClient.Browser;
 using IdentityModel.Client;
+using IdentityModel.OidcClient.Results;
 
 namespace Pantry.Mobile.Core.Infrastructure.Auth0;
 
 public class Auth0Client
 {
     private readonly OidcClient oidcClient;
+    private readonly Auth0ClientOptions _auth0ClientOptions;
 
     public Auth0Client(Auth0ClientOptions options)
     {
+        _auth0ClientOptions = options;
         oidcClient = new OidcClient(new OidcClientOptions
         {
             Authority = $"https://{options.Domain}",
@@ -20,18 +23,52 @@ public class Auth0Client
         });
     }
 
-    public async Task<LoginResult> LoginAsync()
+    public async Task<Credentials> LoginAsync()
     {
-        return await oidcClient.LoginAsync();
+        try
+        {
+            var requestUrl = new LoginRequest();
+            requestUrl.FrontChannelExtraParameters.Add("audience", _auth0ClientOptions.Audience);
+            var loginResult = await oidcClient.LoginAsync(requestUrl);
+            return loginResult.ToCredentials();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return new Credentials { Error = ex.ToString() };
+        }
     }
 
-    public async Task<LoginResult> SignupAsync()
+    public async Task<Credentials> SignupAsync()
     {
-        var requestUrl = new LoginRequest();
-        requestUrl.FrontChannelExtraParameters.Add("prompt", "login");
-        requestUrl.FrontChannelExtraParameters.Add("screen_hint", "signup");
+        try
+        {
+            var requestUrl = new LoginRequest();
+            requestUrl.FrontChannelExtraParameters.Add("prompt", "login");
+            requestUrl.FrontChannelExtraParameters.Add("screen_hint", "signup");
+            requestUrl.FrontChannelExtraParameters.Add("audience", _auth0ClientOptions.Audience);
+            var loginResult = await oidcClient.LoginAsync(requestUrl);
+            return loginResult.ToCredentials();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return new Credentials { Error = ex.ToString() };
+        }
+    }
 
-        return await oidcClient.LoginAsync(requestUrl);
+    public async Task<Credentials> RefreshToken(string refreshToken)
+    {
+        try
+        {
+            var refreshTokenResult = await oidcClient.RefreshTokenAsync(refreshToken);
+            return refreshTokenResult.ToCredentials();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return new Credentials { Error = ex.ToString() };
+        }
     }
 
     public async Task<BrowserResult> LogoutAsync()

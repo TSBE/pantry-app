@@ -11,9 +11,12 @@ namespace Pantry.Mobile.Core.ViewModels
     {
         private readonly INavigationService _navigation;
 
-        public OnboardingViewModel(INavigationService navigation)
+        private readonly ISettingsService _settingsService;
+
+        public OnboardingViewModel(INavigationService navigation, ISettingsService settingsService)
         {
             _navigation = navigation;
+            _settingsService = settingsService;
 
             introScreens = new ObservableCollection<IntroScreenModel>
             {
@@ -72,10 +75,21 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
+        public async Task Init()
+        {
+            var onboardingHasBeenFinished = await _settingsService.GetOnboardingHasBeenFinished();
+            if (onboardingHasBeenFinished)
+            {
+                await _navigation.GoToAsync($"//{PageConstants.LOGIN_PAGE}", false);
+            }
+        }
+
+        [RelayCommand]
         public async Task Next()
         {
             if (Position >= IntroScreens.Count - 1)
             {
+                await _settingsService.SetOnboardingHasBeenFinished(true);
                 await _navigation.GoToAsync($"//{PageConstants.LOGIN_PAGE}", false);
             }
             else

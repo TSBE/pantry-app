@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
@@ -27,9 +28,14 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        // Register  services
+        // Register essentials
+        builder.Services.AddSingleton(Preferences.Default);
+        builder.Services.AddSingleton(SecureStorage.Default);
+
+        // Register services
         builder.Services.AddSingleton<INavigationService, ShellNavigationWrapper>();
         builder.Services.AddSingleton<IDialogService, ToolkitDialogService>();
+        builder.Services.AddSingleton<ISettingsService, SettingsService>();
 
         // Register pages
         builder.Services.AddSingleton<OnboardingPage>();
@@ -46,6 +52,7 @@ public static class MauiProgram
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()
         {
+            Audience = AppConstants.AUTH0_AUDIENCE,
             Domain = AppConstants.AUTH0_DOMAIN,
             ClientId = AppConstants.AUTH0_CLIENT_ID,
             Scope = AppConstants.AUTH0_SCOPES,

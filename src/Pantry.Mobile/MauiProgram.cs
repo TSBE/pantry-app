@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
@@ -7,6 +6,7 @@ using Pantry.Mobile.Core.Infrastructure.Auth0;
 using Pantry.Mobile.Core.ViewModels;
 using Pantry.Mobile.Interactors;
 using Pantry.Mobile.Views;
+using ZXing.Net.Maui.Controls;
 
 namespace Pantry.Mobile;
 
@@ -18,6 +18,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseBarcodeReader()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -31,6 +32,7 @@ public static class MauiProgram
         // Register essentials
         builder.Services.AddSingleton(Preferences.Default);
         builder.Services.AddSingleton(SecureStorage.Default);
+        builder.Services.AddSingleton(Connectivity.Current);
 
         // Register services
         builder.Services.AddSingleton<INavigationService, ShellNavigationWrapper>();
@@ -42,12 +44,15 @@ public static class MauiProgram
         builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<SettingsPage>();
+        builder.Services.AddSingleton<ScannerPage>();
+
 
         // Register view models
         builder.Services.AddSingleton<OnboardingViewModel>();
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
+        builder.Services.AddSingleton<ScannerViewModel>();
 
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()

@@ -39,6 +39,14 @@
                     HorizontalOptions="Center"
                     SemanticProperties.Hint="Counts the number of times you click"
                     Text="{Binding CountButtonText}" />
+
+                <Button
+                    x:Name="OpenScannerBtn"
+                    Margin="0,20"
+                    Command="{Binding OpenScannerCommand}"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Hint="open scanner"
+                    Text="Open scanner" />
             </StackLayout>
         </VerticalStackLayout>
     </ScrollView>

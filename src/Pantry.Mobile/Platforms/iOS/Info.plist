@@ -41,5 +41,7 @@
                 <string>Editor</string>
             </dict>
         </array>
+        <key>NSCameraUsageDescription</key>
+        <string>This app uses barcode scanning to scan product barcodes</string>
     </dict>
 </plist>

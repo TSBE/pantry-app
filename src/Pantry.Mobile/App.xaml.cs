@@ -40,18 +40,20 @@ public partial class App : Application
 
     private async Task<string> InitAsync()
     {
+        var targetPage = $"//{PageConstants.TABBAR_PAGE}";
+
         var onboardingHasBeenFinished = await _settingsService.GetOnboardingHasBeenFinished();
-        if (onboardingHasBeenFinished)
+        if (!onboardingHasBeenFinished)
         {
-            return $"//{PageConstants.LOGIN_PAGE}";
+            targetPage = $"//{PageConstants.LOGIN_PAGE}";
         }
 
         var loginCredentials = await _settingsService.GetCredentials();
         if (loginCredentials is null || loginCredentials.HasError)
         {
-            return $"//{PageConstants.ONBOARDING_PAGE}";
+            targetPage = $"//{PageConstants.LOGIN_PAGE}";
         }
 
-        return $"//{PageConstants.TABBAR_PAGE}";
+        return targetPage;
     }
 }

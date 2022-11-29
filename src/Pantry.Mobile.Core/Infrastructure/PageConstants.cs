@@ -6,4 +6,5 @@ public class PageConstants
     public const string MAIN_PAGE = "MainPage";
     public const string LOGIN_PAGE = "LoginPage";
     public const string ONBOARDING_PAGE = "OnboardingPage";
+    public const string SCANNER_PAGE = "ScannerPage";
 }

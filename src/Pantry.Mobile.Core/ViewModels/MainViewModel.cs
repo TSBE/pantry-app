@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 
 namespace Pantry.Mobile.Core.ViewModels;
@@ -22,5 +23,11 @@ public partial class MainViewModel : BaseViewModel
     {
         _count++;
         CountButtonText = _count == 1 ? $"Clicked {_count} time" : $"Clicked {_count} times";
+    }
+
+    [RelayCommand]
+    private async Task OpenScanner()
+    {
+        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}");
     }
 }

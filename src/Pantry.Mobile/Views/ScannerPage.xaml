@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.ScannerPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    Title="Scanner"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:ScannerViewModel"
+    Shell.PresentationMode="ModalAnimated">
+
+    <zxing:CameraBarcodeReaderView
+        x:Name="cameraBarcodeReaderView"
+        BarcodesDetected="BarcodesDetected"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand" />
+</ContentPage>

@@ -1,8 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Net;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
+using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
+using Refit;
 
 namespace Pantry.Mobile.Core.ViewModels
 {
@@ -10,16 +13,13 @@ namespace Pantry.Mobile.Core.ViewModels
     {
         private readonly INavigationService _navigation;
 
-        private readonly IDialogService _dialogService;
-
         private readonly ISettingsService _settingsService;
 
         private readonly Auth0Client _auth0Client;
 
-        public LoginViewModel(INavigationService navigation, IDialogService dialogService, ISettingsService settingsService, Auth0Client client)
+        public LoginViewModel(INavigationService navigation, ISettingsService settingsService, Auth0Client client)
         {
             _navigation = navigation;
-            _dialogService = dialogService;
             _settingsService = settingsService;
             _auth0Client = client;
         }
@@ -32,20 +32,13 @@ namespace Pantry.Mobile.Core.ViewModels
         {
             try
             {
+                ErrorMessage = string.Empty;
                 var credentials = await _auth0Client.LoginAsync();
-                if (!credentials.HasError)
-                {
-                    await _settingsService.SetCredentials(credentials);
-                    await _dialogService.ShowMessage(credentials.AccessToken);
-                    await _navigation.GoToAsync($"//{PageConstants.TABBAR_PAGE}", false);
-                }
-                else
-                {
-                    ErrorMessage = credentials.Error;
-                }
+                await HandleNextStep(credentials);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ErrorMessage = ex.Message;
             }
         }
 
@@ -54,20 +47,27 @@ namespace Pantry.Mobile.Core.ViewModels
         {
             try
             {
+                ErrorMessage = string.Empty;
                 var credentials = await _auth0Client.SignupAsync();
-                if (!credentials.HasError)
-                {
-                    await _settingsService.SetCredentials(credentials);
-                    await _dialogService.ShowMessage(credentials.AccessToken);
-                    await _navigation.GoToAsync($"//{PageConstants.TABBAR_PAGE}", false);
-                }
-                else
-                {
-                    ErrorMessage = credentials.Error;
-                }
+                await HandleNextStep(credentials);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ErrorMessage = ex.Message;
+            }
+        }
+
+        private async Task HandleNextStep(Credentials credentials)
+        {
+            if (!credentials.HasError)
+            {
+                await _settingsService.SetCredentials(credentials);
+                var nextPage = await _navigation.GetNextStartupPage();
+                await _navigation.GoToAsync(nextPage, false);
+            }
+            else
+            {
+                ErrorMessage = credentials.Error;
             }
         }
     }

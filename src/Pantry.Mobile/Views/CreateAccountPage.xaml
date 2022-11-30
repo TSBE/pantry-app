@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.CreateAccountPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Create account"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:CreateAccountViewModel"
+    Shell.NavBarIsVisible="true">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+
+        <Grid Margin="10" RowDefinitions="*,Auto">
+            <VerticalStackLayout
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Grid RowDefinitions="auto,40*">
+                    <Image
+                        Grid.Row="0"
+                        Margin="0,10,0,50"
+                        Aspect="AspectFit"
+                        MaximumHeightRequest="150"
+                        MinimumHeightRequest="80"
+                        Source="user" />
+
+                    <VerticalStackLayout Grid.Row="1" Spacing="10">
+                        <Label Text="Firstname" />
+                        <Entry Placeholder="Firstname" Text="{Binding FirstName}" />
+                        <Label Text="Lastname" />
+                        <Entry Placeholder="Lastname" Text="{Binding LastName}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="1" Spacing="20">
+                <Label
+                    IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                    Text="{Binding ErrorMessage}"
+                    TextColor="Red" />
+                <Button
+                    x:Name="CreateAccountBtn"
+                    Command="{Binding CreateAccountCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    SemanticProperties.Hint="Create account"
+                    Text="Create account" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

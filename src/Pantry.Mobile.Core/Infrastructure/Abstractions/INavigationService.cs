@@ -2,6 +2,8 @@
 
 public interface INavigationService
 {
+    Task<string> GetNextStartupPage();
+
     Task GoToAsync(ShellNavigationState state);
 
     Task GoToAsync(ShellNavigationState state, bool animate);

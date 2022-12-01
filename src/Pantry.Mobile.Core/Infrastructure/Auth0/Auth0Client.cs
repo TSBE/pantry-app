@@ -71,6 +71,11 @@ public class Auth0Client
         }
     }
 
+    public async Task<UserInfoResult> GetUserInfo(string accessToken)
+    {
+        return await oidcClient.GetUserInfoAsync(accessToken);
+    }
+
     public async Task<BrowserResult> LogoutAsync()
     {
         var logoutParameters = new Dictionary<string, string>

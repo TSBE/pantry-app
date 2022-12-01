@@ -40,20 +40,6 @@ public partial class App : Application
 
     private async Task<string> InitAsync()
     {
-        var targetPage = $"//{PageConstants.TABBAR_PAGE}";
-
-        var onboardingHasBeenFinished = await _settingsService.GetOnboardingHasBeenFinished();
-        if (!onboardingHasBeenFinished)
-        {
-            targetPage = $"//{PageConstants.LOGIN_PAGE}";
-        }
-
-        var loginCredentials = await _settingsService.GetCredentials();
-        if (loginCredentials is null || loginCredentials.HasError)
-        {
-            targetPage = $"//{PageConstants.LOGIN_PAGE}";
-        }
-
-        return targetPage;
+        return await _navigation.GetNextStartupPage();
     }
 }

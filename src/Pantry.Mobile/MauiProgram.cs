@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
+using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.ViewModels;
 using Pantry.Mobile.Interactors;
 using Pantry.Mobile.Views;
@@ -45,7 +46,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<SettingsPage>();
         builder.Services.AddSingleton<ScannerPage>();
-
+        builder.Services.AddSingleton<CreateAccountPage>();
+        builder.Services.AddSingleton<HouseholdPage>();
 
         // Register view models
         builder.Services.AddSingleton<OnboardingViewModel>();
@@ -53,6 +55,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
         builder.Services.AddSingleton<ScannerViewModel>();
+        builder.Services.AddSingleton<CreateAccountViewModel>();
+        builder.Services.AddSingleton<HouseholdViewModel>();
 
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()
@@ -63,6 +67,7 @@ public static class MauiProgram
             Scope = AppConstants.AUTH0_SCOPES,
             RedirectUri = AppConstants.AUTH0_CALLBACK_URL
         }));
+        builder.Services.AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL);
 
         return builder.Build();
     }

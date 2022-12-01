@@ -3,52 +3,82 @@
     x:Class="Pantry.Mobile.Views.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cells="clr-namespace:Pantry.Mobile.Cells"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     Title="Pantry"
     x:DataType="vm:MainViewModel">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <RefreshView
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy}"
+        Style="{StaticResource BaseRefreshView}">
+        <CollectionView
+            BackgroundColor="Transparent"
+            Header="{Binding .}"
+            IsGrouped="True"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsLayout="VerticalList"
+            ItemsSource="{Binding ArticleGroups}"
+            SelectionMode="Single"
+            VerticalOptions="StartAndExpand">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="12">
+                    <Label HorizontalOptions="Center" Text="No articles" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="{x:Null}">
+                    <VerticalStackLayout Padding="12">
+                        <Label Style="{StaticResource LabelMedium}" Text="{Binding Key}" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    IsDestructive="True"
+                                    Text="Delete" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <cells:ArticleCard>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25"
-            VerticalOptions="Center">
-            <StackLayout x:Name="HomeView">
-                <Image
-                    HeightRequest="200"
-                    HorizontalOptions="Center"
-                    SemanticProperties.Description="Pantry assortment icon"
-                    Source="assortment" />
+                            <cells:ArticleCard.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"
+                                    CommandParameter="{Binding .}"
+                                    NumberOfTapsRequired="1" />
+                            </cells:ArticleCard.GestureRecognizers>
 
-                <Label
-                    FontSize="32"
-                    HorizontalOptions="Center"
-                    SemanticProperties.HeadingLevel="Level1"
-                    Text="Hello, World!" />
-
-                <Label
-                    FontSize="18"
-                    HorizontalOptions="Center"
-                    SemanticProperties.Description="Welcome to Pantry"
-                    SemanticProperties.HeadingLevel="Level2"
-                    Text="Welcome to Pantry" />
-
-                <Button
-                    x:Name="CounterBtn"
-                    Margin="0,20"
-                    Command="{Binding CounterCommand}"
-                    HorizontalOptions="Center"
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Text="{Binding CountButtonText}" />
-
-                <Button
-                    x:Name="OpenScannerBtn"
-                    Margin="0,20"
-                    Command="{Binding OpenScannerCommand}"
-                    HorizontalOptions="Center"
-                    SemanticProperties.Hint="open scanner"
-                    Text="Open scanner" />
-            </StackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
-
+                        </cells:ArticleCard>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.HeaderTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout>
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{StaticResource LabelMedium}"
+                            Text="Article overview" />
+                        <Button
+                            x:Name="OpenScannerBtn"
+                            Margin="0,20"
+                            Command="{Binding OpenScannerCommand}"
+                            HorizontalOptions="Center"
+                            SemanticProperties.Hint="open scanner"
+                            Text="Open scanner" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.HeaderTemplate>
+        </CollectionView>
+    </RefreshView>
 </ContentPage>

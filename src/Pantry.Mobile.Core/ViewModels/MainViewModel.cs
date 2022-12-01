@@ -1,33 +1,95 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
+using Pantry.Mobile.Core.Infrastructure.Helpers;
+using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
+using Pantry.Mobile.Core.Models;
 
 namespace Pantry.Mobile.Core.ViewModels;
 
 public partial class MainViewModel : BaseViewModel
 {
     private readonly INavigationService _navigation;
-    private int _count = 0;
 
-    public MainViewModel(INavigationService navigation)
+    private readonly IPantryClientApiService _pantryClientApiService;
+
+    private readonly IDialogService _dialogService;
+
+    public MainViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IDialogService dialogService)
     {
         _navigation = navigation;
-    }
-
-    [ObservableProperty]
-    private string countButtonText = "Click me";
-
-    [RelayCommand]
-    private void Counter()
-    {
-        _count++;
-        CountButtonText = _count == 1 ? $"Clicked {_count} time" : $"Clicked {_count} times";
+        _pantryClientApiService = pantryClientApiService;
+        _dialogService = dialogService;
     }
 
     [RelayCommand]
     private async Task OpenScanner()
     {
         await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}");
+    }
+
+    public ObservableRangeCollection<Grouping<string, ArticleModel>> ArticleGroups { get; set; } = new();
+
+    [RelayCommand]
+    public async Task Init()
+    {
+        try
+        {
+            await Load();
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
+    [RelayCommand]
+    public async Task Delete(ArticleModel article)
+    {
+        if (article == null)
+            return;
+
+        await _dialogService.ShowMessage($"Delete{article.Name}");
+    }
+
+    [RelayCommand]
+    public async Task Tap(ArticleModel article)
+    {
+        if (article == null)
+            return;
+
+        await _dialogService.ShowMessage($"Tabbed{article.Name}");
+    }
+
+    [RelayCommand]
+    public async Task Refresh()
+    {
+        try
+        {
+            await Load();
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    public async Task Load()
+    {
+        var articleListResponse = await _pantryClientApiService.GetAllArticlesAsync();
+        var articles = (from item in articleListResponse?.Articles
+                        select new ArticleModel
+                        {
+                            BestBeforeDate = item.BestBeforeDate,
+                            GlobalTradeItemNumber = item.GlobalTradeItemNumber,
+                            Name = item.Name,
+                            StorageLocationId = item.StorageLocationId
+                        })
+                        .ToList();
+        var groups = articles.GroupBy(x => x.StorageLocationId.ToString());
+        ArticleGroups.Clear();
+        ArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));
     }
 }

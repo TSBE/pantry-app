@@ -48,6 +48,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ScannerPage>();
         builder.Services.AddSingleton<CreateAccountPage>();
         builder.Services.AddSingleton<HouseholdPage>();
+        builder.Services.AddSingleton<StorageLocationPage>();
 
         // Register view models
         builder.Services.AddSingleton<OnboardingViewModel>();
@@ -57,6 +58,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<ScannerViewModel>();
         builder.Services.AddSingleton<CreateAccountViewModel>();
         builder.Services.AddSingleton<HouseholdViewModel>();
+        builder.Services.AddSingleton<StorageLocationViewModel>();
+
 
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()

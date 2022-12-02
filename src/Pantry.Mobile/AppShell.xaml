@@ -31,6 +31,12 @@
             SemanticProperties.Description="Main page" />
 
         <ShellContent
+            Title="Storage"
+            ContentTemplate="{DataTemplate view:StorageLocationPage}"
+            Icon="tab_location"
+            SemanticProperties.Description="Storage location page" />
+
+        <ShellContent
             Title="Settings"
             ContentTemplate="{DataTemplate view:SettingsPage}"
             Icon="settings"

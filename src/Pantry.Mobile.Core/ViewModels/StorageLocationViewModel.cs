@@ -81,4 +81,10 @@ public partial class StorageLocationViewModel : BaseViewModel
         StorageLocations.Clear();
         StorageLocations.AddRange(storageLocations);
     }
+
+    [RelayCommand]
+    public async Task Add()
+    {
+        await _dialogService.ShowMessage("Add pressed");
+    }
 }

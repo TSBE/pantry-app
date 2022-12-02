@@ -50,14 +50,12 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <cells:ArticleCard>
-
                             <cells:ArticleCard.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"
                                     CommandParameter="{Binding .}"
                                     NumberOfTapsRequired="1" />
                             </cells:ArticleCard.GestureRecognizers>
-
                         </cells:ArticleCard>
                     </SwipeView>
                 </DataTemplate>

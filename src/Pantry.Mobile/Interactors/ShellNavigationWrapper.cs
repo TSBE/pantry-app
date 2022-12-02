@@ -1,6 +1,7 @@
 ﻿using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
+using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
 
 namespace Pantry.Mobile.Interactors;
@@ -35,15 +36,14 @@ public class ShellNavigationWrapper : INavigationService
             return targetPage;
         }
 
-        var hasAccount = await HasAccount();
-        if (!hasAccount)
+        var account = await GetAccount();
+        if (account is null)
         {
             targetPage = $"//{PageConstants.CREATEACCOUNT_PAGE}";
             return targetPage;
         }
 
-        var hasHousehold = await HasHousehold();
-        if (!hasHousehold)
+        if (account.Household is null)
         {
             targetPage = $"//{PageConstants.CREATEHOUSEHOLD_PAGE}";
             return targetPage;
@@ -61,29 +61,15 @@ public class ShellNavigationWrapper : INavigationService
     public Task GoToAsync(ShellNavigationState state, bool animate, IDictionary<string, object> parameters) => Shell.Current.GoToAsync(state, animate, parameters);
 
 
-    private async Task<bool> HasAccount()
+    private async Task<AccountResponse?> GetAccount()
     {
         try
         {
-            var account = await _pantryClientApiService.GetAccountAsync();
-            return account is not null;
+            return await _pantryClientApiService.GetAccountAsync();
         }
         catch (ValidationApiException)
         {
-            return false;
-        }
-    }
-
-    private async Task<bool> HasHousehold()
-    {
-        try
-        {
-            var household = await _pantryClientApiService.GetHouseholdAsync();
-            return household is not null;
-        }
-        catch (ValidationApiException)
-        {
-            return false;
+            return null;
         }
     }
 }

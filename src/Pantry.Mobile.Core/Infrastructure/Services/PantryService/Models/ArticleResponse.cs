@@ -14,9 +14,9 @@ public class ArticleResponse
     public long Id { get; set; }
 
     /// <summary>
-    /// Storage location id.
+    /// Storage location.
     /// </summary>
-    public long StorageLocationId { get; set; }
+    public StorageLocationResponse StorageLocation { get; set; }
 
     /// <summary>
     /// The Global Trade Item Number (GTIN) a.k.a. (EAN) of the article.

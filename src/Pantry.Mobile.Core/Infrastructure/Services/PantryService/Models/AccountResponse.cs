@@ -20,4 +20,9 @@ public class AccountResponse
     /// A guid which is the public invate id.
     /// </summary>
     public Guid FriendsCode { get; set; }
+
+    /// <summary>
+    /// Represents a household.
+    /// </summary>
+    public HouseholdResponse? Household { get; set; }
 }

@@ -85,10 +85,10 @@ public partial class MainViewModel : BaseViewModel
                             BestBeforeDate = item.BestBeforeDate,
                             GlobalTradeItemNumber = item.GlobalTradeItemNumber,
                             Name = item.Name,
-                            StorageLocationId = item.StorageLocationId
+                            StorageLocation = new StorageLocationModel { Id = item.StorageLocation.Id, Name = item.StorageLocation.Name, Description = item.StorageLocation.Description }
                         })
                         .ToList();
-        var groups = articles.GroupBy(x => x.StorageLocationId.ToString());
+        var groups = articles.GroupBy(x => x.StorageLocation.Name);
         ArticleGroups.Clear();
         ArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));
     }

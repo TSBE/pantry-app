@@ -10,7 +10,7 @@ public class ArticleModel
     /// <summary>
     /// Storage location id.
     /// </summary>
-    public long StorageLocationId { get; set; }
+    public StorageLocationModel StorageLocation { get; set; }
 
     /// <summary>
     /// The Global Trade Item Number (GTIN) a.k.a. (EAN) of the article.

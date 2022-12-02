@@ -23,6 +23,12 @@ public partial class App : Application
 
     protected override void OnStart()
     {
+        if (VersionTracking.IsFirstLaunchEver)
+        {
+            // clear left overs
+            SecureStorage.RemoveAll();
+        }
+
         var task = InitAsync();
         task.ContinueWith(async (task) =>
         {

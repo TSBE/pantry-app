@@ -50,7 +50,7 @@ public partial class MainViewModel : BaseViewModel
         if (article == null)
             return;
 
-        await _dialogService.ShowMessage($"Delete{article.Name}");
+        await _dialogService.ShowMessage($"Delete {article.Name}");
     }
 
     [RelayCommand]
@@ -59,7 +59,7 @@ public partial class MainViewModel : BaseViewModel
         if (article == null)
             return;
 
-        await _dialogService.ShowMessage($"Tabbed{article.Name}");
+        await _dialogService.ShowMessage($"Tabbed {article.Name}");
     }
 
     [RelayCommand]

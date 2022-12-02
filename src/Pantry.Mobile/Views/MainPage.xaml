@@ -44,7 +44,7 @@
                                 <SwipeItem
                                     BackgroundColor="Red"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
-                                    CommandParameter="{Binding .}"
+                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                     IsDestructive="True"
                                     Text="Delete" />
                             </SwipeItems>
@@ -53,7 +53,7 @@
                             <cells:ArticleCard.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"
-                                    CommandParameter="{Binding .}"
+                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                     NumberOfTapsRequired="1" />
                             </cells:ArticleCard.GestureRecognizers>
                         </cells:ArticleCard>

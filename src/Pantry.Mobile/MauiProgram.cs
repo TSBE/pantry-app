@@ -24,6 +24,10 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            })
+            .ConfigureEssentials(essentials =>
+            {
+                essentials.UseVersionTracking();
             });
 
 #if DEBUG
@@ -31,6 +35,7 @@ public static class MauiProgram
 #endif
 
         // Register essentials
+        builder.Services.AddSingleton(VersionTracking.Default);
         builder.Services.AddSingleton(Preferences.Default);
         builder.Services.AddSingleton(SecureStorage.Default);
         builder.Services.AddSingleton(Connectivity.Current);

@@ -37,7 +37,7 @@
                                 <SwipeItem
                                     BackgroundColor="Red"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=DeleteCommand}"
-                                    CommandParameter="{Binding .}"
+                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                     IsDestructive="True"
                                     Text="Delete" />
                             </SwipeItems>
@@ -46,7 +46,7 @@
                             <cells:StorageCard.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=TapCommand}"
-                                    CommandParameter="{Binding .}"
+                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                     NumberOfTapsRequired="1" />
                             </cells:StorageCard.GestureRecognizers>
                         </cells:StorageCard>

@@ -94,7 +94,7 @@
                                                 x:Name="DeclineInvitation2Btn"
                                                 Grid.Column="0"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=DeclineInvitationCommand}"
-                                                CommandParameter="{Binding .}"
+                                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                                 HorizontalOptions="Fill"
                                                 Text="Decline"
                                                 VerticalOptions="FillAndExpand" />
@@ -102,7 +102,7 @@
                                                 x:Name="AcceptInvitation2Btn"
                                                 Grid.Column="1"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=AcceptInvitationCommand}"
-                                                CommandParameter="{Binding .}"
+                                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                                 HorizontalOptions="Fill"
                                                 Text="Accept"
                                                 VerticalOptions="FillAndExpand" />

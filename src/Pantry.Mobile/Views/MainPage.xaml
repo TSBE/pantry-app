@@ -22,7 +22,7 @@
             ItemSizingStrategy="MeasureAllItems"
             ItemsLayout="VerticalList"
             ItemsSource="{Binding ArticleGroups}"
-            SelectionMode="Single"
+            SelectionMode="None"
             VerticalOptions="StartAndExpand">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="12">
@@ -63,10 +63,6 @@
             <CollectionView.HeaderTemplate>
                 <DataTemplate>
                     <VerticalStackLayout>
-                        <Label
-                            HorizontalOptions="Center"
-                            Style="{StaticResource LabelMedium}"
-                            Text="Article overview" />
                         <Button
                             x:Name="OpenScannerBtn"
                             Margin="0,20"

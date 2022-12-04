@@ -11,53 +11,62 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
-    <RefreshView
-        Command="{Binding RefreshCommand}"
-        IsRefreshing="{Binding IsBusy}"
-        Style="{StaticResource BaseRefreshView}">
-        <CollectionView
-            BackgroundColor="Transparent"
-            Header="{Binding .}"
-            IsGrouped="False"
-            ItemSizingStrategy="MeasureAllItems"
-            ItemsLayout="VerticalList"
-            ItemsSource="{Binding StorageLocations}"
-            SelectionMode="Single"
-            VerticalOptions="StartAndExpand">
-            <CollectionView.EmptyView>
-                <VerticalStackLayout Padding="12">
-                    <Label HorizontalOptions="Center" Text="No storage locations" />
-                </VerticalStackLayout>
-            </CollectionView.EmptyView>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem
-                                    BackgroundColor="Red"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=DeleteCommand}"
-                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
-                                    IsDestructive="True"
-                                    Text="Delete" />
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <cells:StorageCard>
-                            <cells:StorageCard.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=TapCommand}"
-                                    CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
-                                    NumberOfTapsRequired="1" />
-                            </cells:StorageCard.GestureRecognizers>
-                        </cells:StorageCard>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-            <CollectionView.HeaderTemplate>
-                <DataTemplate>
-                    <VerticalStackLayout />
-                </DataTemplate>
-            </CollectionView.HeaderTemplate>
-        </CollectionView>
-    </RefreshView>
+    <Grid RowDefinitions="*">
+        <RefreshView
+            Grid.Row="0"
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsBusy}"
+            Style="{StaticResource BaseRefreshView}">
+            <CollectionView
+                BackgroundColor="Transparent"
+                IsGrouped="False"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsLayout="VerticalList"
+                ItemsSource="{Binding StorageLocations}"
+                SelectionMode="None"
+                VerticalOptions="StartAndExpand">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout Padding="12">
+                        <Label HorizontalOptions="Center" Text="No storage locations" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Red"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                        IsDestructive="True"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <cells:StorageCard>
+                                <cells:StorageCard.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=TapCommand}"
+                                        CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                        NumberOfTapsRequired="1" />
+                                </cells:StorageCard.GestureRecognizers>
+                            </cells:StorageCard>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <ImageButton
+            Grid.Row="0"
+            Margin="0,0,10,0"
+            Command="{Binding AddCommand}"
+            HorizontalOptions="End"
+            Source="add"
+            Style="{StaticResource RoundImageButton}"
+            VerticalOptions="End">
+            <ImageButton.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}" />
+            </ImageButton.Behaviors>
+        </ImageButton>
+    </Grid>
 </ContentPage>

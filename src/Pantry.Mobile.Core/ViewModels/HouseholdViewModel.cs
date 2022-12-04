@@ -37,9 +37,6 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [ObservableProperty]
-        public string errorMessage = string.Empty;
-
-        [ObservableProperty]
         public string name = string.Empty;
 
         [ObservableProperty]

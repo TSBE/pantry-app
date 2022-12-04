@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Helpers;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
@@ -50,7 +51,7 @@ public partial class StorageLocationViewModel : BaseViewModel
         if (locationModel == null)
             return;
 
-        await _dialogService.ShowMessage($"Tabbed {locationModel.Name}");
+        await _navigation.GoToAsync($"{PageConstants.ADD_STORAGE_LOCATION_PAGE}?Id={locationModel.Id}&Name={locationModel.Name}&Description={locationModel.Description}");
     }
 
     [RelayCommand]
@@ -80,5 +81,11 @@ public partial class StorageLocationViewModel : BaseViewModel
                         .ToList();
         StorageLocations.Clear();
         StorageLocations.AddRange(storageLocations);
+    }
+
+    [RelayCommand]
+    public async Task Add()
+    {
+        await _navigation.GoToAsync($"{PageConstants.ADD_STORAGE_LOCATION_PAGE}");
     }
 }

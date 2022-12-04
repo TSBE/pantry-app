@@ -54,6 +54,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<CreateAccountPage>();
         builder.Services.AddSingleton<HouseholdPage>();
         builder.Services.AddSingleton<StorageLocationPage>();
+        builder.Services.AddTransient<AddStorageLocationPage>();
 
         // Register view models
         builder.Services.AddSingleton<OnboardingViewModel>();
@@ -64,7 +65,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<CreateAccountViewModel>();
         builder.Services.AddSingleton<HouseholdViewModel>();
         builder.Services.AddSingleton<StorageLocationViewModel>();
-
+        builder.Services.AddTransient<AddStorageLocationViewModel>();
 
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()
@@ -75,8 +76,14 @@ public static class MauiProgram
             Scope = AppConstants.AUTH0_SCOPES,
             RedirectUri = AppConstants.AUTH0_CALLBACK_URL
         }));
+#if ANDROID
+        builder.Services.AddSingleton<IKeyboardHelper, Pantry.Mobile.DroidKeyboardHelper>();
+#endif
+#if DEBUG
+        builder.Services.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());
+#else
         builder.Services.AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL);
-
+#endif
         return builder.Build();
     }
 }

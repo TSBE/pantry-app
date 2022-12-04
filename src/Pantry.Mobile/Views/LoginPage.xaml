@@ -46,8 +46,8 @@
         <VerticalStackLayout Grid.Row="1" Spacing="20">
             <Label
                 IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
-                Text="{Binding ErrorMessage}"
-                TextColor="Red" />
+                Style="{StaticResource LabelErrorMessage}"
+                Text="{Binding ErrorMessage}" />
             <Button
                 x:Name="LoginBtn"
                 BackgroundColor="{x:StaticResource Secondary}"

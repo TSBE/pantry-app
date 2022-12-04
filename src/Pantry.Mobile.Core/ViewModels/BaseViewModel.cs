@@ -7,5 +7,8 @@ namespace Pantry.Mobile.Core.ViewModels
     {
         [ObservableProperty]
         private bool isBusy = false;
+
+        [ObservableProperty]
+        public string errorMessage = string.Empty;
     }
 }

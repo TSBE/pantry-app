@@ -24,9 +24,6 @@ namespace Pantry.Mobile.Core.ViewModels
             _auth0Client = client;
         }
 
-        [ObservableProperty]
-        public string errorMessage = string.Empty;
-
         [RelayCommand]
         public async Task Login()
         {

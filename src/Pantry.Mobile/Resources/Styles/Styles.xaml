@@ -40,6 +40,10 @@
         </Setter>
     </Style>
 
+    <Style x:Key="LabelErrorMessage" TargetType="Label">
+        <Setter Property="TextColor" Value="Red" />
+    </Style>
+
     <Style x:Key="BaseLabel" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColor}}" />
     </Style>

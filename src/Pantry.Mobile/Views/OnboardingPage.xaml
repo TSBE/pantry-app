@@ -69,6 +69,7 @@
                 HorizontalOptions="EndAndExpand"
                 MinimumWidthRequest="80"
                 SemanticProperties.Hint="Next page"
+                Style="{StaticResource PrimaryButton}"
                 Text="{Binding ButtonText}" />
         </StackLayout>
     </Grid>

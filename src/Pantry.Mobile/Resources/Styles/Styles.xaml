@@ -1,7 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Green}, Dark={StaticResource Green}}" />
+    </Style>
 
+    <Style x:Key="SecondaryButton" TargetType="Button">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="BorderColor" Value="{StaticResource Green}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="DeclineButton" TargetType="Button">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Coral}" />
+    </Style>
+
+    <Style x:Key="AcceptButton" TargetType="Button">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Green}" />
+    </Style>
 
     <Style x:Key="RoundImageButton" TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
@@ -40,16 +60,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="LabelErrorMessage" TargetType="Label">
-        <Setter Property="TextColor" Value="Red" />
+    <Style x:Key="BaseRefreshView" TargetType="RefreshView">
+        <Setter Property="RefreshColor" Value="{StaticResource Green}" />
     </Style>
 
     <Style x:Key="BaseLabel" TargetType="Label">
         <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColor}}" />
-    </Style>
-
-    <Style x:Key="BaseRefreshView" TargetType="RefreshView">
-        <Setter Property="RefreshColor" Value="{StaticResource Green}" />
     </Style>
 
     <Style
@@ -58,6 +74,7 @@
         TargetType="Label">
         <Setter Property="FontSize" Value="Micro" />
     </Style>
+
     <Style
         x:Key="LabelSmall"
         BasedOn="{StaticResource BaseLabel}"
@@ -79,6 +96,13 @@
         <Setter Property="FontSize" Value="Large" />
     </Style>
 
+    <Style
+        x:Key="LabelErrorMessage"
+        BasedOn="{StaticResource LabelMedium}"
+        TargetType="Label">
+        <Setter Property="TextColor" Value="Red" />
+    </Style>
+
     <Style x:Key="StorageCard" TargetType="Border">
         <Setter Property="Shadow.Brush" Value="{AppThemeBinding Dark={StaticResource CardBackground}, Light={StaticResource CardBackgroundDark}}" />
         <Setter Property="Shadow.Offset" Value="10,10" />
@@ -89,7 +113,7 @@
     </Style>
 
     <Style x:Key="ArticleCard" TargetType="Border">
-        <Setter Property="Shadow.Brush" Value="black" />
+        <Setter Property="Shadow.Brush" Value="{AppThemeBinding Dark={StaticResource CardBackground}, Light={StaticResource CardBackgroundDark}}" />
         <Setter Property="Shadow.Offset" Value="10,10" />
         <Setter Property="Shadow.Opacity" Value=".8" />
         <Setter Property="StrokeThickness" Value="2" />

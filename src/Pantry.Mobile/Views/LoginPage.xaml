@@ -11,7 +11,6 @@
     ios:Page.UseSafeArea="true"
     x:DataType="vm:LoginViewModel"
     Shell.NavBarIsVisible="False">
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
@@ -50,17 +49,17 @@
                 Text="{Binding ErrorMessage}" />
             <Button
                 x:Name="LoginBtn"
-                BackgroundColor="{x:StaticResource Secondary}"
                 Command="{Binding LoginCommand}"
                 HorizontalOptions="FillAndExpand"
                 SemanticProperties.Hint="Login"
+                Style="{StaticResource PrimaryButton}"
                 Text="Log in" />
             <Button
                 x:Name="SignupBtn"
-                BackgroundColor="{x:StaticResource Secondary}"
                 Command="{Binding SignupCommand}"
                 HorizontalOptions="FillAndExpand"
                 SemanticProperties.Hint="Signup"
+                Style="{StaticResource SecondaryButton}"
                 Text="Sign up" />
         </VerticalStackLayout>
     </Grid>

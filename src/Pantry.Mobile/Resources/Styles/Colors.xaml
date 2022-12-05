@@ -13,10 +13,12 @@
     <Color x:Key="CardBackground">White</Color>
     <Color x:Key="CardBackgroundDark">#1C1C1E</Color>
 
+    <Color x:Key="Coral">#f79489</Color>
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+
+    <Color x:Key="Primary">#6FBF72</Color>
+    <Color x:Key="Secondary">#d8ebdb</Color>
+    <Color x:Key="Tertiary">#459C49</Color>
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>

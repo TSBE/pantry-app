@@ -26,7 +26,17 @@
             VerticalOptions="StartAndExpand">
             <CollectionView.EmptyView>
                 <VerticalStackLayout Padding="12">
-                    <Label HorizontalOptions="Center" Text="No articles" />
+                    <Image
+                        Margin="0,10,0,20"
+                        Aspect="AspectFit"
+                        HorizontalOptions="Center"
+                        MaximumHeightRequest="150"
+                        MinimumHeightRequest="80"
+                        Source="assortment" />
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{x:StaticResource LabelMedium}"
+                        Text="No articles" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
             <CollectionView.GroupHeaderTemplate>
@@ -69,6 +79,7 @@
                             Command="{Binding OpenScannerCommand}"
                             HorizontalOptions="Center"
                             SemanticProperties.Hint="open scanner"
+                            Style="{StaticResource PrimaryButton}"
                             Text="Open scanner" />
                     </VerticalStackLayout>
                 </DataTemplate>

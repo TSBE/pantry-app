@@ -51,6 +51,7 @@
                     Command="{Binding CreateAccountCommand}"
                     HorizontalOptions="FillAndExpand"
                     SemanticProperties.Hint="Create account"
+                    Style="{StaticResource PrimaryButton}"
                     Text="Create account" />
             </VerticalStackLayout>
         </Grid>

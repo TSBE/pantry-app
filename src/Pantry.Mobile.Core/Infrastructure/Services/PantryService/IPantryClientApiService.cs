@@ -6,8 +6,7 @@ namespace Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 
 [Headers("Accept: application/json; charset=utf-8",
 "Accept-Encoding: gzip, deflate",
-"cache-control: no-cache",
-"Authorization: Bearer")]
+"cache-control: no-cache")]
 public interface IPantryClientApiService
 {
     /// <summary>

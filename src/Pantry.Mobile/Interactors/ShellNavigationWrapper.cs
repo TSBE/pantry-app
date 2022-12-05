@@ -30,7 +30,7 @@ public class ShellNavigationWrapper : INavigationService
         }
 
         var loginCredentials = await _settingsService.GetCredentials();
-        if (loginCredentials is null || loginCredentials.HasError)
+        if (loginCredentials is null || loginCredentials.HasError || loginCredentials.IsExpired)
         {
             targetPage = $"//{PageConstants.LOGIN_PAGE}";
             return targetPage;
@@ -68,6 +68,10 @@ public class ShellNavigationWrapper : INavigationService
             return await _pantryClientApiService.GetAccountAsync();
         }
         catch (ValidationApiException)
+        {
+            return null;
+        }
+        catch (Exception ex)
         {
             return null;
         }

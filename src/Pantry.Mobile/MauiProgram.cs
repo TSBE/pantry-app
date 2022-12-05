@@ -82,6 +82,7 @@ public static class MauiProgram
 #if DEBUG
         builder.Services.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());
 #else
+        builder.Services.AddRefreshTokenDelegatingHandler();
         builder.Services.AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL);
 #endif
         return builder.Build();

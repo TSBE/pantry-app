@@ -1,4 +1,5 @@
 ﻿using Pantry.Mobile.Core.Infrastructure.Abstractions;
+using Pantry.Mobile.Core.Infrastructure.Auth0;
 using Refit;
 
 namespace Pantry.Mobile.Core.Infrastructure;
@@ -12,9 +13,23 @@ public static class ServiceCollectionExtensions
         {
             var settings = new RefitSettings
             {
-                AuthorizationHeaderValueGetter = async () => { var credential = await sp.GetRequiredService<ISettingsService>().GetCredentials(); return credential.AccessToken; }
+                HttpMessageHandlerFactory = () => sp.GetRequiredService<RefreshTokenDelegatingHandler>(),
+                //AuthorizationHeaderValueGetter = async () => { var credential = await sp.GetRequiredService<ISettingsService>().GetCredentials(); return credential.AccessToken; }
             };
             return RestService.For<T>(baseUrl, settings);
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddRefreshTokenDelegatingHandler(this IServiceCollection services)
+    {
+        services.AddSingleton(sp =>
+        {
+            var client = sp.GetRequiredService<Auth0Client>();
+            var settingsService = sp.GetRequiredService<ISettingsService>();
+            var handler = new RefreshTokenDelegatingHandler(client, settingsService);
+            return handler;
         });
 
         return services;

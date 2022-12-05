@@ -27,12 +27,13 @@
                 VerticalOptions="StartAndExpand">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Padding="12">
-                        <Image HorizontalOptions="Center"
-                                Margin="0,10,0,20"
-                                Aspect="AspectFit"
-                                MaximumHeightRequest="150"
-                                MinimumHeightRequest="80"
-                                Source="location" />
+                        <Image
+                            Margin="0,10,0,20"
+                            Aspect="AspectFit"
+                            HorizontalOptions="Center"
+                            MaximumHeightRequest="150"
+                            MinimumHeightRequest="80"
+                            Source="location" />
                         <Label
                             HorizontalOptions="Center"
                             Style="{x:StaticResource LabelMedium}"

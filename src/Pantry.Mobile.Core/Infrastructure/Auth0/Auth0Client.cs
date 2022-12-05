@@ -57,11 +57,11 @@ public class Auth0Client
         }
     }
 
-    public async Task<Credentials> RefreshToken(string refreshToken)
+    public async Task<Credentials> RefreshToken(string refreshToken, CancellationToken cancellationToken)
     {
         try
         {
-            var refreshTokenResult = await oidcClient.RefreshTokenAsync(refreshToken);
+            var refreshTokenResult = await oidcClient.RefreshTokenAsync(refreshToken, cancellationToken: cancellationToken);
             return refreshTokenResult.ToCredentials();
         }
         catch (Exception ex)

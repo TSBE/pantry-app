@@ -98,6 +98,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                 }
             }
         });
+        //return Task.FromResult<ArticleListResponse>(null);
     }
 
     public Task<DeviceListResponse> GetAllDevicesAsync()
@@ -118,6 +119,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                }
             }
         });
+        //return Task.FromResult<StorageLocationListResponse>(null);
     }
 
     public Task<ArticleResponse> GetArticleByIdAsync(long articleId)
@@ -137,7 +139,19 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<InvitationListResponse> GetInvitationAsync(CancellationToken? ct = null)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new InvitationListResponse
+        {
+            Invitations = new List<InvitationResponse>
+            {
+               new InvitationResponse
+               {
+                   CreatorName = "Dummy Creator",
+                   FriendsCode = Guid.NewGuid(),
+                   HouseholdName ="Dummy Household",
+                   ValidUntilDate = DateTime.UtcNow.AddDays(1)
+               }
+            }
+        });
     }
 
     public Task<StorageLocationResponse> GetStorageLocationByIdAsync(long storageLocationId)

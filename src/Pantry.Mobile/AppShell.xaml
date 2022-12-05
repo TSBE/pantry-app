@@ -4,8 +4,12 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Pantry.Mobile"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:view="clr-namespace:Pantry.Mobile.Views"
     Shell.FlyoutBehavior="Disabled">
+    <Page.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Green}" StatusBarStyle="LightContent" />
+    </Page.Behaviors>
 
     <ShellItem Route="OnboardingPage">
         <ShellContent ContentTemplate="{DataTemplate view:OnboardingPage}" SemanticProperties.Description="Onboarding page" />

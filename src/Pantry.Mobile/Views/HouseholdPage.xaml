@@ -96,6 +96,7 @@
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=DeclineInvitationCommand}"
                                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                                 HorizontalOptions="Fill"
+                                                Style="{StaticResource DeclineButton}"
                                                 Text="Decline"
                                                 VerticalOptions="FillAndExpand" />
                                             <Button
@@ -104,6 +105,7 @@
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=AcceptInvitationCommand}"
                                                 CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                                 HorizontalOptions="Fill"
+                                                Style="{StaticResource AcceptButton}"
                                                 Text="Accept"
                                                 VerticalOptions="FillAndExpand" />
                                         </Grid>
@@ -127,16 +129,19 @@
                 HorizontalOptions="FillAndExpand"
                 IsVisible="{Binding IsCreateVisible}"
                 SemanticProperties.Hint="Create household"
+                Style="{StaticResource PrimaryButton}"
                 Text="Create" />
             <Button
                 Command="{Binding ToggleCreateCommand}"
                 HorizontalOptions="FillAndExpand"
                 IsVisible="{Binding IsJoinVisible, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource SecondaryButton}"
                 Text="{Binding ToggleCreateText}" />
             <Button
                 Command="{Binding ToggleJoinCommand}"
                 HorizontalOptions="FillAndExpand"
                 IsVisible="{Binding IsCreateVisible, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource SecondaryButton}"
                 Text="{Binding ToggleJoinText}" />
         </VerticalStackLayout>
     </Grid>

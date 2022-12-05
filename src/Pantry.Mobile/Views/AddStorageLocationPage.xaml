@@ -55,6 +55,7 @@
                 Command="{Binding SaveCommand}"
                 HorizontalOptions="FillAndExpand"
                 IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource PrimaryButton}"
                 Text="Save" />
         </VerticalStackLayout>
     </ScrollView>

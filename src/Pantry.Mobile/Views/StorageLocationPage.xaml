@@ -27,7 +27,16 @@
                 VerticalOptions="StartAndExpand">
                 <CollectionView.EmptyView>
                     <VerticalStackLayout Padding="12">
-                        <Label HorizontalOptions="Center" Text="No storage locations" />
+                        <Image HorizontalOptions="Center"
+                                Margin="0,10,0,20"
+                                Aspect="AspectFit"
+                                MaximumHeightRequest="150"
+                                MinimumHeightRequest="80"
+                                Source="location" />
+                        <Label
+                            HorizontalOptions="Center"
+                            Style="{x:StaticResource LabelMedium}"
+                            Text="No storage locations" />
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>

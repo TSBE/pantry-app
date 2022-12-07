@@ -116,7 +116,7 @@ namespace Pantry.Mobile.Core.ViewModels
 
                 await _pantryClientApiService.CreateHouseholdAsync(new HouseholdRequest { Name = Name, SubscriptionType = SubscriptionType.FREE });
 
-                var nextPage = await _navigation.GetNextStartupPage();
+                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
                 await _navigation.GoToAsync(nextPage, false);
             }
             catch (Exception ex)
@@ -133,7 +133,7 @@ namespace Pantry.Mobile.Core.ViewModels
                 await _pantryClientApiService.AcceptInvitationAsync(model.FriendsCode);
 
                 pollingCancellation.Cancel();
-                var nextPage = await _navigation.GetNextStartupPage();
+                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
                 await _navigation.GoToAsync(nextPage, false);
             }
             catch (Exception ex)

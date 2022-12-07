@@ -178,4 +178,11 @@ public interface IPantryClientApiService
     /// <returns>no content.</returns>
     [Delete("/articles/{articleId}")]
     public Task<HttpResponseMessage> DeleteArticleAsync(long articleId);
+
+    /// <summary>
+    ///  Get metadata.
+    /// </summary>
+    /// <returns>metadata.</returns>
+    [Delete("/metadatas/{barcode}")]
+    public Task<MetadataResponse> GetMetadataByGtinAsync(string barcode);
 }

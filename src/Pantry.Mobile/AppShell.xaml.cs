@@ -15,8 +15,6 @@ public partial class AppShell : Shell
     {
         Routing.RegisterRoute(PageConstants.SCANNER_PAGE, typeof(ScannerPage));
         Routing.RegisterRoute(PageConstants.ADD_STORAGE_LOCATION_PAGE, typeof(AddStorageLocationPage));
-
-        //Routing.RegisterRoute(PageConstants.CREATEACCOUNT_PAGE, typeof(CreateAccountPage));
-        //Routing.RegisterRoute(PageConstants.CREATEHOUSEHOLD_PAGE, typeof(HouseholdPage));
+        Routing.RegisterRoute(PageConstants.ADD_ARTICLE_PAGE, typeof(AddArticlePage));
     }
 }

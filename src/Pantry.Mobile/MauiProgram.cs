@@ -50,22 +50,23 @@ public static class MauiProgram
         builder.Services.AddSingleton<LoginPage>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<SettingsPage>();
-        builder.Services.AddSingleton<ScannerPage>();
         builder.Services.AddSingleton<CreateAccountPage>();
         builder.Services.AddSingleton<HouseholdPage>();
         builder.Services.AddSingleton<StorageLocationPage>();
+        builder.Services.AddTransient<ScannerPage>();
         builder.Services.AddTransient<AddStorageLocationPage>();
+        builder.Services.AddTransient<AddArticlePage>();
 
         // Register view models
         builder.Services.AddSingleton<OnboardingViewModel>();
         builder.Services.AddSingleton<LoginViewModel>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<SettingsViewModel>();
-        builder.Services.AddSingleton<ScannerViewModel>();
         builder.Services.AddSingleton<CreateAccountViewModel>();
         builder.Services.AddSingleton<HouseholdViewModel>();
         builder.Services.AddSingleton<StorageLocationViewModel>();
         builder.Services.AddTransient<AddStorageLocationViewModel>();
+        builder.Services.AddTransient<AddArticleViewModel>();
 
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()

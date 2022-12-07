@@ -2,7 +2,7 @@
 
 public interface INavigationService
 {
-    Task<string> GetNextStartupPage();
+    Task<string> GetNextStartupPage(CancellationToken cancellationToken);
 
     Task GoToAsync(ShellNavigationState state);
 

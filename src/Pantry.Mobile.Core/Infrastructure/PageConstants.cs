@@ -9,6 +9,6 @@ public class PageConstants
     public const string CREATEACCOUNT_PAGE = "CreateAccountPage";
     public const string CREATEHOUSEHOLD_PAGE = "HouseholdPage";
     public const string ADD_STORAGE_LOCATION_PAGE = "AddStorageLocationPage";
-
+    public const string ADD_ARTICLE_PAGE = "AddArticlePage";
     public const string SCANNER_PAGE = "ScannerPage";
 }

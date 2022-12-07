@@ -27,7 +27,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private async Task OpenScanner()
     {
-        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}");
+        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
     }
 
     public ObservableRangeCollection<Grouping<string, ArticleModel>> ArticleGroups { get; set; } = new();
@@ -50,7 +50,8 @@ public partial class MainViewModel : BaseViewModel
         if (article == null)
             return;
 
-        await _dialogService.ShowMessage($"Delete {article.Name}");
+        await _pantryClientApiService.DeleteArticleAsync(article.Id);
+        await Load();
     }
 
     [RelayCommand]
@@ -59,7 +60,7 @@ public partial class MainViewModel : BaseViewModel
         if (article == null)
             return;
 
-        await _dialogService.ShowMessage($"Tabbed {article.Name}");
+        await _navigation.GoToAsync($"{PageConstants.ADD_ARTICLE_PAGE}?Id={article.Id}");
     }
 
     [RelayCommand]
@@ -91,5 +92,12 @@ public partial class MainViewModel : BaseViewModel
         var groups = articles.GroupBy(x => x.StorageLocation.Name);
         ArticleGroups.Clear();
         ArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));
+    }
+
+
+    [RelayCommand]
+    public async Task Add()
+    {
+        await _navigation.GoToAsync($"{PageConstants.ADD_ARTICLE_PAGE}");
     }
 }

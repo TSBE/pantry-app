@@ -46,6 +46,6 @@ public partial class App : Application
 
     private async Task<string> InitAsync()
     {
-        return await _navigation.GetNextStartupPage();
+        return await _navigation.GetNextStartupPage(new CancellationToken());
     }
 }

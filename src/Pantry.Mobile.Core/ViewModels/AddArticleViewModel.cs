@@ -86,10 +86,15 @@ public partial class AddArticleViewModel : BaseViewModel
         }
     }
 
+    partial void OnBarcodeChanged(string value)
+    {
+        InitCommand?.Execute(value);
+    }
+
     private async Task LoadMetadata()
     {
         var metadataResponse = await _pantryClientApiService.GetMetadataByGtinAsync(Barcode);
-        Name = metadataResponse.Name;
-        Description = metadataResponse.Brands;
+        Name = metadataResponse?.Name ?? string.Empty;
+        Description = metadataResponse?.Brands ?? string.Empty;
     }
 }

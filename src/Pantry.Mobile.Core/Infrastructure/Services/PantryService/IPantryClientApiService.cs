@@ -183,6 +183,6 @@ public interface IPantryClientApiService
     ///  Get metadata.
     /// </summary>
     /// <returns>metadata.</returns>
-    [Delete("/metadatas/{barcode}")]
+    [Get("/metadatas/{barcode}")]
     public Task<MetadataResponse> GetMetadataByGtinAsync(string barcode);
 }

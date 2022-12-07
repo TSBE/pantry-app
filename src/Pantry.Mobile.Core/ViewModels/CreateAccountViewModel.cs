@@ -40,7 +40,7 @@ namespace Pantry.Mobile.Core.ViewModels
 
                 await _pantryClientApiService.CreateAccountAsync(new AccountRequest() { FirstName = FirstName, LastName = LastName });
 
-                var nextPage = await _navigation.GetNextStartupPage();
+                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
                 await _navigation.GoToAsync(nextPage, false);
             }
             catch (Exception ex)

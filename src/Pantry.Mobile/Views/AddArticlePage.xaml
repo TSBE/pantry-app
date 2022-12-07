@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.AddArticlePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Add article"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:AddArticleViewModel"
+    Shell.PresentationMode="ModalAnimated"
+    Shell.TabBarIsVisible="False">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="0,20" VerticalOptions="FillAndExpand">
+            <Image
+                Margin="0,30"
+                HeightRequest="150"
+                Source="assortment" />
+            <Label Style="{StaticResource LabelMedium}" Text="Name:" />
+            <Entry
+                toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference DescriptionEntry}"
+                ReturnType="Next"
+                Text="{Binding Name}" />
+            <Label Style="{StaticResource LabelMedium}" Text="Description:" />
+            <Entry
+                x:Name="DescriptionEntry"
+                ReturnCommand="{Binding SaveCommand}"
+                ReturnType="Done"
+                Text="{Binding Description}" />
+            <ScrollView Grid.Row="4" />
+
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+
+            <Label
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                Style="{StaticResource LabelErrorMessage}"
+                Text="{Binding ErrorMessage}" />
+
+            <Button
+                x:Name="SaveBtn"
+                Margin="0,20"
+                Padding="20,0"
+                Command="{Binding SaveCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource PrimaryButton}"
+                Text="Save" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

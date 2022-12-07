@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
 
@@ -18,7 +19,15 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<ArticleResponse> CreateArticleAsync([Body] ArticleRequest articleRequest)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new ArticleResponse
+        {
+            Name = articleRequest.Name,
+            BestBeforeDate = articleRequest.BestBeforeDate,
+            StorageLocation = new StorageLocationResponse
+            {
+                Name = "Dummy Location"
+            }
+        });
     }
 
     public Task<DeviceResponse> CreateDeviceAsync([Body] DeviceRequest deviceRequest)
@@ -89,11 +98,29 @@ public class DummyPantryClientApiService : IPantryClientApiService
             {
                 new ArticleResponse
                 {
-                    Name = "Dummy Article",
+                    Name = "Dummy Article 1",
                     BestBeforeDate = DateTime.UtcNow,
                     StorageLocation = new StorageLocationResponse
                     {
                         Name = "Dummy Location"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Name = "Dummy Article 2",
+                    BestBeforeDate = DateTime.UtcNow,
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Dummy Location"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Name = "Dummy Article 3",
+                    BestBeforeDate = DateTime.UtcNow,
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Dummy Location 2"
                     }
                 }
             }
@@ -114,7 +141,12 @@ public class DummyPantryClientApiService : IPantryClientApiService
             {
                new StorageLocationResponse
                {
-                   Name = "Dummy Location",
+                   Name = "Dummy Location 1",
+                   Description="Dummy Description"
+               },
+                new StorageLocationResponse
+               {
+                   Name = "Dummy Location 2",
                    Description="Dummy Description"
                }
             }
@@ -154,6 +186,17 @@ public class DummyPantryClientApiService : IPantryClientApiService
         });
     }
 
+    public Task<MetadataResponse> GetMetadataByGtinAsync(string barcode)
+    {
+        return Task.FromResult(new MetadataResponse
+        {
+            Name = "Dummy",
+            GlobalTradeItemNumber = "5745000121045",
+            Brands = "True Gum",
+            ImageUrl = "https://images.openfoodfacts.org/images/products/574/500/012/1045/front_de.3.400.jpg"
+        });
+    }
+
     public Task<StorageLocationResponse> GetStorageLocationByIdAsync(long storageLocationId)
     {
         throw new NotImplementedException();
@@ -161,7 +204,16 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<ArticleResponse> UpdateArticleAsync([Body] ArticleRequest articleRequest, long articleId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new ArticleResponse
+        {
+            Id = articleId,
+            Name = articleRequest.Name,
+            BestBeforeDate = articleRequest.BestBeforeDate,
+            StorageLocation = new StorageLocationResponse
+            {
+                Name = "Dummy Location"
+            }
+        });
     }
 
     public Task<DeviceResponse> UpdateDeviceAsync([Body] DeviceUpdateRequest deviceUpdateRequest, Guid installationId)

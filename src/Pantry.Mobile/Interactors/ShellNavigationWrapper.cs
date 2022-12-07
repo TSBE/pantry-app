@@ -1,5 +1,8 @@
-﻿using Pantry.Mobile.Core.Infrastructure;
+﻿using IdentityModel.OidcClient;
+using System.Threading;
+using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
+using Pantry.Mobile.Core.Infrastructure.Auth0;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
@@ -12,13 +15,16 @@ public class ShellNavigationWrapper : INavigationService
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    public ShellNavigationWrapper(ISettingsService settingsService, IPantryClientApiService pantryClientApiService)
+    private readonly Auth0Client _auth0Client;
+
+
+    public ShellNavigationWrapper(ISettingsService settingsService, IPantryClientApiService pantryClientApiService, Auth0Client auth0Client)
     {
         _settingsService = settingsService;
         _pantryClientApiService = pantryClientApiService;
+        _auth0Client = auth0Client;
     }
-
-    public async Task<string> GetNextStartupPage()
+    public async Task<string> GetNextStartupPage(CancellationToken cancellationToken)
     {
         var targetPage = $"//{PageConstants.TABBAR_PAGE}";
 
@@ -30,6 +36,12 @@ public class ShellNavigationWrapper : INavigationService
         }
 
         var loginCredentials = await _settingsService.GetCredentials();
+        if (loginCredentials is not null && loginCredentials.IsExpired && !loginCredentials.HasError)
+        {
+            loginCredentials = await _auth0Client.RefreshToken(loginCredentials.RefreshToken, cancellationToken);
+            await _settingsService.SetCredentials(loginCredentials);
+        }
+
         if (loginCredentials is null || loginCredentials.HasError || loginCredentials.IsExpired)
         {
             targetPage = $"//{PageConstants.LOGIN_PAGE}";

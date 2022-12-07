@@ -42,7 +42,8 @@ public partial class StorageLocationViewModel : BaseViewModel
         if (locationModel == null)
             return;
 
-        await _dialogService.ShowMessage($"Delete {locationModel.Name}");
+        await _pantryClientApiService.DeleteStorageLocationAsync(locationModel.Id);
+        await Load();
     }
 
     [RelayCommand]

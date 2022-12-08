@@ -68,12 +68,8 @@
         </RefreshView>
         <ImageButton
             Grid.Row="0"
-            Margin="0,0,10,0"
             Command="{Binding AddCommand}"
-            HorizontalOptions="End"
-            Source="add"
-            Style="{StaticResource RoundImageButton}"
-            VerticalOptions="End">
+            Style="{StaticResource AddFloatingImageButton}">
             <ImageButton.Behaviors>
                 <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}" />
             </ImageButton.Behaviors>

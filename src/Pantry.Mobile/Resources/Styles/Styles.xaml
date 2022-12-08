@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="Red" />
+    </Style>
+
     <Style x:Key="PrimaryButton" TargetType="Button">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Green}, Dark={StaticResource Green}}" />
@@ -58,6 +62,29 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style
+        x:Key="FloatingImageButton"
+        BasedOn="{StaticResource RoundImageButton}"
+        TargetType="ImageButton">
+        <Setter Property="Margin" Value="0,0,10,0" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="End" />
+    </Style>
+
+    <Style
+        x:Key="AddFloatingImageButton"
+        BasedOn="{StaticResource FloatingImageButton}"
+        TargetType="ImageButton">
+        <Setter Property="Source" Value="add" />
+    </Style>
+
+    <Style
+        x:Key="ScanFloatingImageButton"
+        BasedOn="{StaticResource FloatingImageButton}"
+        TargetType="ImageButton">
+        <Setter Property="Source" Value="barcode_scan" />
     </Style>
 
     <Style x:Key="BaseRefreshView" TargetType="RefreshView">

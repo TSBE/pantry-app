@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
+using Pantry.Mobile.Core.Infrastructure.Extensions;
 using Pantry.Mobile.Core.Infrastructure.Helpers;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Models;
@@ -45,6 +47,12 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    public async Task PerformSearch(string query)
+    {
+        await Task.CompletedTask;
+    }
+
+    [RelayCommand]
     public async Task Delete(ArticleModel article)
     {
         if (article == null)
@@ -80,16 +88,8 @@ public partial class MainViewModel : BaseViewModel
     public async Task Load()
     {
         var articleListResponse = await _pantryClientApiService.GetAllArticlesAsync();
-        var articles = (from item in articleListResponse?.Articles
-                        select new ArticleModel
-                        {
-                            BestBeforeDate = item.BestBeforeDate,
-                            GlobalTradeItemNumber = item.GlobalTradeItemNumber,
-                            Name = item.Name,
-                            StorageLocation = new StorageLocationModel { Id = item.StorageLocation.Id, Name = item.StorageLocation.Name, Description = item.StorageLocation.Description }
-                        })
-                        .ToList();
-        var groups = articles.GroupBy(x => x.StorageLocation.Name);
+        var articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
+        var groups = articles.GroupBy(x => x.StorageLocation?.Name);
         ArticleGroups.Clear();
         ArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));
     }
@@ -98,6 +98,6 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     public async Task Add()
     {
-        await _navigation.GoToAsync($"{PageConstants.ADD_ARTICLE_PAGE}");
+        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
     }
 }

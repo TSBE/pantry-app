@@ -10,7 +10,6 @@
     Title="Add article"
     ios:Page.UseSafeArea="true"
     x:DataType="vm:AddArticleViewModel"
-    Shell.PresentationMode="ModalAnimated"
     Shell.TabBarIsVisible="False">
     <!--<ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
@@ -26,19 +25,62 @@
             <Image
                 Margin="0,30"
                 HeightRequest="150"
-                Source="assortment" />
+                Source="{Binding ArticleModel.ImageUrl, TargetNullValue='groceries'}" />
             <Label Style="{StaticResource LabelMedium}" Text="Name:" />
             <Entry
-                toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference DescriptionEntry}"
+                toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference QuantityEntry}"
                 ReturnType="Next"
-                Text="{Binding Name}" />
-            <Label Style="{StaticResource LabelMedium}" Text="Description:" />
+                Text="{Binding ArticleModel.Name}">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior
+                        Flags="ValidateOnValueChanged"
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        MaximumLength="100"
+                        MinimumLength="2" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Style="{StaticResource LabelMedium}" Text="Quantity:" />
             <Entry
-                x:Name="DescriptionEntry"
-                ReturnCommand="{Binding SaveCommand}"
-                ReturnType="Done"
-                Text="{Binding Description}" />
-            <ScrollView Grid.Row="4" />
+                x:Name="QuantityEntry"
+                toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference ContentEntry}"
+                Keyboard="Numeric"
+                ReturnType="Next"
+                Text="{Binding ArticleModel.Quantity}">
+                <Entry.Behaviors>
+                    <toolkit:NumericValidationBehavior
+                        Flags="ValidateOnValueChanged"
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        MaximumDecimalPlaces="0"
+                        MaximumValue="100"
+                        MinimumValue="1" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Style="{StaticResource LabelMedium}" Text="Content:" />
+            <Entry
+                x:Name="ContentEntry"
+                toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference StorageLocationPicker}"
+                ReturnType="Next"
+                Text="{Binding ArticleModel.Content}">
+                <Entry.Behaviors>
+                    <toolkit:TextValidationBehavior
+                        Flags="ValidateOnValueChanged"
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        MaximumLength="100"
+                        MinimumLength="0" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Style="{StaticResource LabelMedium}" Text="Storage Location:" />
+            <Picker
+                x:Name="StorageLocationPicker"
+                Title="Select a location"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding StorageLocations}"
+                SelectedIndex="{Binding SelectedStorageLocationIndex}"
+                SelectedItem="{Binding ArticleModel.StorageLocation, Mode=TwoWay}" />
+            <Label Style="{StaticResource LabelMedium}" Text="Best before date:" />
+            <DatePicker x:Name="BestBeforeDate" Date="{Binding ArticleModel.BestBeforeDate}" />
+
+            <ScrollView />
 
             <ActivityIndicator
                 HorizontalOptions="Center"

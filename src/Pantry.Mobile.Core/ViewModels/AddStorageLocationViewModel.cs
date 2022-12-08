@@ -15,15 +15,12 @@ public partial class AddStorageLocationViewModel : BaseViewModel
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    private readonly IDialogService _dialogService;
-
     private readonly IKeyboardHelper? _keyboardHelper;
 
-    public AddStorageLocationViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IDialogService dialogService, IKeyboardHelper keyboardHelper)
+    public AddStorageLocationViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IKeyboardHelper keyboardHelper)
     {
         _navigation = navigation;
         _pantryClientApiService = pantryClientApiService;
-        _dialogService = dialogService;
         _keyboardHelper = keyboardHelper;
     }
 

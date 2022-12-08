@@ -1,4 +1,5 @@
 ﻿using Pantry.Mobile.Core.Infrastructure.Abstractions;
+using Pantry.Mobile.Core.Infrastructure.Helpers;
 using ZXing.Net.Maui;
 
 namespace Pantry.Mobile.Views;
@@ -25,20 +26,28 @@ public partial class ScannerPage : ContentPage
 
     protected void BarcodesDetected(object sender, BarcodeDetectionEventArgs e)
     {
-        foreach (var barcode in e.Results)
+        var barcode = e.Results.FirstOrDefault();
+
+        if (!GtinChecker.IsValidEAN13(barcode?.Value ?? string.Empty) && barcode?.Format == BarcodeFormat.Ean13)
         {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                if (string.IsNullOrEmpty(BackTargetPage))
-                {
-                    await _navigationService.GoToAsync($"..?Barcode={barcode.Value}");
-                }
-                else
-                {
-                    await _navigationService.GoToAsync($"../{BackTargetPage}?Barcode={barcode.Value}");
-                }
-            });
-            break;
+            return;
         }
+
+        if (!Guid.TryParse(barcode?.Value, out _) && barcode?.Format == BarcodeFormat.QrCode)
+        {
+            return;
+        }
+
+        MainThread.BeginInvokeOnMainThread(async () =>
+        {
+            if (string.IsNullOrEmpty(BackTargetPage))
+            {
+                await _navigationService.GoToAsync($"..?Barcode={barcode?.Value}");
+            }
+            else
+            {
+                await _navigationService.GoToAsync($"../{BackTargetPage}?Barcode={barcode?.Value}");
+            }
+        });
     }
 }

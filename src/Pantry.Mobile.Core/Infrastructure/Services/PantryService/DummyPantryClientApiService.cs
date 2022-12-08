@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography.X509Certificates;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
 
@@ -98,6 +97,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
             {
                 new ArticleResponse
                 {
+                    Id = 1,
                     Name = "Dummy Article 1",
                     BestBeforeDate = DateTime.UtcNow,
                     StorageLocation = new StorageLocationResponse
@@ -107,6 +107,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                 },
                 new ArticleResponse
                 {
+                    Id = 2,
                     Name = "Dummy Article 2",
                     BestBeforeDate = DateTime.UtcNow,
                     StorageLocation = new StorageLocationResponse
@@ -116,6 +117,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                 },
                 new ArticleResponse
                 {
+                    Id = 3,
                     Name = "Dummy Article 3",
                     BestBeforeDate = DateTime.UtcNow,
                     StorageLocation = new StorageLocationResponse
@@ -141,11 +143,13 @@ public class DummyPantryClientApiService : IPantryClientApiService
             {
                new StorageLocationResponse
                {
+                   Id = 1,
                    Name = "Dummy Location 1",
                    Description="Dummy Description"
                },
                 new StorageLocationResponse
                {
+                    Id = 2,
                    Name = "Dummy Location 2",
                    Description="Dummy Description"
                }
@@ -156,7 +160,21 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<ArticleResponse> GetArticleByIdAsync(long articleId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(
+            new ArticleResponse
+            {
+                Id = articleId,
+                GlobalTradeItemNumber = "5745000121045",
+                Name = $"Dummy Article {articleId}",
+                BestBeforeDate = DateTime.UtcNow,
+                Quantity = 1,
+                StorageLocation = new StorageLocationResponse
+                {
+                    Id = 2,
+                    Name = "Dummy Location 2",
+                    Description = "Dummy Description"
+                }
+            });
     }
 
     public Task<DeviceResponse> GetDeviceByIdAsync(Guid installationId)
@@ -190,7 +208,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
     {
         return Task.FromResult(new MetadataResponse
         {
-            Name = "Dummy",
+            Name = "Zitrone",
             GlobalTradeItemNumber = "5745000121045",
             Brands = "True Gum",
             ImageUrl = "https://images.openfoodfacts.org/images/products/574/500/012/1045/front_de.3.400.jpg"

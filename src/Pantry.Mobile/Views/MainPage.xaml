@@ -75,14 +75,10 @@
                 <CollectionView.HeaderTemplate>
                     <DataTemplate>
                         <VerticalStackLayout>
-                            <Button
-                                x:Name="OpenScannerBtn"
-                                Margin="0,20"
-                                Command="{Binding OpenScannerCommand}"
-                                HorizontalOptions="Center"
-                                SemanticProperties.Hint="open scanner"
-                                Style="{StaticResource PrimaryButton}"
-                                Text="Open scanner" />
+                            <SearchBar
+                                x:Name="searchBar"
+                                SearchCommand="{Binding PerformSearchCommand}"
+                                SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.HeaderTemplate>
@@ -90,12 +86,8 @@
         </RefreshView>
         <ImageButton
             Grid.Row="0"
-            Margin="0,0,10,0"
             Command="{Binding AddCommand}"
-            HorizontalOptions="End"
-            Source="add"
-            Style="{StaticResource RoundImageButton}"
-            VerticalOptions="End">
+            Style="{StaticResource ScanFloatingImageButton}">
             <ImageButton.Behaviors>
                 <toolkit:IconTintColorBehavior TintColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource White}}" />
             </ImageButton.Behaviors>

@@ -9,7 +9,7 @@
         <HorizontalStackLayout Margin="0,15" Spacing="5">
             <Image
                 Margin="5,0"
-                Source="{Binding Image}"
+                Source="{Binding ImageUrl}"
                 WidthRequest="66" />
             <VerticalStackLayout VerticalOptions="Center">
                 <Label

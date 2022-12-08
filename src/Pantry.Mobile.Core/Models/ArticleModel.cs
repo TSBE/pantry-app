@@ -1,31 +1,62 @@
-﻿namespace Pantry.Mobile.Core.Models;
+﻿using System.Security.Cryptography.X509Certificates;
+using CommunityToolkit.Mvvm.ComponentModel;
+using IdentityModel.OidcClient;
+using Pantry.Mobile.Core.Infrastructure.Auth0;
+using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Enums;
 
-public class ArticleModel
+namespace Pantry.Mobile.Core.Models;
+
+[INotifyPropertyChanged]
+public partial class ArticleModel
 {
     /// <summary>
     /// Represents the database internal id.
     /// </summary>
-    public long Id { get; set; }
+    [ObservableProperty]
+    public long id;
 
     /// <summary>
     /// Storage location id.
     /// </summary>
-    public StorageLocationModel StorageLocation { get; set; }
+    [ObservableProperty]
+    public StorageLocationModel? storageLocation;
 
     /// <summary>
     /// The Global Trade Item Number (GTIN) a.k.a. (EAN) of the article.
     /// </summary>
-    public string? GlobalTradeItemNumber { get; set; }
+    [ObservableProperty]
+    public string? globalTradeItemNumber;
 
     /// <summary>
     /// The name of the article.
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    [ObservableProperty]
+    public string name = string.Empty;
 
     /// <summary>
     /// The best before date.
     /// </summary>
-    public DateTime BestBeforeDate { get; set; }
+    [ObservableProperty]
+    public DateTime bestBeforeDate = DateTime.UtcNow.Date;
 
-    public string Image { get; set; } = string.Empty;
+    /// <summary>
+    /// The quantity article.
+    /// </summary>
+    [ObservableProperty]
+    public int quantity = 1;
+
+    /// <summary>
+    /// The content of the article.
+    /// </summary>
+    [ObservableProperty]
+    public string? content;
+
+    /// <summary>
+    /// The content type of the article.
+    /// </summary>
+    [ObservableProperty]
+    public ContentType contentType = ContentType.UNKNOWN;
+
+    [ObservableProperty]
+    public string? imageUrl;
 }

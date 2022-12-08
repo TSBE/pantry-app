@@ -1,19 +1,25 @@
-﻿namespace Pantry.Mobile.Core.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public class StorageLocationModel
+namespace Pantry.Mobile.Core.Models;
+
+[INotifyPropertyChanged]
+public partial class StorageLocationModel
 {
     /// <summary>
     /// Represents the database internal id.
     /// </summary>
-    public long Id { get; set; }
+    [ObservableProperty]
+    public long id;
 
     /// <summary>
     /// The name of the location.
     /// </summary>
-    public string Name { get; set; } = string.Empty;
+    [ObservableProperty]
+    public string name = string.Empty;
 
     /// <summary>
     /// The description.
     /// </summary>
-    public string Description { get; set; } = string.Empty;
+    [ObservableProperty]
+    public string description = string.Empty;
 }

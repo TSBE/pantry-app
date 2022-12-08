@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
+using Pantry.Mobile.Core.Infrastructure.Extensions;
 using Pantry.Mobile.Core.Infrastructure.Helpers;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Models;
@@ -72,14 +73,7 @@ public partial class StorageLocationViewModel : BaseViewModel
     public async Task Load()
     {
         var storageLocationList = await _pantryClientApiService.GetAllStorageLocationsAsync();
-        var storageLocations = (from item in storageLocationList?.StorageLocations
-                                select new StorageLocationModel
-                                {
-                                    Id = item.Id,
-                                    Name = item.Name,
-                                    Description = item.Description
-                                })
-                        .ToList();
+        var storageLocations = (from item in storageLocationList?.StorageLocations select item.ToStorageLocationModel()).ToList();
         StorageLocations.Clear();
         StorageLocations.AddRange(storageLocations);
     }

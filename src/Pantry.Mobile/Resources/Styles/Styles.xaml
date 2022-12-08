@@ -33,7 +33,7 @@
         <Setter Property="Padding" Value="10" />
         <Setter Property="BorderColor" Value="Transparent" />
         <Setter Property="BorderWidth" Value="0" />
-        <Setter Property="CornerRadius" Value="30" />
+        <Setter Property="CornerRadius" Value="{OnPlatform iOS=40, Android=30}" />
         <Setter Property="HeightRequest" Value="80" />
         <Setter Property="WidthRequest" Value="80" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -68,7 +68,7 @@
         x:Key="FloatingImageButton"
         BasedOn="{StaticResource RoundImageButton}"
         TargetType="ImageButton">
-        <Setter Property="Margin" Value="0,0,10,0" />
+        <Setter Property="Margin" Value="0,0,10,10" />
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="VerticalOptions" Value="End" />
     </Style>
@@ -99,28 +99,28 @@
         x:Key="LabelMicro"
         BasedOn="{StaticResource BaseLabel}"
         TargetType="Label">
-        <Setter Property="FontSize" Value="Micro" />
+        <Setter Property="FontSize" Value="{OnPlatform iOS=15, Android=Micro}" />
     </Style>
 
     <Style
         x:Key="LabelSmall"
         BasedOn="{StaticResource BaseLabel}"
         TargetType="Label">
-        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="FontSize" Value="{OnPlatform iOS=20, Android=Small}" />
     </Style>
 
     <Style
         x:Key="LabelMedium"
         BasedOn="{StaticResource BaseLabel}"
         TargetType="Label">
-        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontSize" Value="{OnPlatform iOS=25, Android=Medium}" />
     </Style>
 
     <Style
         x:Key="LabelLarge"
         BasedOn="{StaticResource BaseLabel}"
         TargetType="Label">
-        <Setter Property="FontSize" Value="Large" />
+        <Setter Property="FontSize" Value="{OnPlatform iOS=30, Android=Large}" />
     </Style>
 
     <Style
@@ -144,7 +144,7 @@
         <Setter Property="Shadow.Offset" Value="10,10" />
         <Setter Property="Shadow.Opacity" Value=".8" />
         <Setter Property="StrokeThickness" Value="2" />
-        <Setter Property="StrokeShape" Value="RoundRectangle 10 20" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource CardBackgroundDark}, Light={StaticResource CardBackground}}" />
     </Style>
 

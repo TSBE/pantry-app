@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="Pantry.Mobile.Views.AddStorageLocationPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -10,7 +10,7 @@
     Title="Add storage location"
     ios:Page.UseSafeArea="true"
     x:DataType="vm:AddStorageLocationViewModel"
-    Shell.PresentationMode="ModalAnimated"
+    Shell.PresentationMode="Animated"
     Shell.TabBarIsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,14 +18,14 @@
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView>
+   <ScrollView>
         <VerticalStackLayout Padding="0,20" VerticalOptions="FillAndExpand">
             <Image
                 Margin="0,30"
                 HeightRequest="150"
                 Source="location" />
             <Label Style="{StaticResource LabelMedium}" Text="Name:" />
-            <Entry
+             <Entry
                 toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference DescriptionEntry}"
                 ReturnType="Next"
                 Text="{Binding Name}" />
@@ -35,7 +35,7 @@
                 ReturnCommand="{Binding SaveCommand}"
                 ReturnType="Done"
                 Text="{Binding Description}" />
-            <ScrollView Grid.Row="4" />
+            <!--<ScrollView />-->
 
             <ActivityIndicator
                 HorizontalOptions="Center"

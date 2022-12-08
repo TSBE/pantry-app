@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="Pantry.Mobile.Views.ScannerPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -9,8 +9,8 @@
     xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
     Title="Scanner"
     ios:Page.UseSafeArea="true"
-    x:DataType="vm:ScannerViewModel"
-    Shell.PresentationMode="ModalAnimated">
+    Shell.PresentationMode="Animated"
+    Shell.TabBarIsVisible="False">
 
     <zxing:CameraBarcodeReaderView
         x:Name="cameraBarcodeReaderView"

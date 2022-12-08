@@ -11,6 +11,10 @@
         <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Green}" StatusBarStyle="LightContent" />
     </Page.Behaviors>
 
+    <ShellItem Route="LoadingPage">
+        <ShellContent ContentTemplate="{DataTemplate view:LoadingPage}" SemanticProperties.Description="Loading page" />
+    </ShellItem>
+
     <ShellItem Route="OnboardingPage">
         <ShellContent ContentTemplate="{DataTemplate view:OnboardingPage}" SemanticProperties.Description="Onboarding page" />
     </ShellItem>

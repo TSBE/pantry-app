@@ -17,7 +17,8 @@
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsBusy}"
             Style="{StaticResource BaseRefreshView}">
-            <CollectionView
+            <ContentView>
+                <CollectionView
                 BackgroundColor="Transparent"
                 IsGrouped="False"
                 ItemSizingStrategy="MeasureAllItems"
@@ -25,46 +26,47 @@
                 ItemsSource="{Binding StorageLocations}"
                 SelectionMode="None"
                 VerticalOptions="StartAndExpand">
-                <CollectionView.EmptyView>
-                    <VerticalStackLayout Padding="12">
-                        <Image
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="12">
+                            <Image
                             Margin="0,10,0,20"
                             Aspect="AspectFit"
                             HorizontalOptions="Center"
                             MaximumHeightRequest="150"
                             MinimumHeightRequest="80"
                             Source="location" />
-                        <Label
+                            <Label
                             HorizontalOptions="Center"
                             Style="{x:StaticResource LabelMedium}"
                             Text="No storage locations" />
-                    </VerticalStackLayout>
-                </CollectionView.EmptyView>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem
+                        </VerticalStackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem
                                         BackgroundColor="Red"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=DeleteCommand}"
                                         CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                         IsDestructive="True"
                                         Text="Delete" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <cells:StorageCard>
-                                <cells:StorageCard.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <cells:StorageCard Margin="0,5">
+                                    <cells:StorageCard.GestureRecognizers>
+                                        <TapGestureRecognizer
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=TapCommand}"
                                         CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                         NumberOfTapsRequired="1" />
-                                </cells:StorageCard.GestureRecognizers>
-                            </cells:StorageCard>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                    </cells:StorageCard.GestureRecognizers>
+                                </cells:StorageCard>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ContentView>
         </RefreshView>
         <ImageButton
             Grid.Row="0"

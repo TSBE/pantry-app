@@ -27,6 +27,7 @@ public interface IPantryClientApiService
     ///  Deletes the account for the logged in user.
     /// </summary>
     /// <returns>no content.</returns>
+    [Headers("Content-Type: application/json; charset=UTF-8")]
     [Delete("/accounts/me")]
     public Task<HttpResponseMessage> DeleteAccountAsync();
 
@@ -62,6 +63,7 @@ public interface IPantryClientApiService
     /// Delete device.
     /// </summary>
     /// <returns>no content.</returns>
+    [Headers("Content-Type: application/json; charset=UTF-8")]
     [Delete("/devices/{installationId}")]
     public Task<DeviceResponse> DeleteDeviceAsync(Guid installationId);
 
@@ -141,6 +143,7 @@ public interface IPantryClientApiService
     ///  Deletes storage location.
     /// </summary>
     /// <returns>no content.</returns>
+    [Headers("Content-Type: application/json; charset=UTF-8")]
     [Delete("/storage-locations/{storageLocationId}")]
     public Task<HttpResponseMessage> DeleteStorageLocationAsync(long storageLocationId);
 
@@ -176,6 +179,7 @@ public interface IPantryClientApiService
     ///  Deletes article.
     /// </summary>
     /// <returns>no content.</returns>
+    [Headers("Content-Type: application/json; charset=UTF-8")]
     [Delete("/articles/{articleId}")]
     public Task<HttpResponseMessage> DeleteArticleAsync(long articleId);
 

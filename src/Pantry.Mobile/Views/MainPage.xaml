@@ -17,72 +17,74 @@
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsBusy}"
             Style="{StaticResource BaseRefreshView}">
-            <CollectionView
+            <ContentView>
+                <CollectionView
                 BackgroundColor="Transparent"
+                IsGrouped="{OnPlatform iOS=False, Android=True}"
                 Header="{Binding .}"
-                IsGrouped="True"
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsLayout="VerticalList"
-                ItemsSource="{Binding ArticleGroups}"
+                ItemsSource="{OnPlatform iOS={Binding Articles}, Android={Binding ArticleGroups}}"
                 SelectionMode="None"
                 VerticalOptions="StartAndExpand">
-                <CollectionView.EmptyView>
-                    <VerticalStackLayout Padding="12">
-                        <Image
+                    <CollectionView.EmptyView>
+                        <VerticalStackLayout Padding="12">
+                            <Image
                             Margin="0,10,0,20"
                             Aspect="AspectFit"
                             HorizontalOptions="Center"
                             MaximumHeightRequest="150"
                             MinimumHeightRequest="80"
                             Source="assortment" />
-                        <Label
+                            <Label
                             HorizontalOptions="Center"
                             Style="{x:StaticResource LabelMedium}"
                             Text="No articles" />
-                    </VerticalStackLayout>
-                </CollectionView.EmptyView>
-                <CollectionView.GroupHeaderTemplate>
-                    <DataTemplate x:DataType="{x:Null}">
-                        <VerticalStackLayout Padding="12">
-                            <Label Style="{StaticResource LabelMedium}" Text="{Binding Key}" />
                         </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.GroupHeaderTemplate>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem
+                    </CollectionView.EmptyView>
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate x:DataType="{x:Null}">
+                            <VerticalStackLayout Padding="12">
+                                <Label Style="{StaticResource LabelMedium}" Text="{Binding Key}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem
                                         BackgroundColor="Red"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
                                         CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                         IsDestructive="True"
                                         Text="Delete" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <cells:ArticleCard>
-                                <cells:ArticleCard.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <cells:ArticleCard Margin="0,5">
+                                    <cells:ArticleCard.GestureRecognizers>
+                                        <TapGestureRecognizer
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"
                                         CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                         NumberOfTapsRequired="1" />
-                                </cells:ArticleCard.GestureRecognizers>
-                            </cells:ArticleCard>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.HeaderTemplate>
-                    <DataTemplate>
-                        <VerticalStackLayout>
-                            <SearchBar
+                                    </cells:ArticleCard.GestureRecognizers>
+                                </cells:ArticleCard>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.HeaderTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <SearchBar
                                 x:Name="searchBar"
                                 SearchCommand="{Binding PerformSearchCommand}"
                                 SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </CollectionView.HeaderTemplate>
-            </CollectionView>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.HeaderTemplate>
+                </CollectionView>
+            </ContentView>
         </RefreshView>
         <ImageButton
             Grid.Row="0"

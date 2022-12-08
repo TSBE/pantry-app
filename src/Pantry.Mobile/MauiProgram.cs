@@ -78,7 +78,10 @@ public static class MauiProgram
             RedirectUri = AppConstants.AUTH0_CALLBACK_URL
         }));
 #if ANDROID
-        builder.Services.AddSingleton<IKeyboardHelper, Pantry.Mobile.DroidKeyboardHelper>();
+        builder.Services.AddSingleton<IKeyboardHelper, DroidKeyboardHelper>();
+#endif
+#if IOS
+        builder.Services.AddSingleton<IKeyboardHelper, KeyboardHelper>();
 #endif
 #if DEBUG
         builder.Services.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());

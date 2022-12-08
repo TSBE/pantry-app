@@ -34,6 +34,9 @@ public partial class MainViewModel : BaseViewModel
 
     public ObservableRangeCollection<Grouping<string, ArticleModel>> ArticleGroups { get; set; } = new();
 
+    public ObservableRangeCollection<ArticleModel> Articles { get; set; } = new();
+
+
     [RelayCommand]
     public async Task Init()
     {
@@ -89,6 +92,8 @@ public partial class MainViewModel : BaseViewModel
     {
         var articleListResponse = await _pantryClientApiService.GetAllArticlesAsync();
         var articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
+        Articles.Clear();
+        Articles.AddRange(articles);
         var groups = articles.GroupBy(x => x.StorageLocation?.Name);
         ArticleGroups.Clear();
         ArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));

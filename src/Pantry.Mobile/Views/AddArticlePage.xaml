@@ -12,9 +12,6 @@
     x:DataType="vm:AddArticleViewModel"
     Shell.PresentationMode="Animated"
     Shell.TabBarIsVisible="False">
-    <!--<ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
-    </ContentPage.Behaviors>-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />

@@ -3,12 +3,94 @@
     x:Class="Pantry.Mobile.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Settings">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Settings"
+    x:DataType="vm:SettingsViewModel"
+    Shell.BackgroundColor="{StaticResource Green}"
+    Shell.NavBarHasShadow="False">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
+            </Grid.RowDefinitions>
 
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Not implemented yet!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+            <!--  header background  -->
+            <Border
+                Grid.Row="0"
+                Margin="0,3,0,0"
+                BackgroundColor="White"
+                HeightRequest="150"
+                StrokeShape="RoundRectangle 0,0,40,40"
+                StrokeThickness="0"
+                VerticalOptions="StartAndExpand" />
+            <Border
+                Grid.Row="0"
+                BackgroundColor="{StaticResource Green}"
+                HeightRequest="150"
+                StrokeShape="RoundRectangle 0,0,40,40"
+                StrokeThickness="0"
+                VerticalOptions="StartAndExpand" />
+
+            <!--  profile image  -->
+            <toolkit:AvatarView
+                Grid.Row="0"
+                Margin="0,65,0,-50"
+                BackgroundColor="{StaticResource Green}"
+                BorderWidth="3"
+                CornerRadius="75"
+                FontSize="50"
+                HeightRequest="150"
+                Text="{Binding Account.Initials}"
+                WidthRequest="150" />
+
+            <!--  Profile Name  -->
+            <StackLayout
+                Grid.Row="1"
+                Padding="0,50,0,00"
+                HorizontalOptions="Center">
+                <Label
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelLarge}"
+                    Text="{Binding Account.FirstName}" />
+                <Label
+                    Margin="0,-5"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource LabelSmall}"
+                    Text="{Binding Account.LastName}" />
+            </StackLayout>
+
+            <!--  profile description  -->
+            <ScrollView Grid.Row="2" Margin="0,20">
+                <VerticalStackLayout>
+                    <Label
+                        Margin="20,0"
+                        HorizontalTextAlignment="Center"
+                        Style="{StaticResource LabelMedium}"
+                        Text="{Binding Account.Household.Name}" />
+                    <Button
+                        Margin="20"
+                        Command="{Binding ManageInvitationsCommand}"
+                        Style="{StaticResource SecondaryButton}"
+                        Text="Manage invitations"
+                        VerticalOptions="End" />
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!--  logout button  -->
+            <Button
+                Grid.Row="3"
+                Margin="20"
+                Command="{Binding LogoutCommand}"
+                Style="{StaticResource PrimaryButton}"
+                Text="Logout"
+                VerticalOptions="End" />
+        </Grid>
+    </ScrollView>
 </ContentPage>

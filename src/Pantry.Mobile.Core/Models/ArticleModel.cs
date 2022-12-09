@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using CommunityToolkit.Mvvm.ComponentModel;
-using IdentityModel.OidcClient;
-using Pantry.Mobile.Core.Infrastructure.Auth0;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Enums;
 
 namespace Pantry.Mobile.Core.Models;

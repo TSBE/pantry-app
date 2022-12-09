@@ -41,7 +41,13 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<InvitationResponse> CreateInvitationAsync([Body] InvitationRequest invitationRequest)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new InvitationResponse
+        {
+            CreatorName = "Jane Doe",
+            HouseholdName = "Jane's Household",
+            ValidUntilDate = DateTime.UtcNow.AddDays(10),
+            FriendsCode = invitationRequest.FriendsCode
+        });
     }
 
     public Task<StorageLocationResponse> CreateStorageLocationAsync([Body] StorageLocationRequest storageLocationRequest)
@@ -195,10 +201,17 @@ public class DummyPantryClientApiService : IPantryClientApiService
             {
                new InvitationResponse
                {
+                   CreatorName = "Jane Doe",
+                   FriendsCode = Guid.NewGuid(),
+                   HouseholdName ="Jane's Household",
+                   ValidUntilDate = DateTime.UtcNow.AddDays(1)
+               },
+               new InvitationResponse
+               {
                    CreatorName = "Dummy Creator",
                    FriendsCode = Guid.NewGuid(),
                    HouseholdName ="Dummy Household",
-                   ValidUntilDate = DateTime.UtcNow.AddDays(1)
+                   ValidUntilDate = DateTime.UtcNow.AddDays(10)
                }
             }
         });

@@ -51,8 +51,7 @@ public partial class SettingsViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            //await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
-            await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}");
+            await _navigation.GoToAsync($"{PageConstants.MANAGE_INVITATIONS_PAGE}");
         }
         catch (Exception ex)
         {

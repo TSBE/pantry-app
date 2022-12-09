@@ -57,6 +57,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AddStorageLocationPage>();
         builder.Services.AddTransient<AddArticlePage>();
         builder.Services.AddTransient<ArticleDetailPage>();
+        builder.Services.AddTransient<ManageInvitationsPage>();
 
         // Register view models
         builder.Services.AddSingleton<OnboardingViewModel>();
@@ -69,6 +70,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AddStorageLocationViewModel>();
         builder.Services.AddTransient<AddArticleViewModel>();
         builder.Services.AddTransient<ArticleDetailViewModel>();
+        builder.Services.AddTransient<ManageInvitationsViewModel>();
 
         //Register helpers
         builder.Services.AddSingleton(new Auth0Client(new()

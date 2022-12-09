@@ -43,11 +43,13 @@
                 Grid.Row="0"
                 Margin="0,65,0,-50"
                 BackgroundColor="{StaticResource Green}"
+                BorderColor="White"
                 BorderWidth="3"
                 CornerRadius="75"
                 FontSize="50"
                 HeightRequest="150"
                 Text="{Binding Account.Initials}"
+                TextColor="White"
                 WidthRequest="150" />
 
             <!--  Profile Name  -->

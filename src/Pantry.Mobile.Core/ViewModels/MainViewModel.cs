@@ -39,6 +39,7 @@ public partial class MainViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
+            ErrorMessage = ex.Message;
         }
     }
 
@@ -71,7 +72,7 @@ public partial class MainViewModel : BaseViewModel
         if (article == null)
             return;
 
-        await _navigation.GoToAsync($"{PageConstants.ADD_ARTICLE_PAGE}?Id={article.Id}");
+        await _navigation.GoToAsync($"{PageConstants.ARTICLE_DETAIL_PAGE}?Id={article.Id}");
     }
 
     [RelayCommand]

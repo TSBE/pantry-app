@@ -9,9 +9,9 @@
         <HorizontalStackLayout Margin="10,15" Spacing="5">
             <Image
                 Margin="0,0"
+                MaximumHeightRequest="60"
                 Source="location"
-                WidthRequest="50"
-                MaximumHeightRequest="60" />
+                WidthRequest="50" />
             <VerticalStackLayout VerticalOptions="Center">
                 <Label
                     Style="{x:StaticResource LabelMedium}"

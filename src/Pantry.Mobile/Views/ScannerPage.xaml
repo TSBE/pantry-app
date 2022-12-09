@@ -7,6 +7,7 @@
     xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    x:Name="scannerPage"
     Title="Scanner"
     ios:Page.UseSafeArea="true"
     Shell.PresentationMode="Animated"
@@ -15,6 +16,8 @@
     <zxing:CameraBarcodeReaderView
         x:Name="cameraBarcodeReaderView"
         BarcodesDetected="BarcodesDetected"
+        BindingContext="{x:Reference Name=scannerPage}"
         HorizontalOptions="FillAndExpand"
+        IsDetecting="{Binding IsDetecting}"
         VerticalOptions="FillAndExpand" />
 </ContentPage>

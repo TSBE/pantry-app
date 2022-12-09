@@ -1,4 +1,7 @@
-﻿namespace Pantry.Mobile.Core.Models;
+﻿using System.Globalization;
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Pantry.Mobile.Core.Models;
 
 public class InvitationModel
 {
@@ -21,4 +24,10 @@ public class InvitationModel
     /// The household to which this invitation belongs.
     /// </summary>
     public string HouseholdName { get; set; } = string.Empty;
+
+
+    /// <summary>
+    /// Formatted friends code.
+    /// </summary>
+    public string FriendsCodeFormatted => FriendsCode.ToString().ToUpperInvariant().Replace("-", Environment.NewLine);
 }

@@ -12,4 +12,5 @@ public class PageConstants
     public const string ADD_ARTICLE_PAGE = "AddArticlePage";
     public const string ARTICLE_DETAIL_PAGE = "ArticleDetailPage";
     public const string SCANNER_PAGE = "ScannerPage";
+    public const string MANAGE_INVITATIONS_PAGE = "ManageInvitationsPage";
 }

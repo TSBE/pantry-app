@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid
+    x:Class="Pantry.Mobile.Cells.InvitationCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    x:DataType="models:InvitationModel">
+    <Border Style="{x:StaticResource InvitationCard}">
+        <VerticalStackLayout
+            Padding="10,10"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="Center">
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{x:StaticResource LabelMedium}"
+                Text="{Binding CreatorName, StringFormat='Creator: {0}'}"
+                VerticalOptions="Center" />
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{x:StaticResource LabelSmall}"
+                Text="{Binding ValidUntilDate, StringFormat='Valid until: {0:dd. MMMM yyyy}'}"
+                VerticalOptions="Center" />
+            <Label
+                HorizontalTextAlignment="Center"
+                Style="{x:StaticResource LabelMedium}"
+                Text="Friends code"
+                VerticalOptions="Center" />
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Style="{x:StaticResource LabelSmall}"
+                Text="{Binding FriendsCodeFormatted}"
+                TextColor="{StaticResource Green}"
+                VerticalOptions="Center" />
+        </VerticalStackLayout>
+    </Border>
+</Grid>

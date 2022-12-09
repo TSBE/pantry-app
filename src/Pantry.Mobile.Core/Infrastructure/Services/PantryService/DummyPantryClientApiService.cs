@@ -98,31 +98,31 @@ public class DummyPantryClientApiService : IPantryClientApiService
                 new ArticleResponse
                 {
                     Id = 1,
-                    Name = "Dummy Article 1",
-                    BestBeforeDate = DateTime.UtcNow,
+                    Name = "Milk",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddDays(1),
                     StorageLocation = new StorageLocationResponse
                     {
-                        Name = "Dummy Location"
+                        Name = "Kitchen cabinet"
                     }
                 },
                 new ArticleResponse
                 {
                     Id = 2,
-                    Name = "Dummy Article 2",
-                    BestBeforeDate = DateTime.UtcNow,
+                    Name = "Rice",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddMonths(1),
                     StorageLocation = new StorageLocationResponse
                     {
-                        Name = "Dummy Location"
+                        Name = "Kitchen cabinet"
                     }
                 },
                 new ArticleResponse
                 {
                     Id = 3,
-                    Name = "Dummy Article 3",
-                    BestBeforeDate = DateTime.UtcNow,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
                     StorageLocation = new StorageLocationResponse
                     {
-                        Name = "Dummy Location 2"
+                        Name = "Basement"
                     }
                 }
             }
@@ -144,13 +144,13 @@ public class DummyPantryClientApiService : IPantryClientApiService
                new StorageLocationResponse
                {
                    Id = 1,
-                   Name = "Dummy Location 1",
+                   Name = "Küche",
                    Description="Dummy Description"
                },
                 new StorageLocationResponse
                {
                     Id = 2,
-                   Name = "Dummy Location 2",
+                   Name = "Keller",
                    Description="Dummy Description"
                }
             }

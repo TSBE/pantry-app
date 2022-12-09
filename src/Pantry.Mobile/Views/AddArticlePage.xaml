@@ -81,8 +81,6 @@
             <Label Style="{StaticResource LabelMedium}" Text="Best before date:" />
             <DatePicker x:Name="BestBeforeDate" Date="{Binding ArticleModel.BestBeforeDate}" />
 
-            <!--<ScrollView />-->
-
             <ActivityIndicator
                 HorizontalOptions="Center"
                 IsRunning="{Binding IsBusy}"

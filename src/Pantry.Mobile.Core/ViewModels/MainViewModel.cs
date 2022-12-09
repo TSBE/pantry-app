@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
@@ -17,25 +15,20 @@ public partial class MainViewModel : BaseViewModel
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    private readonly IDialogService _dialogService;
-
-    public MainViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IDialogService dialogService)
+    public MainViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService)
     {
         _navigation = navigation;
         _pantryClientApiService = pantryClientApiService;
-        _dialogService = dialogService;
     }
 
-    [RelayCommand]
-    private async Task OpenScanner()
-    {
-        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
-    }
+    private List<ArticleModel> Articles { get; set; } = new();
 
-    public ObservableRangeCollection<Grouping<string, ArticleModel>> ArticleGroups { get; set; } = new();
+    public ObservableRangeCollection<Grouping<string, ArticleModel>> FilteredArticleGroups { get; set; } = new();
 
-    public ObservableRangeCollection<ArticleModel> Articles { get; set; } = new();
+    public ObservableRangeCollection<ArticleModel> FilteredArticles { get; set; } = new();
 
+    [ObservableProperty]
+    public DateTime? filterByDate = null;
 
     [RelayCommand]
     public async Task Init()
@@ -50,9 +43,16 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task PerformSearch(string query)
+    public Task PerformSearch(string query)
     {
-        await Task.CompletedTask;
+        var filteredArticles = Articles.Where(x => x.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase)).ToList();
+
+        if (filteredArticles.Any())
+        {
+            SetFilteredList(filteredArticles);
+        }
+
+        return Task.CompletedTask;
     }
 
     [RelayCommand]
@@ -90,19 +90,40 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     public async Task Load()
     {
+        FilterByDate = null;
         var articleListResponse = await _pantryClientApiService.GetAllArticlesAsync();
-        var articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
-        Articles.Clear();
-        Articles.AddRange(articles);
-        var groups = articles.GroupBy(x => x.StorageLocation?.Name);
-        ArticleGroups.Clear();
-        ArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));
-    }
+        Articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
 
+        SetFilteredList(Articles);
+    }
 
     [RelayCommand]
     public async Task Add()
     {
         await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
+    }
+
+    private void SetFilteredList(IList<ArticleModel> filteredArticles)
+    {
+        FilteredArticles.Clear();
+        FilteredArticles.AddRange(filteredArticles);
+        var groups = FilteredArticles.GroupBy(x => x.StorageLocation?.Name);
+        FilteredArticleGroups.Clear();
+        FilteredArticleGroups.AddRange(from item in groups select new Grouping<string, ArticleModel>(item.Key, item));
+    }
+
+    partial void OnFilterByDateChanged(DateTime? value)
+    {
+        if (value is null)
+        {
+            return;
+        }
+
+        var filteredArticles = Articles.Where(x => x.BestBeforeDate <= value).ToList();
+
+        if (filteredArticles.Any())
+        {
+            SetFilteredList(filteredArticles);
+        }
     }
 }

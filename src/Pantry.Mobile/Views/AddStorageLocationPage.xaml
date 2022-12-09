@@ -18,14 +18,14 @@
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-   <ScrollView>
+    <ScrollView>
         <VerticalStackLayout Padding="0,20" VerticalOptions="FillAndExpand">
             <Image
                 Margin="0,30"
                 HeightRequest="150"
                 Source="location" />
             <Label Style="{StaticResource LabelMedium}" Text="Name:" />
-             <Entry
+            <Entry
                 toolkit:SetFocusOnEntryCompletedBehavior.NextElement="{x:Reference DescriptionEntry}"
                 ReturnType="Next"
                 Text="{Binding Name}" />
@@ -35,7 +35,6 @@
                 ReturnCommand="{Binding SaveCommand}"
                 ReturnType="Done"
                 Text="{Binding Description}" />
-            <!--<ScrollView />-->
 
             <ActivityIndicator
                 HorizontalOptions="Center"

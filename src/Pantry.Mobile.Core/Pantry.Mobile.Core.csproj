@@ -9,7 +9,7 @@
    <ItemGroup>
       <PackageReference Include="CommunityToolkit.Maui.Core" Version="3.0.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-      <PackageReference Include="IdentityModel.OidcClient" Version="5.1.0" />
+      <PackageReference Include="IdentityModel.OidcClient" Version="5.2.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
       <PackageReference Include="Polly" Version="7.2.3" />
       <PackageReference Include="Refit" Version="6.3.2" />

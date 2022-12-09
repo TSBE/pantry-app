@@ -1,11 +1,6 @@
-﻿using System.Net;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Pantry.Mobile.Core.Infrastructure;
+﻿using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
-using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
-using Refit;
 
 namespace Pantry.Mobile.Core.ViewModels
 {

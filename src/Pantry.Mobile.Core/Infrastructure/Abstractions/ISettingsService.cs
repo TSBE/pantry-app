@@ -13,4 +13,6 @@ public interface ISettingsService
     Task<Credentials> GetCredentials();
 
     Task SetCredentials(Credentials credentials);
+
+    Task DeleteCredentials();
 }

@@ -78,12 +78,12 @@ public class DummyPantryClientApiService : IPantryClientApiService
     {
         return Task.FromResult(new AccountResponse
         {
-            FirstName = "Dummy",
-            LastName = "Dummy",
+            FirstName = "Jane",
+            LastName = "Doe",
             FriendsCode = Guid.NewGuid(),
             Household = new HouseholdResponse
             {
-                Name = "Dummy Household",
+                Name = "Jane's Household",
                 SubscriptionType = Enums.SubscriptionType.FREE
             }
         });

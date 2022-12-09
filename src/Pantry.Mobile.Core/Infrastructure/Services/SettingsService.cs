@@ -84,4 +84,14 @@ public class SettingsService : ISettingsService
         var json = JsonSerializer.Serialize(credentials);
         await _secureStorage.SetAsync(CREDENTIALS, json);
     }
+
+    /// <summary>
+    /// Delete credentials.
+    /// </summary>
+    /// <returns>credentials.</returns>
+    public Task DeleteCredentials()
+    {
+        _secureStorage.Remove(CREDENTIALS);
+        return Task.CompletedTask;
+    }
 }

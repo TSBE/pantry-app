@@ -39,6 +39,7 @@ public static class ArticleExtensions
         Id = articleResponse.Id,
         Name = articleResponse.Name,
         Quantity = articleResponse.Quantity,
-        StorageLocation = articleResponse.StorageLocation.ToStorageLocationModel()
+        StorageLocation = articleResponse.StorageLocation.ToStorageLocationModel(),
+        ImageUrl = articleResponse.ImageUrl
     };
 }

@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton(sp =>
         {
-            var client = sp.GetRequiredService<Auth0Client>();
+            var client = sp.GetRequiredService<IAuth0Client>();
             var settingsService = sp.GetRequiredService<ISettingsService>();
             var handler = new RefreshTokenDelegatingHandler(client, settingsService);
             return handler;

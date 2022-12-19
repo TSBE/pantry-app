@@ -2,10 +2,11 @@
 using IdentityModel.OidcClient.Browser;
 using IdentityModel.Client;
 using IdentityModel.OidcClient.Results;
+using Pantry.Mobile.Core.Infrastructure.Abstractions;
 
 namespace Pantry.Mobile.Core.Infrastructure.Auth0;
 
-public class Auth0Client
+public class Auth0Client : IAuth0Client
 {
     private readonly OidcClient oidcClient;
     private readonly Auth0ClientOptions _auth0ClientOptions;
@@ -23,7 +24,7 @@ public class Auth0Client
         });
     }
 
-    public async Task<Credentials> LoginAsync()
+    public async Task<Credentials> Login()
     {
         try
         {
@@ -39,7 +40,7 @@ public class Auth0Client
         }
     }
 
-    public async Task<Credentials> SignupAsync()
+    public async Task<Credentials> Signup()
     {
         try
         {
@@ -76,7 +77,7 @@ public class Auth0Client
         return await oidcClient.GetUserInfoAsync(accessToken);
     }
 
-    public async Task<BrowserResult> LogoutAsync()
+    public async Task<BrowserResult> Logout()
     {
         var logoutParameters = new Dictionary<string, string>
         {

@@ -10,9 +10,9 @@ namespace Pantry.Mobile.Core.ViewModels
 
         private readonly ISettingsService _settingsService;
 
-        private readonly Auth0Client _auth0Client;
+        private readonly IAuth0Client _auth0Client;
 
-        public LoginViewModel(INavigationService navigation, ISettingsService settingsService, Auth0Client client)
+        public LoginViewModel(INavigationService navigation, ISettingsService settingsService, IAuth0Client client)
         {
             _navigation = navigation;
             _settingsService = settingsService;
@@ -20,12 +20,12 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
-        public async Task Login()
+        private async Task Login()
         {
             try
             {
                 ErrorMessage = string.Empty;
-                var credentials = await _auth0Client.LoginAsync();
+                var credentials = await _auth0Client.Login();
                 await HandleNextStep(credentials);
             }
             catch (Exception ex)
@@ -35,12 +35,12 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
-        public async Task Signup()
+        private async Task Signup()
         {
             try
             {
                 ErrorMessage = string.Empty;
-                var credentials = await _auth0Client.SignupAsync();
+                var credentials = await _auth0Client.Signup();
                 await HandleNextStep(credentials);
             }
             catch (Exception ex)

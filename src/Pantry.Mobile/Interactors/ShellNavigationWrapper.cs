@@ -1,8 +1,5 @@
-﻿using IdentityModel.OidcClient;
-using System.Threading;
-using Pantry.Mobile.Core.Infrastructure;
+﻿using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
-using Pantry.Mobile.Core.Infrastructure.Auth0;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
@@ -15,10 +12,10 @@ public class ShellNavigationWrapper : INavigationService
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    private readonly Auth0Client _auth0Client;
+    private readonly IAuth0Client _auth0Client;
 
 
-    public ShellNavigationWrapper(ISettingsService settingsService, IPantryClientApiService pantryClientApiService, Auth0Client auth0Client)
+    public ShellNavigationWrapper(ISettingsService settingsService, IPantryClientApiService pantryClientApiService, IAuth0Client auth0Client)
     {
         _settingsService = settingsService;
         _pantryClientApiService = pantryClientApiService;
@@ -64,13 +61,13 @@ public class ShellNavigationWrapper : INavigationService
         return targetPage;
     }
 
-    public Task GoToAsync(ShellNavigationState state) => Shell.Current.GoToAsync(state);
+    public Task GoToAsync(string state) => Shell.Current.GoToAsync(state);
 
-    public Task GoToAsync(ShellNavigationState state, bool animate) => Shell.Current.GoToAsync(state, animate);
+    public Task GoToAsync(string state, bool animate) => Shell.Current.GoToAsync(state, animate);
 
-    public Task GoToAsync(ShellNavigationState state, IDictionary<string, object> parameters) => Shell.Current.GoToAsync(state, parameters);
+    public Task GoToAsync(string state, IDictionary<string, object> parameters) => Shell.Current.GoToAsync(state, parameters);
 
-    public Task GoToAsync(ShellNavigationState state, bool animate, IDictionary<string, object> parameters) => Shell.Current.GoToAsync(state, animate, parameters);
+    public Task GoToAsync(string state, bool animate, IDictionary<string, object> parameters) => Shell.Current.GoToAsync(state, animate, parameters);
 
 
     private async Task<AccountResponse?> GetAccount()
@@ -83,7 +80,7 @@ public class ShellNavigationWrapper : INavigationService
         {
             return null;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return null;
         }

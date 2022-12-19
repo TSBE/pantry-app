@@ -1,4 +1,5 @@
-﻿using Android.Content;
+﻿using System.Runtime.Versioning;
+using Android.Content;
 using Android.Views.InputMethods;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 
@@ -10,16 +11,16 @@ public class DroidKeyboardHelper : IKeyboardHelper
     {
     }
 
+    [SupportedOSPlatform("Android10.0")]
     public void HideKeyboard()
     {
-        var context = Android.App.Application.Context;
-        var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
-        if (inputMethodManager != null)
+        Context context = Android.App.Application.Context;
+        if (context.GetSystemService(Context.InputMethodService) is InputMethodManager inputMethodManager)
         {
             var activity = Platform.CurrentActivity;
-            var token = activity.CurrentFocus?.WindowToken;
+            var token = activity?.CurrentFocus?.WindowToken;
             inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None);
-            activity.Window.DecorView.ClearFocus();
+            activity?.Window?.DecorView.ClearFocus();
         }
     }
 }

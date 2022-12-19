@@ -17,9 +17,9 @@ public partial class SettingsViewModel : BaseViewModel
 
     private readonly ISettingsService _settingsService;
 
-    private readonly Auth0Client _auth0Client;
+    private readonly IAuth0Client _auth0Client;
 
-    public SettingsViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, ISettingsService settingsService, Auth0Client client)
+    public SettingsViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, ISettingsService settingsService, IAuth0Client client)
     {
         _navigation = navigation;
         _pantryClientApiService = pantryClientApiService;
@@ -66,7 +66,7 @@ public partial class SettingsViewModel : BaseViewModel
         try
         {
             IsBusy = true;
-            await _auth0Client.LogoutAsync();
+            await _auth0Client.Logout();
             await _settingsService.DeleteCredentials();
             var targetPage = await _navigation.GetNextStartupPage(new CancellationToken());
             await _navigation.GoToAsync(targetPage);

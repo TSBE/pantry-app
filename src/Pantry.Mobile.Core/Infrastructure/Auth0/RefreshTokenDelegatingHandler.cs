@@ -11,7 +11,7 @@ namespace Pantry.Mobile.Core.Infrastructure.Auth0;
 public class RefreshTokenDelegatingHandler : DelegatingHandler
 {
     private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
-    private readonly Auth0Client _auth0Client;
+    private readonly IAuth0Client _auth0Client;
     private readonly ISettingsService _settingsService;
 
     private string? _accessToken;
@@ -78,7 +78,7 @@ public class RefreshTokenDelegatingHandler : DelegatingHandler
     /// <param name="refreshToken">The refresh token.</param>
     /// <param name="innerHandler">The inner handler.</param>
     /// <exception cref="ArgumentNullException">oidcClient</exception>
-    public RefreshTokenDelegatingHandler(Auth0Client auth0Client, ISettingsService settingsService, HttpMessageHandler? innerHandler = null)
+    public RefreshTokenDelegatingHandler(IAuth0Client auth0Client, ISettingsService settingsService, HttpMessageHandler? innerHandler = null)
     {
         _auth0Client = auth0Client ?? throw new ArgumentNullException(nameof(auth0Client));
         _settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));

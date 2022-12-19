@@ -93,8 +93,13 @@ public partial class MainViewModel : BaseViewModel
     {
         FilterByDate = null;
         var articleListResponse = await _pantryClientApiService.GetAllArticlesAsync();
-        Articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
 
+        if (articleListResponse?.Articles is null)
+        {
+            return;
+        }
+
+        Articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
         SetFilteredList(Articles);
     }
 

@@ -73,7 +73,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ManageInvitationsViewModel>();
 
         //Register helpers
-        builder.Services.AddSingleton(new Auth0Client(new()
+        builder.Services.AddSingleton<IAuth0Client>(new Auth0Client(new()
         {
             Audience = AppConstants.AUTH0_AUDIENCE,
             Domain = AppConstants.AUTH0_DOMAIN,
@@ -87,12 +87,12 @@ public static class MauiProgram
 #if IOS
         builder.Services.AddSingleton<IKeyboardHelper, KeyboardHelper>();
 #endif
-#if DEBUG
-        builder.Services.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());
-#else
+        //#if DEBUG
+        //        builder.Services.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());
+        //#else
         builder.Services.AddRefreshTokenDelegatingHandler();
         builder.Services.AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL);
-#endif
+        //#endif
         return builder.Build();
     }
 }

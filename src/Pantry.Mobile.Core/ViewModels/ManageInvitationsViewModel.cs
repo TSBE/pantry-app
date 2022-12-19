@@ -74,6 +74,12 @@ public partial class ManageInvitationsViewModel : BaseViewModel
     public async Task Load()
     {
         var invitationListResponse = await _pantryClientApiService.GetInvitationAsync();
+
+        if (invitationListResponse?.Invitations is null)
+        {
+            return;
+        }
+
         var invitations = (from item in invitationListResponse?.Invitations select item.ToInvitationModel()).ToList();
         Invitations.Clear();
         Invitations.AddRange(invitations);

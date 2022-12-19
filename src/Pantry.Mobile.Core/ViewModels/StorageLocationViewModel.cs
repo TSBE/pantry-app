@@ -14,13 +14,10 @@ public partial class StorageLocationViewModel : BaseViewModel
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    private readonly IDialogService _dialogService;
-
-    public StorageLocationViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IDialogService dialogService)
+    public StorageLocationViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService)
     {
         _navigation = navigation;
         _pantryClientApiService = pantryClientApiService;
-        _dialogService = dialogService;
     }
 
     public ObservableRangeCollection<StorageLocationModel> StorageLocations { get; set; } = new();
@@ -32,7 +29,7 @@ public partial class StorageLocationViewModel : BaseViewModel
         {
             await Load();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
     }
@@ -73,6 +70,11 @@ public partial class StorageLocationViewModel : BaseViewModel
     public async Task Load()
     {
         var storageLocationList = await _pantryClientApiService.GetAllStorageLocationsAsync();
+        if (storageLocationList?.StorageLocations is null)
+        {
+            return;
+        }
+
         var storageLocations = (from item in storageLocationList?.StorageLocations select item.ToStorageLocationModel()).ToList();
         StorageLocations.Clear();
         StorageLocations.AddRange(storageLocations);

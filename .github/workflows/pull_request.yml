@@ -9,6 +9,7 @@ on:
 env:
   DOTNETVERSION: 7.0.x
   PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
+  TEST_PROJECT_PATH: "tests/Pantry.Mobile.Tests.Core/Pantry.Mobile.Tests.Core.csproj"
 
 jobs:
   maui-build:
@@ -38,8 +39,16 @@ jobs:
         shell: pwsh
         run: dotnet build ${{ env.PROJECT_PATH }}
 
-      # - name: Build and Run UnitTests
-      # shell: pwsh
-      # run: |
-      # dotnet build <path to unit test csproj>
-      # dotnet test <path to unit test csproj> --no-build --verbosity normal
+      - name: Build and Run UnitTests
+        shell: pwsh
+        run: |
+          dotnet build ${{ env.TEST_PROJECT_PATH }}
+          dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal --logger trx
+
+      - name: Publish tests report
+        uses: dorny/test-reporter@v1.6.0
+        if: success() || failure()
+        with:
+          name: .NET Tests
+          path: "**/*.trx"
+          reporter: dotnet-trx

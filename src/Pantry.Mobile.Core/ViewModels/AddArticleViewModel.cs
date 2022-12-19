@@ -50,7 +50,7 @@ public partial class AddArticleViewModel : BaseViewModel
             StorageLocations.Clear();
             StorageLocations.AddRange(storageLocations);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         finally { IsBusy = false; }
@@ -67,7 +67,7 @@ public partial class AddArticleViewModel : BaseViewModel
             ArticleModel.Content = metadataResponse?.Brands ?? string.Empty;
             ArticleModel.ImageUrl = metadataResponse?.ImageUrl ?? null;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         finally { IsBusy = false; }
@@ -87,7 +87,7 @@ public partial class AddArticleViewModel : BaseViewModel
                 SelectedStorageLocationIndex = StorageLocations?.IndexOf(location) ?? -1;
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         }
         finally { IsBusy = false; }

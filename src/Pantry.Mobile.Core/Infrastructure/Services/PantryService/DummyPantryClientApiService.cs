@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
 
@@ -8,12 +10,17 @@ public class DummyPantryClientApiService : IPantryClientApiService
 {
     public Task AcceptInvitationAsync([Url] Guid friendsCode)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     public Task<AccountResponse> CreateAccountAsync([Body] AccountRequest accountRequest)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new AccountResponse
+        {
+            FirstName = accountRequest.FirstName,
+            LastName = accountRequest.LastName,
+            FriendsCode = Guid.NewGuid()
+        });
     }
 
     public Task<ArticleResponse> CreateArticleAsync([Body] ArticleRequest articleRequest)
@@ -31,12 +38,25 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<DeviceResponse> CreateDeviceAsync([Body] DeviceRequest deviceRequest)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(
+            new DeviceResponse
+            {
+                DeviceToken = deviceRequest.DeviceToken,
+                InstallationId = deviceRequest.InstallationId,
+                Model = deviceRequest.Model,
+                Platform = deviceRequest.Platform,
+                Name = deviceRequest.Name
+            });
     }
 
     public Task<HouseholdResponse> CreateHouseholdAsync([Body] HouseholdRequest householdRequest)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(
+            new HouseholdResponse
+            {
+                Name = householdRequest.Name,
+                SubscriptionType = Enums.SubscriptionType.FREE
+            });
     }
 
     public Task<InvitationResponse> CreateInvitationAsync([Body] InvitationRequest invitationRequest)
@@ -57,42 +77,43 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task DeclineInvitationAsync([Url] Guid friendsCode)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     public Task<HttpResponseMessage> DeleteAccountAsync()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NoContent));
     }
 
     public Task<HttpResponseMessage> DeleteArticleAsync(long articleId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NoContent));
     }
 
-    public Task<DeviceResponse> DeleteDeviceAsync(Guid installationId)
+    public Task<HttpResponseMessage> DeleteDeviceAsync(Guid installationId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NoContent));
     }
 
     public Task<HttpResponseMessage> DeleteStorageLocationAsync(long storageLocationId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NoContent));
     }
 
     public Task<AccountResponse> GetAccountAsync()
     {
-        return Task.FromResult(new AccountResponse
-        {
-            FirstName = "Jane",
-            LastName = "Doe",
-            FriendsCode = Guid.NewGuid(),
-            Household = new HouseholdResponse
+        return Task.FromResult(
+            new AccountResponse
             {
-                Name = "Jane's Household",
-                SubscriptionType = Enums.SubscriptionType.FREE
-            }
-        });
+                FirstName = "Jane",
+                LastName = "Doe",
+                FriendsCode = Guid.NewGuid(),
+                Household = new HouseholdResponse
+                {
+                    Name = "Jane's Household",
+                    SubscriptionType = Enums.SubscriptionType.FREE
+                }
+            });
     }
 
     public Task<ArticleListResponse> GetAllArticlesAsync()
@@ -106,6 +127,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                     Id = 1,
                     Name = "Milk",
                     BestBeforeDate = DateTime.UtcNow.Date.AddDays(1),
+                    ImageUrl = "https://images.openfoodfacts.org/images/products/574/500/012/1045/front_de.3.400.jpg",
                     StorageLocation = new StorageLocationResponse
                     {
                         Name = "Kitchen cabinet"
@@ -116,6 +138,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                     Id = 2,
                     Name = "Rice",
                     BestBeforeDate = DateTime.UtcNow.Date.AddMonths(1),
+                    ImageUrl = "https://images.openfoodfacts.org/images/products/574/500/012/1045/front_de.3.400.jpg",
                     StorageLocation = new StorageLocationResponse
                     {
                         Name = "Kitchen cabinet"
@@ -124,6 +147,87 @@ public class DummyPantryClientApiService : IPantryClientApiService
                 new ArticleResponse
                 {
                     Id = 3,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    ImageUrl = "https://images.openfoodfacts.org/images/products/574/500/012/1045/front_de.3.400.jpg",
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 4,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 5,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 6,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 7,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 8,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 9,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 10,
+                    Name = "Honey",
+                    BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
+                    StorageLocation = new StorageLocationResponse
+                    {
+                        Name = "Basement"
+                    }
+                },
+                new ArticleResponse
+                {
+                    Id = 11,
                     Name = "Honey",
                     BestBeforeDate = DateTime.UtcNow.Date.AddYears(1),
                     StorageLocation = new StorageLocationResponse
@@ -138,7 +242,26 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<DeviceListResponse> GetAllDevicesAsync()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new DeviceListResponse
+        {
+            Devices = new List<DeviceResponse>
+            {
+                new DeviceResponse
+                {
+                    DeviceToken = null,
+                    InstallationId = Guid.NewGuid(),
+                    Model = "iPhone 12",
+                    Platform = Enums.DevicePlatformType.IOS
+                },
+                new DeviceResponse
+                {
+                    DeviceToken = null,
+                    InstallationId = Guid.NewGuid(),
+                    Model = "Samsung Galaxy S22",
+                    Platform = Enums.DevicePlatformType.ANDROID
+                }
+            }
+        });
     }
 
     public Task<StorageLocationListResponse> GetAllStorageLocationsAsync()
@@ -174,6 +297,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                 Name = $"Dummy Article {articleId}",
                 BestBeforeDate = DateTime.UtcNow,
                 Quantity = 1,
+                ImageUrl = "https://images.openfoodfacts.org/images/products/574/500/012/1045/front_de.3.400.jpg",
                 StorageLocation = new StorageLocationResponse
                 {
                     Id = 2,
@@ -185,12 +309,23 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<DeviceResponse> GetDeviceByIdAsync(Guid installationId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new DeviceResponse
+        {
+            DeviceToken = null,
+            InstallationId = installationId,
+            Model = "iPhone 12",
+            Platform = Enums.DevicePlatformType.IOS
+        });
     }
 
     public Task<HouseholdResponse> GetHouseholdAsync()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(
+            new HouseholdResponse
+            {
+                Name = "Dummy Household",
+                SubscriptionType = Enums.SubscriptionType.FREE
+            });
     }
 
     public Task<InvitationListResponse> GetInvitationAsync(CancellationToken? ct = null)
@@ -230,7 +365,13 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<StorageLocationResponse> GetStorageLocationByIdAsync(long storageLocationId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(
+            new StorageLocationResponse
+            {
+                Id = 1,
+                Name = "Dummy Location",
+                Description = "Dummy Description"
+            });
     }
 
     public Task<ArticleResponse> UpdateArticleAsync([Body] ArticleRequest articleRequest, long articleId)
@@ -249,7 +390,13 @@ public class DummyPantryClientApiService : IPantryClientApiService
 
     public Task<DeviceResponse> UpdateDeviceAsync([Body] DeviceUpdateRequest deviceUpdateRequest, Guid installationId)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(new DeviceResponse
+        {
+            DeviceToken = null,
+            InstallationId = installationId,
+            Model = "iPhone 12",
+            Platform = Enums.DevicePlatformType.IOS
+        });
     }
 
     public Task<StorageLocationResponse> UpdateStorageLocationAsync([Body] StorageLocationRequest storageLocationRequest, long storageLocationId)

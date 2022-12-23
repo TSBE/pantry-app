@@ -109,6 +109,17 @@ public partial class MainViewModel : BaseViewModel
         await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
     }
 
+    [RelayCommand]
+    public async Task Edit(ArticleModel article)
+    {
+        if (article is null)
+        {
+            return;
+        }
+
+        await _navigation.GoToAsync($"{PageConstants.ADD_ARTICLE_PAGE}?Id={article.Id}");
+    }
+
     private void SetFilteredList(IList<ArticleModel> filteredArticles)
     {
         FilteredArticles.Clear();

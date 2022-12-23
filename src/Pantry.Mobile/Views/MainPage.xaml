@@ -74,14 +74,19 @@
                                 <SwipeView.RightItems>
                                     <SwipeItems>
                                         <SwipeItem
-                                            BackgroundColor="Red"
+                                            BackgroundColor="{StaticResource EditBackgroundColor}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=EditCommand}"
+                                            CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                            Text="Edit" />
+                                        <SwipeItem
+                                            BackgroundColor="{StaticResource DeleteBackgroundColor}"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
                                             CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
                                             IsDestructive="True"
                                             Text="Delete" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>
-                                <cells:ArticleCard Margin="0,0">
+                                <cells:ArticleCard Margin="{OnPlatform '0,5', Android='0,0'}">
                                     <cells:ArticleCard.GestureRecognizers>
                                         <TapGestureRecognizer
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"

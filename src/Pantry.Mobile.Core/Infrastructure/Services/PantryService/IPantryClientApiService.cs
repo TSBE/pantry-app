@@ -65,7 +65,7 @@ public interface IPantryClientApiService
     /// <returns>no content.</returns>
     [Headers("Content-Type: application/json; charset=UTF-8")]
     [Delete("/devices/{installationId}")]
-    public Task<DeviceResponse> DeleteDeviceAsync(Guid installationId);
+    public Task<HttpResponseMessage> DeleteDeviceAsync(Guid installationId);
 
     /// <summary>
     /// Get my household.

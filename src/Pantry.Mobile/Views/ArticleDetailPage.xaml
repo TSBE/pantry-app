@@ -3,6 +3,7 @@
     x:Class="Pantry.Mobile.Views.ArticleDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cells="clr-namespace:Pantry.Mobile.Cells"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -19,11 +20,17 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
-        <VerticalStackLayout Padding="0,20" VerticalOptions="FillAndExpand">
+        <VerticalStackLayout Padding="0,20" VerticalOptions="Fill">
             <Image
                 Margin="0,30"
                 HeightRequest="150"
                 Source="{Binding Article.ImageUrl, TargetNullValue='groceries'}" />
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                Scale="2"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
             <Label Style="{StaticResource LabelMedium}" Text="Name:" />
             <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.Name}" />
             <Label Style="{StaticResource LabelMedium}" Text="Quantity:" />
@@ -34,12 +41,6 @@
             <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.StorageLocation.Name}" />
             <Label Style="{StaticResource LabelMedium}" Text="Best before date:" />
             <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.BestBeforeDate, StringFormat='{0:dd. MMMM yyyy}'}" />
-
-            <ActivityIndicator
-                HorizontalOptions="Center"
-                IsRunning="{Binding IsBusy}"
-                IsVisible="{Binding IsBusy}"
-                VerticalOptions="Center" />
 
             <Label
                 IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
@@ -54,6 +55,26 @@
                 IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                 Style="{StaticResource PrimaryButton}"
                 Text="Back" />
+            <CollectionView
+                BackgroundColor="Transparent"
+                Header="{Binding .}"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsLayout="VerticalList"
+                ItemsSource="{Binding Article.Nutriments}"
+                SelectionMode="None">
+                <CollectionView.HeaderTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Label Style="{StaticResource LabelMedium}" Text="Nutriments" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.HeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <cells:NutrimentCard Margin="{OnPlatform '0,5', Android='0,0'}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Pantry.Mobile.Core.Infrastructure.Helpers;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Enums;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 
@@ -70,5 +71,5 @@ public partial class ArticleModel
     /// <summary>
     /// Nutriments.
     /// </summary>
-    public IDictionary<string, NutrimentResponse>? Nutriments { get; set; }
+    public ObservableRangeCollection<NutrimentModel>? Nutriments { get; set; }
 }

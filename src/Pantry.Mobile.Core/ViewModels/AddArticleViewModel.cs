@@ -81,11 +81,6 @@ public partial class AddArticleViewModel : BaseViewModel
             IsBusy = true;
             var articleResponse = await _pantryClientApiService.GetArticleByIdAsync(id);
             ArticleModel = articleResponse.ToArticleModel();
-            var location = StorageLocations?.FirstOrDefault(x => x.Id == ArticleModel?.StorageLocation?.Id);
-            if (location is not null)
-            {
-                SelectedStorageLocationIndex = StorageLocations?.IndexOf(location) ?? -1;
-            }
         }
         catch (Exception)
         {
@@ -132,16 +127,31 @@ public partial class AddArticleViewModel : BaseViewModel
         }
     }
 
-    partial void OnIdChanged(long value)
+    async partial void OnIdChanged(long value)
     {
-        LoadStorageLocationsCommand?.Execute(null);
-        LoadArticleCommand?.Execute(value);
+        await LoadStorageLocations();
+        await LoadArticle(value);
+        SelectStorageLocation();
     }
 
-    partial void OnBarcodeChanged(string value)
+    async partial void OnBarcodeChanged(string value)
     {
-        LoadStorageLocationsCommand?.Execute(null);
-        LoadMetadataCommand?.Execute(value);
+        await LoadStorageLocations();
+        await LoadMetadata();
         ArticleModel.GlobalTradeItemNumber = value;
+        SelectStorageLocation();
+    }
+
+    private void SelectStorageLocation()
+    {
+        var location = StorageLocations?.FirstOrDefault(x => x.Id == ArticleModel?.StorageLocation?.Id);
+        if (location is not null && StorageLocations is not null)
+        {
+            SelectedStorageLocationIndex = StorageLocations.IndexOf(location);
+        }
+        else if (StorageLocations is not null)
+        {
+            ArticleModel.StorageLocation = StorageLocations.FirstOrDefault();
+        }
     }
 }

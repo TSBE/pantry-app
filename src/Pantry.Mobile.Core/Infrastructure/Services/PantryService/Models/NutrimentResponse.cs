@@ -1,12 +1,20 @@
-﻿namespace Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
+﻿namespace Pantry.Mobile.Core.Models;
 
-public class NutrimentResponse
+public class NutrimentModel
 {
-    public double Name { get; set; }
+    public string? Name { get; set; }
 
     public string? Unit { get; set; }
 
     public double Value { get; set; }
 
     public double ValueFor100g { get; set; }
+
+    public string ValueFor100gWithUnit
+    {
+        get
+        {
+            return $"{ValueFor100g:0.##} {Unit}";
+        }
+    }
 }

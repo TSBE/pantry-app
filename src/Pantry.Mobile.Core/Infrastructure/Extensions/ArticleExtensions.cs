@@ -40,6 +40,7 @@ public static class ArticleExtensions
         Name = articleResponse.Name,
         Quantity = articleResponse.Quantity,
         StorageLocation = articleResponse.StorageLocation.ToStorageLocationModel(),
-        ImageUrl = articleResponse.ImageUrl
+        ImageUrl = articleResponse.ImageUrl,
+        Nutriments = articleResponse.Nutriments?.ToNutrimentModels()
     };
 }

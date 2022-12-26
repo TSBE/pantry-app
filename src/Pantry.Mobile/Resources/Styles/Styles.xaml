@@ -140,6 +140,15 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource CardBackgroundDark}, Light={StaticResource CardBackground}}" />
     </Style>
 
+    <Style x:Key="NutrimentCard" TargetType="Border">
+        <!--<Setter Property="Shadow.Brush" Value="{AppThemeBinding Dark={StaticResource CardBackground}, Light={StaticResource CardBackgroundDark}}" />-->
+        <Setter Property="Shadow.Offset" Value="10,10" />
+        <Setter Property="Shadow.Opacity" Value=".8" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <!--<Setter Property="StrokeShape" Value="RoundRectangle 10" />-->
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource CardBackgroundDark}, Light={StaticResource CardBackground}}" />
+    </Style>
+
     <Style x:Key="StorageCard" TargetType="Border">
         <Setter Property="Shadow.Brush" Value="{AppThemeBinding Dark={StaticResource CardBackground}, Light={StaticResource CardBackgroundDark}}" />
         <Setter Property="Shadow.Offset" Value="10,10" />

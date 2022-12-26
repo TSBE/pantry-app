@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid
+    x:Class="Pantry.Mobile.Cells.NutrimentCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    x:DataType="models:NutrimentModel">
+    <Border Style="{x:StaticResource NutrimentCard}">
+        <Grid ColumnDefinitions="*,Auto" Margin="20,0">
+            <Label
+                Grid.Column="0"
+                Style="{x:StaticResource LabelMedium}"
+                Text="{Binding Name}"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Column="1"
+                Style="{x:StaticResource LabelSmall}"
+                HorizontalOptions="EndAndExpand"
+                HorizontalTextAlignment="End"
+                Text="{Binding ValueFor100gWithUnit}"
+                VerticalOptions="Center" />
+        </Grid>
+    </Border>
+</Grid>

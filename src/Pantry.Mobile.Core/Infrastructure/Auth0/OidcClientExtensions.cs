@@ -14,12 +14,12 @@ public static class OidcClientExtensions
             AccessTokenExpiration = loginResult.AccessTokenExpiration
         };
 
-    public static Credentials ToCredentials(this RefreshTokenResult refreshTokenResult)
+    public static Credentials ToCredentials(this RefreshTokenResult refreshTokenResult, string refreshToken)
         => new()
         {
             AccessToken = refreshTokenResult.AccessToken,
             IdentityToken = refreshTokenResult.IdentityToken,
-            RefreshToken = refreshTokenResult.RefreshToken,
+            RefreshToken = !string.IsNullOrWhiteSpace(refreshTokenResult.RefreshToken) ? refreshTokenResult.RefreshToken : refreshToken,
             AccessTokenExpiration = refreshTokenResult.AccessTokenExpiration
         };
 }

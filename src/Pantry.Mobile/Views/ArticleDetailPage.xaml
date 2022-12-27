@@ -17,6 +17,7 @@
         <ResourceDictionary>
             <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
@@ -56,6 +57,7 @@
                 Style="{StaticResource PrimaryButton}"
                 Text="Back" />
             <CollectionView
+                IsVisible="{Binding Article.Nutriments, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
                 BackgroundColor="Transparent"
                 Header="{Binding .}"
                 ItemSizingStrategy="MeasureAllItems"

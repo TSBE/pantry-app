@@ -63,7 +63,7 @@ public class Auth0Client : IAuth0Client
         try
         {
             var refreshTokenResult = await oidcClient.RefreshTokenAsync(refreshToken, cancellationToken: cancellationToken);
-            return refreshTokenResult.ToCredentials();
+            return refreshTokenResult.ToCredentials(refreshToken);
         }
         catch (Exception ex)
         {

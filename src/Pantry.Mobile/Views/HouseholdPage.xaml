@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.HouseholdPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    Title="Household"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:HouseholdViewModel"
+    Shell.NavBarIsVisible="true">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10" RowDefinitions="*,auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Grid IsVisible="{Binding IsJoinVisible, Converter={StaticResource InvertedBoolConverter}}" RowDefinitions="auto,40*">
+                    <Image
+                        Grid.Row="0"
+                        Margin="0,10,0,20"
+                        Aspect="AspectFit"
+                        MaximumHeightRequest="150"
+                        MinimumHeightRequest="80"
+                        Source="family_home" />
+                </Grid>
+                <VerticalStackLayout
+                    x:Name="createStack"
+                    IsVisible="{Binding IsCreateVisible}"
+                    Spacing="10">
+                    <Entry Placeholder="Name" Text="{Binding Name}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    x:Name="joinStack"
+                    IsVisible="{Binding IsJoinVisible}"
+                    Spacing="10"
+                    VerticalOptions="FillAndExpand">
+                    <zxing:BarcodeGeneratorView
+                        Margin="3"
+                        Format="QrCode"
+                        HeightRequest="150"
+                        WidthRequest="150"
+                        Value="{Binding FriendsCode}" />
+                    <Label HorizontalOptions="Center" Text="Your Friend Code" />
+                    <ActivityIndicator
+                        HorizontalOptions="Center"
+                        IsRunning="true"
+                        IsVisible="{Binding IsPolling}" />
+                    <Label
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsPolling}"
+                        Text="Waiting for invitation" />
+                    <ListView
+                        x:Name="InvitationView"
+                        Margin="0,20,0,0"
+                        HasUnevenRows="True"
+                        ItemsSource="{Binding Invitations}"
+                        SelectionMode="None"
+                        SeparatorColor="Transparent"
+                        SeparatorVisibility="None"
+                        VerticalOptions="FillAndExpand">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:InvitationModel">
+                                <ViewCell>
+                                    <VerticalStackLayout VerticalOptions="FillAndExpand">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding HouseholdName, StringFormat='Household: {0}'}"
+                                            VerticalOptions="FillAndExpand" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="20"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding CreatorName, StringFormat='Owner: {0}'}"
+                                            VerticalOptions="FillAndExpand" />
+                                        <Grid
+                                            Margin="0,5"
+                                            ColumnDefinitions="*,*"
+                                            ColumnSpacing="5"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="FillAndExpand">
+                                            <Button
+                                                x:Name="DeclineInvitation2Btn"
+                                                Grid.Column="0"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=DeclineInvitationCommand}"
+                                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                                HorizontalOptions="Fill"
+                                                Style="{StaticResource DeclineButton}"
+                                                Text="Decline"
+                                                VerticalOptions="FillAndExpand" />
+                                            <Button
+                                                x:Name="AcceptInvitation2Btn"
+                                                Grid.Column="1"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=AcceptInvitationCommand}"
+                                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                                HorizontalOptions="Fill"
+                                                Style="{StaticResource AcceptButton}"
+                                                Text="Accept"
+                                                VerticalOptions="FillAndExpand" />
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="20">
+            <Label
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                Style="{StaticResource LabelErrorMessage}"
+                Text="{Binding ErrorMessage}" />
+            <Button
+                x:Name="CreateHouseholdBtn"
+                Command="{Binding CreateHouseholdCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsCreateVisible}"
+                SemanticProperties.Hint="Create household"
+                Style="{StaticResource PrimaryButton}"
+                Text="Create" />
+            <Button
+                Command="{Binding ToggleCreateCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsJoinVisible, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource SecondaryButton}"
+                Text="{Binding ToggleCreateText}" />
+            <Button
+                Command="{Binding ToggleJoinCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsCreateVisible, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource SecondaryButton}"
+                Text="{Binding ToggleJoinText}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

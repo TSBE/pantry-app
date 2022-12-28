@@ -1,0 +1,54 @@
+name: pull request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  workflow_dispatch:
+
+env:
+  DOTNETVERSION: 7.0.x
+  PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
+  TEST_PROJECT_PATH: "tests/Pantry.Mobile.Tests.Core/Pantry.Mobile.Tests.Core.csproj"
+
+jobs:
+  maui-build:
+    runs-on: windows-2022
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET SDK ${{env.DOTNETVERSION}}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "${{env.DOTNETVERSION}}"
+
+      - name: Install .NET MAUI
+        shell: pwsh
+        run: dotnet workload install maui-android maui-ios --source https://api.nuget.org/v3/index.json
+
+      - name: Restore NuGet packages
+        shell: pwsh
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - name: Build
+        shell: pwsh
+        run: dotnet build ${{ env.PROJECT_PATH }}
+
+      - name: Build and Run UnitTests
+        shell: pwsh
+        run: |
+          dotnet build ${{ env.TEST_PROJECT_PATH }}
+          dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal --logger trx
+
+      - name: Publish tests report
+        uses: dorny/test-reporter@v1.6.0
+        if: success() || failure()
+        with:
+          name: .NET Tests
+          path: "**/*.trx"
+          reporter: dotnet-trx

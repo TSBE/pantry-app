@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid
+    x:Class="Pantry.Mobile.Cells.ArticleCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    x:DataType="models:ArticleModel">
+    <Border Style="{x:StaticResource ArticleCard}">
+        <HorizontalStackLayout Margin="10,15" Spacing="5">
+            <Image
+                Margin="0,0"
+                MaximumHeightRequest="60"
+                Source="{Binding ImageUrl, TargetNullValue='groceries'}"
+                WidthRequest="60" />
+            <VerticalStackLayout Margin="15,0" VerticalOptions="Center">
+                <Label
+                    Style="{x:StaticResource LabelMedium}"
+                    Text="{Binding Name}"
+                    VerticalOptions="Center" />
+                <Label
+                    Style="{x:StaticResource LabelSmall}"
+                    Text="{Binding BestBeforeDate, StringFormat='{0:dd. MMMM yyyy}'}"
+                    VerticalOptions="Center" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </Border>
+</Grid>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.ArticleDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cells="clr-namespace:Pantry.Mobile.Cells"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Article info"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:ArticleDetailViewModel"
+    Shell.PresentationMode="ModalAnimated"
+    Shell.TabBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Padding="0,20" VerticalOptions="Fill">
+            <Image
+                Margin="0,30"
+                HeightRequest="150"
+                Source="{Binding Article.ImageUrl, TargetNullValue='groceries'}" />
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                Scale="2"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+            <Label Style="{StaticResource LabelMedium}" Text="Name:" />
+            <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.Name}" />
+            <Label Style="{StaticResource LabelMedium}" Text="Quantity:" />
+            <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.Quantity}" />
+            <Label Style="{StaticResource LabelMedium}" Text="Content:" />
+            <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.Content}" />
+            <Label Style="{StaticResource LabelMedium}" Text="Storage Location:" />
+            <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.StorageLocation.Name}" />
+            <Label Style="{StaticResource LabelMedium}" Text="Best before date:" />
+            <Label Style="{StaticResource LabelMedium}" Text="{Binding Article.BestBeforeDate, StringFormat='{0:dd. MMMM yyyy}'}" />
+
+            <Label
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                Style="{StaticResource LabelErrorMessage}"
+                Text="{Binding ErrorMessage}" />
+
+            <Button
+                Margin="0,20"
+                Padding="20,0"
+                Command="{Binding BackCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource PrimaryButton}"
+                Text="Back" />
+            <CollectionView
+                IsVisible="{Binding Article.Nutriments, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
+                BackgroundColor="Transparent"
+                Header="{Binding .}"
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsLayout="VerticalList"
+                ItemsSource="{Binding Article.Nutriments}"
+                SelectionMode="None">
+                <CollectionView.HeaderTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Label Style="{StaticResource LabelMedium}" Text="Nutriments" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.HeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <cells:NutrimentCard Margin="{OnPlatform '0,5', Android='0,0'}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

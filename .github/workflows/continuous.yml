@@ -1,0 +1,168 @@
+name: continuous
+
+on:
+  push:
+    branches: [main, develop]
+#  pull_request:
+#    types: [opened, synchronize, reopened]
+
+  workflow_dispatch:
+
+env:
+  DOTNETVERSION: 7.0.x
+  PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
+
+jobs:
+  # ***************************** #
+  # >>>>>>> Android build <<<<<<< #
+  # ***************************** #
+  maui-android:
+    runs-on: windows-2022
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET SDK ${{env.DOTNETVERSION}}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "${{env.DOTNETVERSION}}"
+
+      - name: Install .NET MAUI
+        shell: pwsh
+        run: dotnet workload install maui --source https://api.nuget.org/v3/index.json
+
+      # Store Android Signing Keystore and password in Secrets using base64 encoding
+      - name: Extract Android signing key from env
+        shell: pwsh
+        run: |
+          echo "${{ secrets.RELEASE_KEYSTORE }}" > release.keystore.base64
+          certutil -decode release.keystore.base64 release.keystore
+
+      - name: Restore NuGet packages
+        shell: pwsh
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      # https://docs.microsoft.com/en-us/dotnet/maui/android/deployment/overview
+      - name: Build Android App
+        env:
+          NEW_VERSION: ${{ github.run_number }}
+        shell: pwsh
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-android --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:AndroidSigningKeyStore=$PWD\release.keystore /p:AndroidSigningStorePass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyPass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyAlias=appcenter
+
+      # - name: Build and Run UnitTests
+      # shell: pwsh
+      # run: |
+      # dotnet build <path to unit test csproj>
+      # dotnet test <path to unit test csproj> --no-build --verbosity normal
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-android
+          path: app/publish/com.vorash.pantry-Signed.apk
+          retention-days: 5
+
+      - name: App Center Distribute
+        uses: Coxxs/AppCenter-Github-Action@v1
+        with:
+          appName: pantry-app/pantry-app-android
+          token: ${{secrets.APP_CENTER_TOKEN_ANDROID}}
+          group: Public
+          file: app/publish/com.vorash.pantry-Signed.apk
+          notifyTesters: false
+
+  # ************************* #
+  # >>>>>>> iOS Build <<<<<<< #
+  # ************************* #
+  maui-ios:
+    runs-on: macos-12
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET SDK ${{env.DOTNETVERSION}}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "${{env.DOTNETVERSION}}"
+
+      - name: Install .NET MAUI
+        shell: bash
+        run: |
+          dotnet nuget locals all --clear 
+          dotnet workload install maui --source https://api.nuget.org/v3/index.json
+
+      # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
+      - name: Install the Apple certificate and provisioning profile
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+      - name: Restore NuGet packages
+        shell: bash
+        run: dotnet restore ${{ env.PROJECT_PATH }} --runtime ios-arm64
+
+      # https://docs.microsoft.com/en-us/dotnet/maui/ios/deployment/overview
+      - name: Build MAUI iOS project
+        env:
+          NEW_VERSION: ${{ github.run_number }}
+        shell: bash
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net7.0-ios --no-restore /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:packageApp=false
+
+      - name: Publish MAUI iOS project
+        env:
+          NEW_VERSION: ${{ github.run_number }}
+        shell: bash
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-ios --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:ArchiveOnBuild=false /p:packageApp=true
+
+      # - name: Build and Run UnitTests
+      #   shell: bash
+      #   run: |
+      #     dotnet build <path to unit test csproj>
+      #     dotnet test <path to unit test csproj> --no-build --verbosity normal
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: artifacts-ios
+          path: app/publish/Pantry.Mobile.ipa
+          retention-days: 5
+
+      - name: App Center Distribute
+        uses: Coxxs/AppCenter-Github-Action@v1
+        with:
+          appName: pantry-app/pantry-app-ios
+          token: ${{secrets.APP_CENTER_TOKEN_IOS}}
+          group: Public
+          file: app/publish/Pantry.Mobile.ipa
+          notifyTesters: false

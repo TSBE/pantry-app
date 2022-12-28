@@ -1,15 +1,53 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    x:Class="Pantry.AppShell"
+    x:Class="Pantry.Mobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Pantry"
+    xmlns:local="clr-namespace:Pantry.Mobile"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:view="clr-namespace:Pantry.Mobile.Views"
     Shell.FlyoutBehavior="Disabled">
+    <Page.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Green}" StatusBarStyle="LightContent" />
+    </Page.Behaviors>
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellItem Route="LoadingPage">
+        <ShellContent ContentTemplate="{DataTemplate view:LoadingPage}" SemanticProperties.Description="Loading page" />
+    </ShellItem>
 
+    <ShellItem Route="OnboardingPage">
+        <ShellContent ContentTemplate="{DataTemplate view:OnboardingPage}" SemanticProperties.Description="Onboarding page" />
+    </ShellItem>
+
+    <ShellItem Route="CreateAccountPage">
+        <ShellContent ContentTemplate="{DataTemplate view:CreateAccountPage}" SemanticProperties.Description="Create account page" />
+    </ShellItem>
+
+    <ShellItem Route="HouseholdPage">
+        <ShellContent ContentTemplate="{DataTemplate view:HouseholdPage}" SemanticProperties.Description="Household page" />
+    </ShellItem>
+
+    <ShellItem Route="LoginPage">
+        <ShellContent ContentTemplate="{DataTemplate view:LoginPage}" SemanticProperties.Description="Login page" />
+    </ShellItem>
+
+    <TabBar Route="TabBarPage">
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate view:MainPage}"
+            Icon="home"
+            SemanticProperties.Description="Main page" />
+
+        <ShellContent
+            Title="Storage"
+            ContentTemplate="{DataTemplate view:StorageLocationPage}"
+            Icon="tab_location"
+            SemanticProperties.Description="Storage location page" />
+
+        <ShellContent
+            Title="Settings"
+            ContentTemplate="{DataTemplate view:SettingsPage}"
+            Icon="settings"
+            SemanticProperties.Description="Settings page" />
+    </TabBar>
 </Shell>
-

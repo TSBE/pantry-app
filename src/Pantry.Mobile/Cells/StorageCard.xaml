@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid
+    x:Class="Pantry.Mobile.Cells.StorageCard"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    x:DataType="models:StorageLocationModel">
+    <Border Style="{x:StaticResource StorageCard}">
+        <HorizontalStackLayout Margin="10,15" Spacing="5">
+            <Image
+                Margin="0,0"
+                MaximumHeightRequest="60"
+                Source="location"
+                WidthRequest="50" />
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label
+                    Style="{x:StaticResource LabelMedium}"
+                    Text="{Binding Name}"
+                    VerticalOptions="Center" />
+                <Label
+                    Style="{x:StaticResource LabelSmall}"
+                    Text="{Binding Description}"
+                    VerticalOptions="Center" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </Border>
+</Grid>

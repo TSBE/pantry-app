@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Login"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:LoginViewModel"
+    Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="10" RowDefinitions="*,Auto">
+        <VerticalStackLayout
+            Grid.Row="0"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <Grid RowDefinitions="auto,40*">
+                <Image
+                    Grid.Row="0"
+                    Margin="0,50,0,50"
+                    Aspect="AspectFit"
+                    MaximumHeightRequest="220"
+                    MinimumHeightRequest="100"
+                    Source="user" />
+
+                <VerticalStackLayout Grid.Row="1" Spacing="10">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="28"
+                        Text="It's that simple" />
+                    <Label
+                        FontSize="20"
+                        Text="Log in with your existing account or create a new one to get started right away."
+                        TextColor="Gray" />
+                </VerticalStackLayout>
+            </Grid>
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Spacing="20">
+            <Label
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                Style="{StaticResource LabelErrorMessage}"
+                Text="{Binding ErrorMessage}" />
+            <Button
+                x:Name="LoginBtn"
+                Command="{Binding LoginCommand}"
+                HorizontalOptions="FillAndExpand"
+                SemanticProperties.Hint="Login"
+                Style="{StaticResource PrimaryButton}"
+                Text="Log in" />
+            <Button
+                x:Name="SignupBtn"
+                Command="{Binding SignupCommand}"
+                HorizontalOptions="FillAndExpand"
+                SemanticProperties.Hint="Signup"
+                Style="{StaticResource SecondaryButton}"
+                Text="Sign up" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

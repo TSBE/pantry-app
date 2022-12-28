@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pantry.Mobile.Views.OnboardingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
+    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    Title="Onboarding Page"
+    ios:Page.UseSafeArea="true"
+    x:DataType="vm:OnboardingViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <Grid Margin="10" RowDefinitions="*,Auto">
+        <CarouselView
+            Grid.Row="0"
+            HorizontalOptions="FillAndExpand"
+            IndicatorView="indicatorView"
+            ItemsSource="{Binding IntroScreens}"
+            Loop="False"
+            Position="{Binding Position}"
+            PositionChangedCommand="{Binding PositionChangedCommand}"
+            PositionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=Position}"
+            VerticalOptions="FillAndExpand">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="models:IntroScreenModel">
+                    <Grid RowDefinitions="auto,40*">
+                        <Image
+                            Grid.Row="0"
+                            Margin="0,50,0,50"
+                            Aspect="AspectFit"
+                            MaximumHeightRequest="220"
+                            MinimumHeightRequest="100"
+                            Source="{Binding Image}" />
+                        <VerticalStackLayout Grid.Row="1" Spacing="10">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="28"
+                                Text="{Binding Title}" />
+                            <Label
+                                FontSize="20"
+                                Text="{Binding Description}"
+                                TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+        <StackLayout
+            Grid.Row="1"
+            Padding="20,0"
+            Orientation="Horizontal">
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <IndicatorView
+                    x:Name="indicatorView"
+                    HorizontalOptions="StartAndExpand"
+                    IndicatorColor="LightGray"
+                    IndicatorSize="10"
+                    SelectedIndicatorColor="{x:StaticResource Primary}"
+                    VerticalOptions="Center" />
+            </Frame>
+            <Button
+                x:Name="NextBtn"
+                Command="{Binding NextCommand}"
+                HorizontalOptions="EndAndExpand"
+                MinimumWidthRequest="80"
+                SemanticProperties.Hint="Next page"
+                Style="{StaticResource PrimaryButton}"
+                Text="{Binding ButtonText}" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

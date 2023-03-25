@@ -5,13 +5,13 @@ using Pantry.Mobile.Core.Infrastructure;
 
 namespace Pantry.Mobile;
 
-[Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTop, Exported = true)]
+[Activity(NoHistory = true, LaunchMode = LaunchMode.SingleTask, Exported = true)]
 [IntentFilter(new[] { Android.Content.Intent.ActionView },
               Categories = new[] {
                 Android.Content.Intent.CategoryDefault,
                 Android.Content.Intent.CategoryBrowsable
               },
               DataScheme = AppConstants.AUTH0_CALLBACK_SCHEME)]
-public class WebAuthenticationCallbackActivity : Microsoft.Maui.Authentication.WebAuthenticatorCallbackActivity
+public class WebAuthenticationCallbackActivity : Pantry.Mobile.WebAuthenticator.WebAuthenticatorCallbackActivity
 {
 }

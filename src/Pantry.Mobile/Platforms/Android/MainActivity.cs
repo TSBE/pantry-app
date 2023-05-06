@@ -7,4 +7,3 @@ namespace Pantry.Mobile;
 public class MainActivity : MauiAppCompatActivity
 {
 }
-

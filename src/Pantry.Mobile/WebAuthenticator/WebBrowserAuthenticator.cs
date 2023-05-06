@@ -1,7 +1,7 @@
 ﻿using IdentityModel.Client;
 using IdentityModel.OidcClient.Browser;
 
-namespace Pantry.Mobile.Core.Infrastructure.Auth0;
+namespace Pantry.Mobile.WebAuthenticator;
 
 public class WebBrowserAuthenticator : IdentityModel.OidcClient.Browser.IBrowser
 {

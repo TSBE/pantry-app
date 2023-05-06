@@ -12,5 +12,5 @@ public class Auth0ClientOptions
 
     public string Scope { get; set; } = AppConstants.AUTH0_SCOPES;
 
-    public IdentityModel.OidcClient.Browser.IBrowser Browser { get; set; } = new WebBrowserAuthenticator();
+    public IdentityModel.OidcClient.Browser.IBrowser Browser { get; set; }
 }

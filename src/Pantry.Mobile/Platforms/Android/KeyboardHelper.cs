@@ -5,9 +5,9 @@ using Pantry.Mobile.Core.Infrastructure.Abstractions;
 
 namespace Pantry.Mobile;
 
-public class DroidKeyboardHelper : IKeyboardHelper
+public class KeyboardHelper : IKeyboardHelper
 {
-    public DroidKeyboardHelper()
+    public KeyboardHelper()
     {
     }
 

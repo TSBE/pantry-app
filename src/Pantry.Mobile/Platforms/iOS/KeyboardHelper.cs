@@ -1,4 +1,5 @@
-﻿using Pantry.Mobile.Core.Infrastructure.Abstractions;
+﻿
+using Pantry.Mobile.Core.Infrastructure.Abstractions;
 
 namespace Pantry.Mobile;
 

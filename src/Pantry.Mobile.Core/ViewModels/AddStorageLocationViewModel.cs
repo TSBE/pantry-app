@@ -37,8 +37,8 @@ public partial class AddStorageLocationViewModel : BaseViewModel
     {
         ErrorMessage = string.Empty;
 
-        if (string.IsNullOrWhiteSpace(name) ||
-            string.IsNullOrWhiteSpace(description))
+        if (string.IsNullOrWhiteSpace(Name) ||
+            string.IsNullOrWhiteSpace(Description))
         {
             return;
         }

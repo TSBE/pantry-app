@@ -2,8 +2,7 @@
 
 namespace Pantry.Mobile.Core.Models;
 
-[INotifyPropertyChanged]
-public partial class AccountModel
+public partial class AccountModel : ObservableObject
 {
     /// <summary>
     /// The users first name.

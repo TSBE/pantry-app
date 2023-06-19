@@ -3,8 +3,7 @@ using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Enums;
 
 namespace Pantry.Mobile.Core.Models;
 
-[INotifyPropertyChanged]
-public partial class HouseholdModel
+public partial class HouseholdModel : ObservableObject
 {
     /// <summary>
     /// The name of the household.

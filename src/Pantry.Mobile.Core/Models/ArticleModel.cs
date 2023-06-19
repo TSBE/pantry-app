@@ -5,8 +5,7 @@ using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 
 namespace Pantry.Mobile.Core.Models;
 
-[INotifyPropertyChanged]
-public partial class ArticleModel
+public partial class ArticleModel : ObservableObject
 {
     /// <summary>
     /// Represents the database internal id.

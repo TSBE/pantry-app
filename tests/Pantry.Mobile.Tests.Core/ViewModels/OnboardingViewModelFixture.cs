@@ -62,7 +62,7 @@ public class OnboardingViewModelFixture
         var navigation = Substitute.For<INavigationService>();
         var settingsService = Substitute.For<ISettingsService>();
         var vm = new OnboardingViewModel(navigation, settingsService);
-        vm.Position = vm.introScreens.Count - 1;
+        vm.Position = vm.IntroScreens.Count - 1;
 
         // Act
         vm.NextCommand.Execute(null);
@@ -81,7 +81,7 @@ public class OnboardingViewModelFixture
         var vm = new OnboardingViewModel(navigation, settingsService);
 
         // Act
-        vm.PositionChangedCommand.Execute(vm.introScreens.Count - 1);
+        vm.PositionChangedCommand.Execute(vm.IntroScreens.Count - 1);
 
         // Assert
         vm.ButtonText.Should().Be("Start");

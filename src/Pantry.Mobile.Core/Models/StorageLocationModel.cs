@@ -2,8 +2,7 @@
 
 namespace Pantry.Mobile.Core.Models;
 
-[INotifyPropertyChanged]
-public partial class StorageLocationModel
+public partial class StorageLocationModel : ObservableObject
 {
     /// <summary>
     /// Represents the database internal id.

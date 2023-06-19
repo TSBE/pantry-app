@@ -2,8 +2,7 @@
 
 namespace Pantry.Mobile.Core.ViewModels
 {
-    [INotifyPropertyChanged]
-    public abstract partial class BaseViewModel
+    public abstract partial class BaseViewModel : ObservableObject
     {
         [ObservableProperty]
         private bool isBusy = false;

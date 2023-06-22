@@ -9,6 +9,8 @@
     ":prConcurrentLimit20",
     ":preserveSemverRanges"
   ],
+  "reviewersFromCodeOwners": true,
+  "assigneesFromCodeOwners": true,
   "rebaseWhen": "behind-base-branch",
   "labels": [
     "Renovate :wrench:"

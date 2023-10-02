@@ -59,8 +59,8 @@
       <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
       <PackageReference Include="IdentityModel.OidcClient" Version="5.2.1" />
-      <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.2" />
-      <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.2" />
+      <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
+      <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.3.0-preview.1" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.3.0-preview.1" />

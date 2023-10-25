@@ -4,20 +4,28 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
-    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:zxingc="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui;assembly=ZXing.Net.MAUI"
     x:Name="scannerPage"
+    x:DataType="vm:ScannerViewModel"
     Title="Scanner"
     ios:Page.UseSafeArea="true"
     Shell.PresentationMode="Animated"
     Shell.TabBarIsVisible="False">
 
-    <zxing:CameraBarcodeReaderView
-        x:Name="cameraBarcodeReaderView"
-        BarcodesDetected="BarcodesDetected"
-        BindingContext="{x:Reference Name=scannerPage}"
+    <zxingc:CameraBarcodeReaderView
         HorizontalOptions="FillAndExpand"
         IsDetecting="{Binding IsDetecting}"
-        VerticalOptions="FillAndExpand" />
+        Options="{Binding BarcodeReaderOptions}"
+        IsTorchOn="{Binding IsTorchOn}"
+        VerticalOptions="FillAndExpand">
+            <zxingc:CameraBarcodeReaderView.Behaviors>
+                <toolkit:EventToCommandBehavior
+                    x:TypeArguments="zxing:BarcodeDetectionEventArgs"
+                    EventName="BarcodesDetected"
+                    Command="{Binding BarcodesDetectedCommand}" />
+            </zxingc:CameraBarcodeReaderView.Behaviors>
+        </zxingc:CameraBarcodeReaderView>
 </ContentPage>

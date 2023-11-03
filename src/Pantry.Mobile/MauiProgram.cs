@@ -69,6 +69,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<CreateAccountViewModel>();
         builder.Services.AddSingleton<HouseholdViewModel>();
         builder.Services.AddSingleton<StorageLocationViewModel>();
+        builder.Services.AddTransient<ScannerViewModel>();
         builder.Services.AddTransient<AddStorageLocationViewModel>();
         builder.Services.AddTransient<AddArticleViewModel>();
         builder.Services.AddTransient<ArticleDetailViewModel>();

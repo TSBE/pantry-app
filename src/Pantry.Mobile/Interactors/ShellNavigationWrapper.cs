@@ -33,13 +33,13 @@ public class ShellNavigationWrapper : INavigationService
         }
 
         var loginCredentials = await _settingsService.GetCredentials();
-        if (loginCredentials is not null && loginCredentials.IsExpired && !loginCredentials.HasError)
+        if (loginCredentials is { IsExpired: true, HasError: false })
         {
             loginCredentials = await _auth0Client.RefreshToken(loginCredentials.RefreshToken, cancellationToken);
             await _settingsService.SetCredentials(loginCredentials);
         }
 
-        if (loginCredentials is null || loginCredentials.HasError || loginCredentials.IsExpired)
+        if (loginCredentials.HasError || loginCredentials.IsExpired)
         {
             targetPage = $"//{PageConstants.LOGIN_PAGE}";
             return targetPage;

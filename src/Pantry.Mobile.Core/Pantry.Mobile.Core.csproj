@@ -1,18 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-   <PropertyGroup>
-      <TargetFramework>net7.0</TargetFramework>
-      <UseMaui>true</UseMaui>
-      <ImplicitUsings>enable</ImplicitUsings>
-      <Nullable>enable</Nullable>
-   </PropertyGroup>
-   <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.0" />
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-      <PackageReference Include="IdentityModel.OidcClient" Version="5.2.1" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-      <PackageReference Include="Polly" Version="8.2.0" />
-      <PackageReference Include="Refit" Version="7.0.0" />
-      <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
-   </ItemGroup>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<UseMaui>true</UseMaui>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui.Core" Version="7.0.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+		<PackageReference Include="IdentityModel.OidcClient" Version="5.2.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Polly" Version="8.2.0" />
+		<PackageReference Include="Refit" Version="7.0.0" />
+		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
+		<PackageReference Include="BarcodeScanner.Mobile.Maui" Version="7.0.0.1-pre" />
+	</ItemGroup>
 </Project>

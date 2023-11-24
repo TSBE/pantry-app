@@ -8,6 +8,7 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:zxingc="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
     xmlns:zxing="clr-namespace:ZXing.Net.Maui;assembly=ZXing.Net.MAUI"
+    xmlns:gv="clr-namespace:BarcodeScanner.Mobile;assembly=BarcodeScanner.Mobile.Maui"
     x:Name="scannerPage"
     x:DataType="vm:ScannerViewModel"
     Title="Scanner"
@@ -15,7 +16,7 @@
     Shell.PresentationMode="Animated"
     Shell.TabBarIsVisible="False">
 
-    <zxingc:CameraBarcodeReaderView
+    <!--<zxingc:CameraBarcodeReaderView
         HorizontalOptions="FillAndExpand"
         IsDetecting="{Binding IsDetecting}"
         Options="{Binding BarcodeReaderOptions}"
@@ -27,5 +28,13 @@
                     EventName="BarcodesDetected"
                     Command="{Binding BarcodesDetectedCommand}" />
             </zxingc:CameraBarcodeReaderView.Behaviors>
-        </zxingc:CameraBarcodeReaderView>
+        </zxingc:CameraBarcodeReaderView>-->
+
+       <gv:CameraView HorizontalOptions="FillAndExpand"
+                      VerticalOptions="FillAndExpand"
+                      OnDetectedCommand="{Binding DetectedCommand}"
+                      TorchOn="{Binding IsTorchOn}"
+                      IsScanning="{Binding IsDetecting}"
+                      VibrationOnDetected="False"
+                      ScanInterval="100"/>
 </ContentPage>

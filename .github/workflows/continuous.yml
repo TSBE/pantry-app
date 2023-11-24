@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNETVERSION: 7.0.x
+  DOTNETVERSION: 8.0.x
   PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
 
 jobs:
@@ -51,7 +51,7 @@ jobs:
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: pwsh
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-android --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:AndroidSigningKeyStore=$PWD\release.keystore /p:AndroidSigningStorePass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyPass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyAlias=appcenter
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net8.0-android --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:AndroidSigningKeyStore=$PWD\release.keystore /p:AndroidSigningStorePass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyPass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyAlias=appcenter
 
       # - name: Build and Run UnitTests
       # shell: pwsh
@@ -138,13 +138,13 @@ jobs:
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: bash
-        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net7.0-ios --no-restore /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:packageApp=false
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net8.0-ios --no-restore /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:packageApp=false
 
       - name: Publish MAUI iOS project
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: bash
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net7.0-ios --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:ArchiveOnBuild=false /p:packageApp=true
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net8.0-ios --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:ArchiveOnBuild=false /p:packageApp=true
 
       # - name: Build and Run UnitTests
       #   shell: bash

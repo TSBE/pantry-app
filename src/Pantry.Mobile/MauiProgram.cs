@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui;
+﻿using BarcodeScanner.Mobile;
+using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
 using Pantry.Mobile.Core.Infrastructure;
@@ -30,6 +31,11 @@ public static class MauiProgram
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();
+            })
+            .ConfigureMauiHandlers(handlers =>
+            {
+                // Add the handlers
+                handlers.AddBarcodeScannerHandler();
             });
 
 #if DEBUG

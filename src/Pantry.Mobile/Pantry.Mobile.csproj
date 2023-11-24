@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
-      <TargetFrameworks>net7.0-android;net7.0-ios</TargetFrameworks>
+      <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+      <!-- <MauiVersion>8.0.3</MauiVersion> -->
       <OutputType>Exe</OutputType>
       <UseMaui>true</UseMaui>
       <SingleProject>true</SingleProject>
@@ -56,6 +57,8 @@
       <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
    </ItemGroup>
    <ItemGroup>
+      <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
       <PackageReference Include="CommunityToolkit.Maui" Version="7.0.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
       <PackageReference Include="IdentityModel.OidcClient" Version="5.2.1" />
@@ -64,6 +67,7 @@
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="7.0.0.1-pre" />
    </ItemGroup>
    <ItemGroup>
       <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />

@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNETVERSION: 7.0.x
+  DOTNETVERSION: 8.0.x
   PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
   TEST_PROJECT_PATH: "tests/Pantry.Mobile.Tests.Core/Pantry.Mobile.Tests.Core.csproj"
 

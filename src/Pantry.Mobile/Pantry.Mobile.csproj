@@ -5,6 +5,7 @@
       <!-- <MauiVersion>8.0.3</MauiVersion> -->
       <OutputType>Exe</OutputType>
       <UseMaui>true</UseMaui>
+      <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
       <SingleProject>true</SingleProject>
       <ImplicitUsings>enable</ImplicitUsings>
       <Nullable>enable</Nullable>
@@ -68,6 +69,13 @@
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
       <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.0.1" />
+   </ItemGroup>
+   <!-- Have to include this package here otherwise build will be failed -->
+   <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+      <PackageReference Include="Xamarin.Google.MLKit.BarcodeScanning" Version="117.2.0.3" />
+      <!-- https://github.com/JimmyPun610/BarcodeScanner.Mobile/issues/218 -->
+      <PackageReference Include="Xamarin.AndroidX.Collection" Version="1.3.0.2" />
+      <PackageReference Include="Xamarin.AndroidX.Preference" Version="1.2.1.3" />
    </ItemGroup>
    <ItemGroup>
       <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />

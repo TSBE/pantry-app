@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
       <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
-      <!-- <MauiVersion>8.0.3</MauiVersion> -->
+      <MauiVersion>8.0.14</MauiVersion>
       <OutputType>Exe</OutputType>
       <UseMaui>true</UseMaui>
       <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>

@@ -65,9 +65,9 @@
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
       <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.21" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
-      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.0.1" />
    </ItemGroup>
    <!-- Have to include this package here otherwise build will be failed -->
    <ItemGroup Condition="$(TargetFramework.Contains('-android'))">

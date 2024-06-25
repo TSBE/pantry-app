@@ -65,7 +65,7 @@
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.5" />
       <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40" />
+      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40.1" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
    </ItemGroup>

@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
       <TargetFrameworks>net8.0-android;net8.0-ios</TargetFrameworks>
+      <RuntimeIdentifier Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">ios-arm64</RuntimeIdentifier>
       <OutputType>Exe</OutputType>
       <UseMaui>true</UseMaui>
       <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
@@ -32,7 +33,6 @@
       <AndroidKeyStore>False</AndroidKeyStore>
    </PropertyGroup>
    <PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
-      <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
       <CreatePackage>false</CreatePackage>
       <CodesignProvision>Automatic</CodesignProvision>
       <CodesignKey>iPhone Distribution</CodesignKey>
@@ -65,16 +65,11 @@
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.5" />
       <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.5" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40" />
+      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40.1" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
-   </ItemGroup>
-   <!-- Have to include this package here otherwise build will be failed -->
-   <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
-      <PackageReference Include="Xamarin.Google.MLKit.BarcodeScanning" Version="117.2.0.5" />
-      <!-- https://github.com/JimmyPun610/BarcodeScanner.Mobile/issues/218 -->
-      <PackageReference Include="Xamarin.AndroidX.Collection" Version="1.3.0.2" />
-      <PackageReference Include="Xamarin.AndroidX.Preference" Version="1.2.1.3" />
+      <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.9.0.2" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+      <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.0.2" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
    </ItemGroup>
    <ItemGroup>
       <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />

@@ -68,7 +68,7 @@
       <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40.1" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
-      <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.9.0.2" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
+      <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.9.0.4" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
       <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.0.2" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
    </ItemGroup>
    <ItemGroup>

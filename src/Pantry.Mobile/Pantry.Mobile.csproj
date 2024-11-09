@@ -59,7 +59,7 @@
    <ItemGroup>
       <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.93" />
       <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.93" />
-      <PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
+      <PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
       <PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />

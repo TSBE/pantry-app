@@ -1,10 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
-    ":autodetectPinVersions",
     ":prHourlyLimit4",
     ":prConcurrentLimit20",
     ":preserveSemverRanges"
@@ -17,18 +16,18 @@
   ],
   "packageRules": [
     {
-      "matchPackagePrefixes": [
-        "Microsoft.AppCenter."
-      ],
       "groupName": "AppCenter",
-      "groupSlug": "appcenter"
+      "groupSlug": "appcenter",
+      "matchPackageNames": [
+        "Microsoft.AppCenter.{/,}**"
+      ]
     },
     {
-      "matchPackagePrefixes": [
-        "CommunityToolkit."
-      ],
       "groupName": "CommunityToolkit",
-      "groupSlug": "communitytoolkit"
+      "groupSlug": "communitytoolkit",
+      "matchPackageNames": [
+        "CommunityToolkit.{/,}**"
+      ]
     }
   ],
   "ignorePaths": []

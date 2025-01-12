@@ -9,9 +9,12 @@ public class WebBrowserAuthenticator : IdentityModel.OidcClient.Browser.IBrowser
     {
         try
         {
-            WebAuthenticatorResult result = await WebAuthenticator.Default.AuthenticateAsync(
-                new Uri(options.StartUrl),
-                new Uri(options.EndUrl));
+            WebAuthenticatorResult result = await WebAuthenticator.Default.AuthenticateAsync(            new WebAuthenticatorOptions
+            {
+                CallbackUrl = new Uri(options.EndUrl),
+                Url = new Uri(options.StartUrl),
+                PrefersEphemeralWebBrowserSession = true
+            });
 
             var url = new RequestUrl(options.EndUrl)
                 .Create(new Parameters(result.Properties));

@@ -89,8 +89,8 @@ public class HouseholdViewModelFixture
         vm.ToggleCreateCommand.Execute(null);
 
         // Assert
-        vm.IsCreateVisible.Should().BeTrue();
-        vm.IsJoinVisible.Should().BeFalse();
+        vm.IsCreateVisible.ShouldBeTrue();
+        vm.IsJoinVisible.ShouldBeFalse();
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class HouseholdViewModelFixture
         vm.ToggleJoinCommand.Execute(null);
 
         // Assert
-        vm.IsJoinVisible.Should().BeTrue();
-        vm.IsCreateVisible.Should().BeFalse();
+        vm.IsJoinVisible.ShouldBeTrue();
+        vm.IsCreateVisible.ShouldBeFalse();
     }
 }

@@ -66,7 +66,7 @@
    <ItemGroup>
       <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
       <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.30" />
-      <PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
+      <PackageReference Include="CommunityToolkit.Maui" Version="11.0.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
       <PackageReference Include="IdentityModel.OidcClient" Version="6.0.0" />
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.6" />
@@ -75,10 +75,12 @@
       <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40.1" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
-      <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.9.3.1" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
-      <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.3.1" Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'" />
    </ItemGroup>
    <ItemGroup>
       <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />
+   </ItemGroup>
+   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+     <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.9.3.2" />
+     <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.9.3.2" />
    </ItemGroup>
 </Project>

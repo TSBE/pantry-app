@@ -51,7 +51,7 @@ public class OnboardingViewModelFixture
         vm.NextCommand.Execute(null);
 
         // Assert
-        vm.Position.Should().Be(1);
+        vm.Position.ShouldBe(1);
         navigation.DidNotReceive().GoToAsync(Arg.Any<string>(), Arg.Any<bool>());
     }
 
@@ -84,6 +84,6 @@ public class OnboardingViewModelFixture
         vm.PositionChangedCommand.Execute(vm.IntroScreens.Count - 1);
 
         // Assert
-        vm.ButtonText.Should().Be("Start");
+        vm.ButtonText.ShouldBe("Start");
     }
 }

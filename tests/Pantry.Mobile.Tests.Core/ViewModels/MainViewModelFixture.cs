@@ -103,9 +103,9 @@ public class MainViewModelFixture
 
         // Assert
         pantryClient.Received(1).GetAllArticlesAsync();
-        vm.FilteredArticles.Should().HaveCount(1);
-        vm.FilteredArticles.FirstOrDefault().Should().NotBeNull();
-        vm.FilteredArticles.FirstOrDefault()!.Name.Should().Be("Test");
+        vm.FilteredArticles.Count.ShouldBe(1);
+        vm.FilteredArticles.FirstOrDefault().ShouldNotBeNull();
+        vm.FilteredArticles.FirstOrDefault()!.Name.ShouldBe("Test");
     }
 
     [Fact]

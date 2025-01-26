@@ -2,11 +2,10 @@
 
 namespace Pantry.Mobile.Views;
 
-public partial class CreateAccountPage : ContentPage
+public partial class CreateAccountPage
 {
-    public CreateAccountPage(CreateAccountViewModel vm)
+    public CreateAccountPage(CreateAccountViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

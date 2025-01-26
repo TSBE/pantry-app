@@ -6,6 +6,7 @@ using Pantry.Mobile.Core.Infrastructure.Extensions;
 using Pantry.Mobile.Core.Infrastructure.Helpers;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Models;
+using ZXing.Net.Maui;
 
 namespace Pantry.Mobile.Core.ViewModels;
 
@@ -15,23 +16,25 @@ public partial class MainViewModel : BaseViewModel
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    public MainViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService)
+    private readonly IKeyboardHelper _keyboardHelper;
+
+    public MainViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IKeyboardHelper keyboardHelper)
     {
         _navigation = navigation;
         _pantryClientApiService = pantryClientApiService;
+        _keyboardHelper = keyboardHelper;
     }
 
-    private List<ArticleModel> Articles { get; set; } = new();
+    private List<ArticleModel> Articles { get; set; } = [];
 
-    public ObservableRangeCollection<Grouping<string, ArticleModel>> FilteredArticleGroups { get; set; } = new();
+    public ObservableRangeCollection<Grouping<string, ArticleModel>> FilteredArticleGroups { get; set; } = [];
 
-    public ObservableRangeCollection<ArticleModel> FilteredArticles { get; set; } = new();
+    public ObservableRangeCollection<ArticleModel> FilteredArticles { get; set; } = [];
 
-    [ObservableProperty]
-    public DateTime? filterByDate = null;
+    [ObservableProperty] private DateTime? filterByDate;
 
     [RelayCommand]
-    public async Task Init()
+    private async Task Init()
     {
         try
         {
@@ -44,39 +47,35 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public Task PerformSearch(string query)
+    private Task PerformSearch(string query)
     {
         var filteredArticles = Articles.Where(x => x.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase)).ToList();
 
-        if (filteredArticles.Any())
+        if (filteredArticles.Count != 0)
         {
             SetFilteredList(filteredArticles);
         }
 
+        _keyboardHelper.HideKeyboard();
+        
         return Task.CompletedTask;
     }
 
     [RelayCommand]
-    public async Task Delete(ArticleModel article)
+    private async Task Delete(ArticleModel article)
     {
-        if (article == null)
-            return;
-
         await _pantryClientApiService.DeleteArticleAsync(article.Id);
         await Load();
     }
 
     [RelayCommand]
-    public async Task Tap(ArticleModel article)
+    private async Task Tap(ArticleModel article)
     {
-        if (article == null)
-            return;
-
-        await _navigation.GoToAsync($"{PageConstants.ARTICLE_DETAIL_PAGE}?Id={article.Id}");
+        await _navigation.GoToAsync($"{PageConstants.ArticleDetailPage}?Id={article.Id}");
     }
 
     [RelayCommand]
-    public async Task Refresh()
+    private async Task Refresh()
     {
         try
         {
@@ -89,7 +88,7 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Load()
+    private async Task Load()
     {
         FilterByDate = null;
         var articleListResponse = await _pantryClientApiService.GetAllArticlesAsync();
@@ -99,25 +98,20 @@ public partial class MainViewModel : BaseViewModel
             return;
         }
 
-        Articles = (from item in articleListResponse?.Articles select item.ToArticleModel()).ToList();
+        Articles = (from item in articleListResponse.Articles select item.ToArticleModel()).ToList();
         SetFilteredList(Articles);
     }
 
     [RelayCommand]
-    public async Task Add()
+    private async Task Add()
     {
-        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}");
+        await _navigation.GoToAsync($"{PageConstants.ScannerPage}?BackTargetPage={PageConstants.AddArticlePage}&ActiveBarcodeFormat={BarcodeFormat.Ean13}");
     }
 
     [RelayCommand]
-    public async Task Edit(ArticleModel article)
+    private async Task Edit(ArticleModel article)
     {
-        if (article is null)
-        {
-            return;
-        }
-
-        await _navigation.GoToAsync($"{PageConstants.ADD_ARTICLE_PAGE}?Id={article.Id}");
+        await _navigation.GoToAsync($"{PageConstants.AddArticlePage}?Id={article.Id}");
     }
 
     private void SetFilteredList(IList<ArticleModel> filteredArticles)

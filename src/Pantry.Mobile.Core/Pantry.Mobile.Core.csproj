@@ -9,6 +9,7 @@
       <LangVersion>default</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
+      <PackageReference Include="BarcodeScanning.Native.Maui" Version="2.1.4" />
       <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.30" />
       <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.30" />
       <PackageReference Include="CommunityToolkit.Maui.Core" Version="11.0.0" />
@@ -17,7 +18,6 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.1" />
       <PackageReference Include="Polly" Version="8.5.1" />
       <PackageReference Include="Refit" Version="8.0.0" />
-      <PackageReference Include="BarcodeScanner.Mobile.Maui" Version="8.0.40.1" />
       <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
 	</ItemGroup>
 </Project>

@@ -16,7 +16,7 @@ public partial class AddArticleViewModel : BaseViewModel
 
     private readonly IPantryClientApiService _pantryClientApiService;
 
-    private readonly IKeyboardHelper? _keyboardHelper;
+    private readonly IKeyboardHelper _keyboardHelper;
 
     public AddArticleViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService, IKeyboardHelper keyboardHelper)
     {
@@ -25,22 +25,18 @@ public partial class AddArticleViewModel : BaseViewModel
         _keyboardHelper = keyboardHelper;
     }
 
-    [ObservableProperty]
-    public long id;
+    [ObservableProperty] private long id;
 
-    [ObservableProperty]
-    public ArticleModel articleModel = new();
+    [ObservableProperty] private ArticleModel articleModel = new();
 
-    [ObservableProperty]
-    public int selectedStorageLocationIndex;
+    [ObservableProperty] private int selectedStorageLocationIndex;
 
-    [ObservableProperty]
-    public string barcode = string.Empty;
+    [ObservableProperty] private string barcode = string.Empty;
 
-    public ObservableRangeCollection<StorageLocationModel> StorageLocations { get; } = new();
+    public ObservableRangeCollection<StorageLocationModel> StorageLocations { get; } = [];
 
     [RelayCommand]
-    public async Task LoadStorageLocations()
+    private async Task LoadStorageLocations()
     {
         try
         {
@@ -52,44 +48,47 @@ public partial class AddArticleViewModel : BaseViewModel
         }
         catch (Exception)
         {
+            // ignored
         }
         finally { IsBusy = false; }
     }
 
     [RelayCommand]
-    public async Task LoadMetadata()
+    private async Task LoadMetadata()
     {
         try
         {
             IsBusy = true;
             var metadataResponse = await _pantryClientApiService.GetMetadataByGtinAsync(Barcode);
-            ArticleModel.Name = metadataResponse?.Name ?? string.Empty;
-            ArticleModel.Content = metadataResponse?.Brands ?? string.Empty;
-            ArticleModel.ImageUrl = metadataResponse?.ImageUrl ?? null;
+            ArticleModel.Name = metadataResponse.Name ?? string.Empty;
+            ArticleModel.Content = metadataResponse.Brands ?? string.Empty;
+            ArticleModel.ImageUrl = metadataResponse.ImageUrl ?? null;
         }
         catch (Exception)
         {
+            // ignored
         }
         finally { IsBusy = false; }
     }
 
     [RelayCommand]
-    public async Task LoadArticle(long id)
+    private async Task LoadArticle(long articleId)
     {
         try
         {
             IsBusy = true;
-            var articleResponse = await _pantryClientApiService.GetArticleByIdAsync(id);
+            var articleResponse = await _pantryClientApiService.GetArticleByIdAsync(articleId);
             ArticleModel = articleResponse.ToArticleModel();
         }
         catch (Exception)
         {
+            // ignored
         }
         finally { IsBusy = false; }
     }
 
     [RelayCommand]
-    public async Task Save()
+    private async Task Save()
     {
         ErrorMessage = string.Empty;
 
@@ -115,7 +114,7 @@ public partial class AddArticleViewModel : BaseViewModel
                 await _pantryClientApiService.CreateArticleAsync(articleRequest);
             }
             await _navigation.GoToAsync("..");
-            _keyboardHelper?.HideKeyboard();
+            _keyboardHelper.HideKeyboard();
         }
         catch (Exception ex)
         {
@@ -144,12 +143,12 @@ public partial class AddArticleViewModel : BaseViewModel
 
     private void SelectStorageLocation()
     {
-        var location = StorageLocations?.FirstOrDefault(x => x.Id == ArticleModel?.StorageLocation?.Id);
-        if (location is not null && StorageLocations is not null)
+        var location = StorageLocations.FirstOrDefault(x => x.Id == ArticleModel.StorageLocation?.Id);
+        if (location is not null)
         {
             SelectedStorageLocationIndex = StorageLocations.IndexOf(location);
         }
-        else if (StorageLocations is not null)
+        else
         {
             ArticleModel.StorageLocation = StorageLocations.FirstOrDefault();
         }

@@ -36,7 +36,7 @@ public class OnboardingViewModelFixture
 
         // Assert
         settingsService.Received(1).GetOnboardingHasBeenFinished();
-        navigation.Received(1).GoToAsync(Arg.Is($"//{PageConstants.LOGIN_PAGE}"), Arg.Is(false));
+        navigation.Received(1).GoToAsync(Arg.Is($"//{PageConstants.LoginPage}"), Arg.Is(false));
     }
 
     [Fact]
@@ -69,7 +69,7 @@ public class OnboardingViewModelFixture
 
         // Assert
         settingsService.Received(1).SetOnboardingHasBeenFinished(Arg.Is(true));
-        navigation.Received(1).GoToAsync(Arg.Is($"//{PageConstants.LOGIN_PAGE}"), Arg.Is(false));
+        navigation.Received(1).GoToAsync(Arg.Is($"//{PageConstants.LoginPage}"), Arg.Is(false));
     }
 
     [Fact]

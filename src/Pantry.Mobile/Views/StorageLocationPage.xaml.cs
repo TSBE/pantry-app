@@ -2,11 +2,10 @@
 
 namespace Pantry.Mobile.Views;
 
-public partial class StorageLocationPage : ContentPage
+public partial class StorageLocationPage
 {
-    public StorageLocationPage(StorageLocationViewModel vm)
+    public StorageLocationPage(StorageLocationViewModel vm): base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

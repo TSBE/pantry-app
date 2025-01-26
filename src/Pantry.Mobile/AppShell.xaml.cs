@@ -3,7 +3,7 @@ using Pantry.Mobile.Views;
 
 namespace Pantry.Mobile;
 
-public partial class AppShell : Shell
+public partial class AppShell
 {
     public AppShell()
     {
@@ -13,10 +13,10 @@ public partial class AppShell : Shell
 
     private static void RegisterRoutes()
     {
-        Routing.RegisterRoute(PageConstants.SCANNER_PAGE, typeof(ScannerPage));
-        Routing.RegisterRoute(PageConstants.ADD_STORAGE_LOCATION_PAGE, typeof(AddStorageLocationPage));
-        Routing.RegisterRoute(PageConstants.ADD_ARTICLE_PAGE, typeof(AddArticlePage));
-        Routing.RegisterRoute(PageConstants.ARTICLE_DETAIL_PAGE, typeof(ArticleDetailPage));
-        Routing.RegisterRoute(PageConstants.MANAGE_INVITATIONS_PAGE, typeof(ManageInvitationsPage));
+        Routing.RegisterRoute(PageConstants.ScannerPage, typeof(ScannerPage));
+        Routing.RegisterRoute(PageConstants.AddStorageLocationPage, typeof(AddStorageLocationPage));
+        Routing.RegisterRoute(PageConstants.AddArticlePage, typeof(AddArticlePage));
+        Routing.RegisterRoute(PageConstants.ArticleDetailPage, typeof(ArticleDetailPage));
+        Routing.RegisterRoute(PageConstants.ManageInvitationsPage, typeof(ManageInvitationsPage));
     }
 }

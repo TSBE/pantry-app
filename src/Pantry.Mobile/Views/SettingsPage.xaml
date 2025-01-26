@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
     x:Class="Pantry.Mobile.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     Title="Settings"
+    x:Name="Settings"
     x:DataType="vm:SettingsViewModel"
+    x:TypeArguments="vm:SettingsViewModel"
     Shell.BackgroundColor="{StaticResource Green}"
     Shell.NavBarHasShadow="False">
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+        <toolkit:EventToCommandBehavior 
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference Settings}, x:DataType=ContentPage}"
+            Command="{Binding InitCommand}" 
+            EventName="Appearing" />
     </ContentPage.Behaviors>
     <ScrollView>
         <Grid ColumnSpacing="0" RowSpacing="0">
@@ -95,4 +101,4 @@
                 VerticalOptions="End" />
         </Grid>
     </ScrollView>
-</ContentPage>
+</views:BasePage>

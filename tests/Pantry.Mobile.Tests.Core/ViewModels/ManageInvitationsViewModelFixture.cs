@@ -4,6 +4,7 @@ using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Models;
 using Pantry.Mobile.Core.ViewModels;
 using Pantry.Mobile.Core.Infrastructure;
+using ZXing.Net.Maui;
 
 namespace Pantry.Mobile.Tests.Core.ViewModels;
 
@@ -21,7 +22,7 @@ public class ManageInvitationsViewModelFixture
         vm.AddCommand.Execute(null);
 
         // Assert
-        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.SCANNER_PAGE}"));
+        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ScannerPage}?ActiveBarcodeFormat={BarcodeFormat.QrCode}"));
     }
 
     [Fact]

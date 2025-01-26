@@ -2,11 +2,10 @@
 
 namespace Pantry.Mobile.Views;
 
-public partial class LoginPage : ContentPage
+public partial class LoginPage
 {
-    public LoginPage(LoginViewModel vm)
+    public LoginPage(LoginViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

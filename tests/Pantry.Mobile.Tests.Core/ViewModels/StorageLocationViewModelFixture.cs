@@ -20,7 +20,7 @@ public class StorageLocationViewModelFixture
         vm.AddCommand.Execute(null);
 
         // Assert
-        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ADD_STORAGE_LOCATION_PAGE}"));
+        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.AddStorageLocationPage}"));
     }
 
     [Fact]
@@ -99,6 +99,6 @@ public class StorageLocationViewModelFixture
         vm.TapCommand.Execute(model);
 
         // Assert
-        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ADD_STORAGE_LOCATION_PAGE}?Id={model.Id}&Name={model.Name}&Description={model.Description}"));
+        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.AddStorageLocationPage}?Id={model.Id}&Name={model.Name}&Description={model.Description}"));
     }
 }

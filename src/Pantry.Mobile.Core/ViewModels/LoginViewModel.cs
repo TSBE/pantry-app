@@ -54,7 +54,7 @@ namespace Pantry.Mobile.Core.ViewModels
             if (!credentials.HasError)
             {
                 await _settingsService.SetCredentials(credentials);
-                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
+                var nextPage = await _navigation.GetNextStartupPage(CancellationToken.None);
                 await _navigation.GoToAsync(nextPage, false);
             }
             else

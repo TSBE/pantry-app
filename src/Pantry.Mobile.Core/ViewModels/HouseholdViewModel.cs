@@ -17,51 +17,43 @@ namespace Pantry.Mobile.Core.ViewModels
 
         private readonly IPantryClientApiService _pantryClientApiService;
 
-        private readonly string createHouseholdText = "New";
+        private const string CreateHouseholdText = "New";
 
-        private readonly string joinHouseholdText = "Join";
+        private const string JoinHouseholdText = "Join";
 
-        private readonly string cancelText = "Cancel";
+        private const string CancelText = "Cancel";
 
-        private readonly AsyncRetryPolicy<InvitationListResponse> retryWithDelay = Policy.HandleResult<InvitationListResponse>(x => { return x?.Invitations?.FirstOrDefault() is null; }).WaitAndRetryForeverAsync(x => new TimeSpan(0, 0, 5));
+        private readonly AsyncRetryPolicy<InvitationListResponse> _retryWithDelay = Policy.HandleResult<InvitationListResponse>(x => { return x?.Invitations?.FirstOrDefault() is null; }).WaitAndRetryForeverAsync(x => new TimeSpan(0, 0, 5));
 
-        private CancellationTokenSource pollingCancellation = new();
+        private CancellationTokenSource _pollingCancellation = new();
 
         public HouseholdViewModel(INavigationService navigation, IPantryClientApiService pantryClientApiService)
         {
             _navigation = navigation;
             _pantryClientApiService = pantryClientApiService;
 
-            toggleCreateText = createHouseholdText;
-            toggleJoinText = joinHouseholdText;
+            toggleCreateText = CreateHouseholdText;
+            toggleJoinText = JoinHouseholdText;
         }
 
-        [ObservableProperty]
-        public string name = string.Empty;
+        [ObservableProperty] private string name = string.Empty;
 
-        [ObservableProperty]
-        public string friendsCode = string.Empty;
+        [ObservableProperty] private string friendsCode = string.Empty;
 
-        [ObservableProperty]
-        public ObservableCollection<InvitationModel> invitations = new();
+        [ObservableProperty] private ObservableCollection<InvitationModel> invitations = [];
 
-        [ObservableProperty]
-        public bool isPolling = false;
+        [ObservableProperty] private bool isPolling;
 
-        [ObservableProperty]
-        public bool isCreateVisible = false;
+        [ObservableProperty] private bool isCreateVisible;
 
-        [ObservableProperty]
-        public bool isJoinVisible = false;
+        [ObservableProperty] private bool isJoinVisible;
 
-        [ObservableProperty]
-        public string toggleCreateText;
+        [ObservableProperty] private string toggleCreateText;
 
-        [ObservableProperty]
-        public string toggleJoinText;
+        [ObservableProperty] private string toggleJoinText;
 
         [RelayCommand]
-        public async Task Init()
+        private async Task Init()
         {
             try
             {
@@ -75,7 +67,7 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
-        public void ToggleCreate()
+        private void ToggleCreate()
         {
             IsCreateVisible = !IsCreateVisible;
             IsJoinVisible = false;
@@ -83,27 +75,27 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
-        public void ToggleJoin()
+        private void ToggleJoin()
         {
             IsCreateVisible = false;
             IsJoinVisible = !IsJoinVisible;
             SetButtonText();
             if (IsJoinVisible)
             {
-                pollingCancellation = new CancellationTokenSource();
+                _pollingCancellation = new CancellationTokenSource();
                 IsPolling = true;
-                retryWithDelay.ExecuteAsync(ct => CheckInvitation(ct), pollingCancellation.Token).ContinueWith((x) => { IsPolling = false; });
+                _retryWithDelay.ExecuteAsync(CheckInvitation, _pollingCancellation.Token).ContinueWith((x) => { IsPolling = false; });
             }
             else
             {
                 IsPolling = false;
                 Invitations.Clear();
-                pollingCancellation.Cancel();
+                _pollingCancellation.Cancel();
             }
         }
 
         [RelayCommand]
-        public async Task CreateHousehold()
+        private async Task CreateHousehold()
         {
             try
             {
@@ -116,7 +108,7 @@ namespace Pantry.Mobile.Core.ViewModels
 
                 await _pantryClientApiService.CreateHouseholdAsync(new HouseholdRequest { Name = Name, SubscriptionType = SubscriptionType.FREE });
 
-                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
+                var nextPage = await _navigation.GetNextStartupPage(CancellationToken.None);
                 await _navigation.GoToAsync(nextPage, false);
             }
             catch (Exception ex)
@@ -126,14 +118,14 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
-        public async Task AcceptInvitation(InvitationModel model)
+        private async Task AcceptInvitation(InvitationModel model)
         {
             try
             {
                 await _pantryClientApiService.AcceptInvitationAsync(model.FriendsCode);
 
-                pollingCancellation.Cancel();
-                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
+                await _pollingCancellation.CancelAsync();
+                var nextPage = await _navigation.GetNextStartupPage(CancellationToken.None);
                 await _navigation.GoToAsync(nextPage, false);
             }
             catch (Exception ex)
@@ -143,7 +135,7 @@ namespace Pantry.Mobile.Core.ViewModels
         }
 
         [RelayCommand]
-        public async Task DeclineInvitation(InvitationModel model)
+        private async Task DeclineInvitation(InvitationModel model)
         {
             try
             {
@@ -162,28 +154,30 @@ namespace Pantry.Mobile.Core.ViewModels
         private void SetButtonText()
         {
             ErrorMessage = string.Empty;
-            ToggleCreateText = IsCreateVisible ? cancelText : createHouseholdText;
-            ToggleJoinText = IsJoinVisible ? cancelText : joinHouseholdText;
+            ToggleCreateText = IsCreateVisible ? CancelText : CreateHouseholdText;
+            ToggleJoinText = IsJoinVisible ? CancelText : JoinHouseholdText;
         }
 
         private async Task<InvitationListResponse> CheckInvitation(CancellationToken ct)
         {
             var invitationList = await _pantryClientApiService.GetInvitationAsync(ct);
-            if (invitationList?.Invitations is not null)
+            if (invitationList.Invitations is null)
             {
-                Invitations.Clear();
-                foreach (var i in invitationList.Invitations)
-                {
-                    Invitations.Add(new InvitationModel
-                    {
-                        FriendsCode = i.FriendsCode,
-                        CreatorName = i.CreatorName,
-                        ValidUntilDate = i.ValidUntilDate,
-                        HouseholdName = i.HouseholdName
-                    });
-                }
+                return invitationList;
             }
-            return invitationList ?? new InvitationListResponse();
+
+            Invitations.Clear();
+            foreach (var i in invitationList.Invitations)
+            {
+                Invitations.Add(new InvitationModel
+                {
+                    FriendsCode = i.FriendsCode,
+                    CreatorName = i.CreatorName,
+                    ValidUntilDate = i.ValidUntilDate,
+                    HouseholdName = i.HouseholdName
+                });
+            }
+            return invitationList;
         }
     }
 }

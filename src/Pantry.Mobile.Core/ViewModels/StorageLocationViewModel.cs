@@ -20,10 +20,10 @@ public partial class StorageLocationViewModel : BaseViewModel
         _pantryClientApiService = pantryClientApiService;
     }
 
-    public ObservableRangeCollection<StorageLocationModel> StorageLocations { get; set; } = new();
+    public ObservableRangeCollection<StorageLocationModel> StorageLocations { get; set; } = [];
 
     [RelayCommand]
-    public async Task Init()
+    private async Task Init()
     {
         try
         {
@@ -31,30 +31,25 @@ public partial class StorageLocationViewModel : BaseViewModel
         }
         catch (Exception)
         {
+            // ignored
         }
     }
 
     [RelayCommand]
-    public async Task Delete(StorageLocationModel locationModel)
+    private async Task Delete(StorageLocationModel locationModel)
     {
-        if (locationModel == null)
-            return;
-
         await _pantryClientApiService.DeleteStorageLocationAsync(locationModel.Id);
         await Load();
     }
 
     [RelayCommand]
-    public async Task Tap(StorageLocationModel locationModel)
+    private async Task Tap(StorageLocationModel locationModel)
     {
-        if (locationModel == null)
-            return;
-
-        await _navigation.GoToAsync($"{PageConstants.ADD_STORAGE_LOCATION_PAGE}?Id={locationModel.Id}&Name={locationModel.Name}&Description={locationModel.Description}");
+        await _navigation.GoToAsync($"{PageConstants.AddStorageLocationPage}?Id={locationModel.Id}&Name={locationModel.Name}&Description={locationModel.Description}");
     }
 
     [RelayCommand]
-    public async Task Refresh()
+    private async Task Refresh()
     {
         try
         {
@@ -67,7 +62,7 @@ public partial class StorageLocationViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Load()
+    private async Task Load()
     {
         var storageLocationList = await _pantryClientApiService.GetAllStorageLocationsAsync();
         if (storageLocationList?.StorageLocations is null)
@@ -81,8 +76,8 @@ public partial class StorageLocationViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Add()
+    private async Task Add()
     {
-        await _navigation.GoToAsync($"{PageConstants.ADD_STORAGE_LOCATION_PAGE}");
+        await _navigation.GoToAsync($"{PageConstants.AddStorageLocationPage}");
     }
 }

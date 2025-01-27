@@ -2,11 +2,10 @@
 
 namespace Pantry.Mobile.Views;
 
-public partial class AddArticlePage : ContentPage
+public partial class AddArticlePage
 {
-    public AddArticlePage(AddArticleViewModel vm)
+    public AddArticlePage(AddArticleViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

@@ -18,14 +18,12 @@ namespace Pantry.Mobile.Core.ViewModels
             _pantryClientApiService = pantryClientApiService;
         }
 
-        [ObservableProperty]
-        public string firstName = string.Empty;
+        [ObservableProperty] private string firstName = string.Empty;
 
-        [ObservableProperty]
-        public string lastName = string.Empty;
+        [ObservableProperty] private string lastName = string.Empty;
 
         [RelayCommand]
-        public async Task CreateAccount()
+        private async Task CreateAccount()
         {
             try
             {
@@ -38,7 +36,7 @@ namespace Pantry.Mobile.Core.ViewModels
 
                 await _pantryClientApiService.CreateAccountAsync(new AccountRequest() { FirstName = FirstName, LastName = LastName });
 
-                var nextPage = await _navigation.GetNextStartupPage(new CancellationToken());
+                var nextPage = await _navigation.GetNextStartupPage(CancellationToken.None);
                 await _navigation.GoToAsync(nextPage, false);
             }
             catch (Exception ex)

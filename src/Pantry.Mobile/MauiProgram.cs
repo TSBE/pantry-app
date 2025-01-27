@@ -1,4 +1,4 @@
-﻿using BarcodeScanner.Mobile;
+﻿using BarcodeScanning;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
@@ -15,6 +15,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitCore()
+            .UseBarcodeScanning()
             .UseBarcodeReader()
             .ConfigureFonts(fonts =>
             {
@@ -24,10 +25,6 @@ public static class MauiProgram
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();
-            })
-            .ConfigureMauiHandlers(handlers =>
-            {
-                handlers.AddBarcodeScannerHandler();
             })
 #if DEBUG
             .Logging.AddDebug()

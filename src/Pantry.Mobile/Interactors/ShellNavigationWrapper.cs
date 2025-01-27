@@ -23,12 +23,12 @@ public class ShellNavigationWrapper : INavigationService
     }
     public async Task<string> GetNextStartupPage(CancellationToken cancellationToken)
     {
-        var targetPage = $"//{PageConstants.TABBAR_PAGE}";
+        var targetPage = $"//{PageConstants.TabbarPage}";
 
         var onboardingHasBeenFinished = await _settingsService.GetOnboardingHasBeenFinished();
         if (!onboardingHasBeenFinished)
         {
-            targetPage = $"//{PageConstants.ONBOARDING_PAGE}";
+            targetPage = $"//{PageConstants.OnboardingPage}";
             return targetPage;
         }
 
@@ -41,20 +41,20 @@ public class ShellNavigationWrapper : INavigationService
 
         if (loginCredentials.HasError || loginCredentials.IsExpired)
         {
-            targetPage = $"//{PageConstants.LOGIN_PAGE}";
+            targetPage = $"//{PageConstants.LoginPage}";
             return targetPage;
         }
 
         var account = await GetAccount();
         if (account is null)
         {
-            targetPage = $"//{PageConstants.CREATEACCOUNT_PAGE}";
+            targetPage = $"//{PageConstants.CreateaccountPage}";
             return targetPage;
         }
 
         if (account.Household is null)
         {
-            targetPage = $"//{PageConstants.CREATEHOUSEHOLD_PAGE}";
+            targetPage = $"//{PageConstants.CreatehouseholdPage}";
             return targetPage;
         }
 

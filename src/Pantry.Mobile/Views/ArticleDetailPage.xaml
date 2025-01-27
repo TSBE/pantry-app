@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
     x:Class="Pantry.Mobile.Views.ArticleDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:cells="clr-namespace:Pantry.Mobile.Cells"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     Title="Article info"
     ios:Page.UseSafeArea="true"
     x:DataType="vm:ArticleDetailViewModel"
+    x:TypeArguments="vm:ArticleDetailViewModel"
     Shell.PresentationMode="ModalAnimated"
     Shell.TabBarIsVisible="False">
     <ContentPage.Resources>
@@ -79,4 +80,4 @@
             </CollectionView>
         </VerticalStackLayout>
     </ScrollView>
-</ContentPage>
+</views:BasePage>

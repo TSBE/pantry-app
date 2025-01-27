@@ -60,6 +60,6 @@ public class SettingsViewModelFixture
         vm.ManageInvitationsCommand.Execute(null);
 
         // Assert
-        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.MANAGE_INVITATIONS_PAGE}"));
+        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ManageInvitationsPage}"));
     }
 }

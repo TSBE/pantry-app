@@ -15,7 +15,8 @@ public static class ServiceExtensions
         return service.AddSingleton(VersionTracking.Default)
             .AddSingleton(Preferences.Default)
             .AddSingleton(SecureStorage.Default)
-            .AddSingleton(Connectivity.Current);
+            .AddSingleton(Connectivity.Current)
+            .AddSingleton(DeviceInfo.Current);
     }
         
     public static IServiceCollection RegisterServices(this IServiceCollection service)
@@ -66,14 +67,14 @@ public static class ServiceExtensions
     {
         return service.AddSingleton<IKeyboardHelper, KeyboardHelper>()
             .AddRefreshTokenDelegatingHandler()
-            .AddSingleton<IAuth0Client>(new Auth0Client(new()
+            .AddSingleton<IAuth0Client>(new Auth0Client(new Auth0ClientOptions
             {
                 Audience = AppConstants.AUTH0_AUDIENCE,
                 Domain = AppConstants.AUTH0_DOMAIN,
                 ClientId = AppConstants.AUTH0_CLIENT_ID,
                 Scope = AppConstants.AUTH0_SCOPES,
                 RedirectUri = AppConstants.AUTH0_CALLBACK_URL,
-                Browser = new Pantry.Mobile.WebAuthenticator.WebBrowserAuthenticator()
+                Browser = new WebAuthenticator.WebBrowserAuthenticator()
             }));
     }
 }

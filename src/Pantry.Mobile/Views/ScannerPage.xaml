@@ -1,21 +1,86 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<views:BasePage
     x:Class="Pantry.Mobile.Views.ScannerPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    xmlns:scanner="clr-namespace:BarcodeScanning;assembly=BarcodeScanning.Native.Maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:zxingc="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
-    xmlns:zxing="clr-namespace:ZXing.Net.Maui;assembly=ZXing.Net.MAUI"
-    xmlns:gv="clr-namespace:BarcodeScanner.Mobile;assembly=BarcodeScanner.Mobile.Maui"
-    x:Name="scannerPage"
+    x:Name="ScannerView"
     x:DataType="vm:ScannerViewModel"
+    x:TypeArguments="vm:ScannerViewModel"
     Title="Scanner"
     ios:Page.UseSafeArea="true"
     Shell.PresentationMode="Animated"
     Shell.TabBarIsVisible="False">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference ScannerView}, x:DataType=ContentPage}"
+            Command="{Binding InitCommand}" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        Margin="10"
+        RowDefinitions="*,auto">
+        <!-- Border visible only on real devices -->
+        <scanner:CameraView
+            Grid.Row="0"
+            IsVisible="{Binding IsSimulator, Converter={StaticResource InvertedBoolConverter}}"
+            OnDetectionFinishedCommand="{Binding DetectionFinishedCommand}" />
+        <!-- Border visible only on a simulator -->
+        <Border Grid.Row="0"
+                IsVisible="{Binding IsSimulator}"
+                Stroke="Black"
+                StrokeThickness="2"
+                BackgroundColor="Crimson"
+                Padding="10"
+                VerticalOptions="Center">
+            <Label VerticalTextAlignment="Center" Text="This is the simulator view!" />
+        </Border>
+        <VerticalStackLayout
+            Grid.Row="1"
+            IsVisible="{Binding IsSimulator}"
+            VerticalOptions="Start">
 
+            <Entry
+                Placeholder="Barcode"
+                ReturnCommand="{Binding SimulatorScanCommand}"
+                ReturnType="Done"
+                Text="{Binding SimulatorBarcode}" />
+
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+
+            <Label
+                IsVisible="{Binding ErrorMessage, Converter={StaticResource IsStringNotNullOrEmptyConverter}}"
+                Style="{StaticResource LabelErrorMessage}"
+                Text="{Binding ErrorMessage}" />
+
+            <Button
+                Margin="0,20"
+                Padding="20,0"
+                Command="{Binding SimulatorScanCommand}"
+                HorizontalOptions="FillAndExpand"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                Style="{StaticResource PrimaryButton}"
+                Text="Scan" />
+        </VerticalStackLayout>
+    </Grid>
+
+    <!-- xmlns:zxingc="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls" -->
+    <!-- xmlns:zxing="clr-namespace:ZXing.Net.Maui;assembly=ZXing.Net.MAUI" -->
     <!--<zxingc:CameraBarcodeReaderView
         HorizontalOptions="FillAndExpand"
         IsDetecting="{Binding IsDetecting}"
@@ -29,12 +94,4 @@
                     Command="{Binding BarcodesDetectedCommand}" />
             </zxingc:CameraBarcodeReaderView.Behaviors>
         </zxingc:CameraBarcodeReaderView>-->
-
-       <gv:CameraView HorizontalOptions="FillAndExpand"
-                      VerticalOptions="FillAndExpand"
-                      OnDetectedCommand="{Binding DetectedCommand}"
-                      TorchOn="{Binding IsTorchOn}"
-                      IsScanning="{Binding IsDetecting}"
-                      VibrationOnDetected="False"
-                      ScanInterval="100"/>
-</ContentPage>
+</views:BasePage>

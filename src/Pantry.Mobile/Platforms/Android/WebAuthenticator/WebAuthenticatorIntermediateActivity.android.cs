@@ -14,11 +14,11 @@ namespace Pantry.Mobile.WebAuthenticator
         bool launched;
         Intent actualIntent;
 
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
-            var extras = savedInstanceState ?? Intent.Extras;
+            var extras = savedInstanceState ?? Intent?.Extras;
 
             if (extras == null)
             {
@@ -56,7 +56,7 @@ namespace Pantry.Mobile.WebAuthenticator
             }
         }
 
-        protected override void OnNewIntent(Intent intent)
+        protected override void OnNewIntent(Intent? intent)
         {
             base.OnNewIntent(intent);
 

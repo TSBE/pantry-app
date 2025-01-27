@@ -4,6 +4,7 @@ using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Pantry.Mobile.Core.Models;
 using Pantry.Mobile.Core.ViewModels;
+using ZXing.Net.Maui;
 
 namespace Pantry.Mobile.Tests.Core.ViewModels;
 
@@ -15,13 +16,15 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
 
         // Act
         vm.AddCommand.Execute(null);
 
         // Assert
-        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.SCANNER_PAGE}?BackTargetPage={PageConstants.ADD_ARTICLE_PAGE}"));
+        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ScannerPage}?BackTargetPage={PageConstants.AddArticlePage}&ActiveBarcodeFormat={BarcodeFormat.Ean13}"));
     }
 
     [Fact]
@@ -30,7 +33,9 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
         var model = new ArticleModel { Id = 1 };
 
         pantryClient.GetAllArticlesAsync().Returns(Task.FromResult(new ArticleListResponse()));
@@ -49,7 +54,9 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
 
         pantryClient.GetAllArticlesAsync().Returns(Task.FromResult(new ArticleListResponse()));
 
@@ -66,7 +73,9 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
 
         pantryClient.GetAllArticlesAsync().Returns(Task.FromResult(new ArticleListResponse()));
 
@@ -83,15 +92,17 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
 
         pantryClient.GetAllArticlesAsync().Returns(Task.FromResult(
             new ArticleListResponse
             {
                 Articles = new List<ArticleResponse>
                 {
-                    new ArticleResponse { Name = "Unit", StorageLocation = new StorageLocationResponse { Name = "Dummy" } },
-                    new ArticleResponse { Name = "Test", StorageLocation = new StorageLocationResponse { Name = "Dummy" } }
+                    new() { Name = "Unit", StorageLocation = new StorageLocationResponse { Name = "Dummy" } },
+                    new() { Name = "Test", StorageLocation = new StorageLocationResponse { Name = "Dummy" } }
                 }
             }));
 
@@ -114,7 +125,9 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
 
         pantryClient.GetAllArticlesAsync().Returns(Task.FromResult(new ArticleListResponse()));
 
@@ -131,14 +144,16 @@ public class MainViewModelFixture
         // Arrange
         var navigation = Substitute.For<INavigationService>();
         var pantryClient = Substitute.For<IPantryClientApiService>();
-        var vm = new MainViewModel(navigation, pantryClient);
+        var keyboardHelper = Substitute.For<IKeyboardHelper>();
+
+        var vm = new MainViewModel(navigation, pantryClient, keyboardHelper);
 
         var model = new ArticleModel { Id = 1 };
 
         // Act
         vm.TapCommand.Execute(model);
 
-        // Assert        
-        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ARTICLE_DETAIL_PAGE}?Id={model.Id}"));
+        // Assert
+        navigation.Received(1).GoToAsync(Arg.Is($"{PageConstants.ArticleDetailPage}?Id={model.Id}"));
     }
 }

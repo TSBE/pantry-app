@@ -2,11 +2,10 @@
 
 namespace Pantry.Mobile.Views;
 
-public partial class ManageInvitationsPage : ContentPage
+public partial class ManageInvitationsPage
 {
-    public ManageInvitationsPage(ManageInvitationsViewModel vm)
+    public ManageInvitationsPage(ManageInvitationsViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

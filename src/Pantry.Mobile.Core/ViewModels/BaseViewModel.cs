@@ -5,9 +5,8 @@ namespace Pantry.Mobile.Core.ViewModels
     public abstract partial class BaseViewModel : ObservableObject
     {
         [ObservableProperty]
-        private bool isBusy = false;
+        private bool isBusy;
 
-        [ObservableProperty]
-        public string errorMessage = string.Empty;
+        [ObservableProperty] private string errorMessage = string.Empty;
     }
 }

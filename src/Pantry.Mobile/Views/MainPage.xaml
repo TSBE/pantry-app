@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
     x:Class="Pantry.Mobile.Views.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:cells="clr-namespace:Pantry.Mobile.Cells"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     Title="Pantry"
-    x:DataType="vm:MainViewModel">
+    x:Name="Main"
+    x:DataType="vm:MainViewModel"
+    x:TypeArguments="vm:MainViewModel">
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference Main}, x:DataType=ContentPage}"
+            Command="{Binding InitCommand}" />
     </ContentPage.Behaviors>
     <Grid RowDefinitions="*">
         <RefreshView
@@ -30,12 +37,14 @@
                     SelectionMode="None"
                     VerticalOptions="StartAndExpand">
                     <CollectionView.HeaderTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="{x:Type vm:MainViewModel}">
                             <VerticalStackLayout Spacing="10">
                                 <SearchBar
-                                    x:Name="searchBar"
-                                    SearchCommand="{Binding PerformSearchCommand}"
-                                    SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
+                                    x:Name="Search"
+                                    Placeholder="Search by name"
+                                    SearchCommand="{Binding PerformSearchCommand, x:DataType=vm:MainViewModel}"
+                                    SearchCommandParameter="{Binding Source={x:Reference Search}, Path=Text}">
+                                </SearchBar>
                                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                                     <Label
                                         Style="{StaticResource LabelSmall}"
@@ -62,26 +71,27 @@
                         </VerticalStackLayout>
                     </CollectionView.EmptyView>
                     <CollectionView.GroupHeaderTemplate>
-                        <DataTemplate x:DataType="{x:Null}">
+                        <DataTemplate x:DataType="models:Grouping(x:String,models:ArticleModel)">
                             <VerticalStackLayout Padding="12">
-                                <Label Style="{StaticResource LabelMedium}" Text="{Binding Key}" />
+                                <Label Style="{StaticResource LabelMedium}" 
+                                       Text="{Binding Key}" />
                             </VerticalStackLayout>
                         </DataTemplate>
                     </CollectionView.GroupHeaderTemplate>
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:ArticleModel">
                             <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
                                 <SwipeView.RightItems>
                                     <SwipeItems>
                                         <SwipeItem
                                             BackgroundColor="{StaticResource EditBackgroundColor}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=EditCommand}"
-                                            CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=EditCommand, x:DataType={x:Type vm:MainViewModel}}"
+                                            CommandParameter="{Binding Path=., x:DataType={x:Type models:ArticleModel}}"
                                             Text="Edit" />
                                         <SwipeItem
                                             BackgroundColor="{StaticResource DeleteBackgroundColor}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand}"
-                                            CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=DeleteCommand, x:DataType={x:Type vm:MainViewModel}}"
+                                            CommandParameter="{Binding Path=., x:DataType={x:Type models:ArticleModel}}"
                                             IsDestructive="True"
                                             Text="Delete" />
                                     </SwipeItems>
@@ -89,8 +99,8 @@
                                 <cells:ArticleCard Margin="{OnPlatform '0,5', Android='0,0'}">
                                     <cells:ArticleCard.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand}"
-                                            CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MainViewModel}}, Path=TapCommand, x:DataType={x:Type vm:MainViewModel}}"
+                                            CommandParameter="{Binding Path=., x:DataType={x:Type models:ArticleModel}}"
                                             NumberOfTapsRequired="1" />
                                     </cells:ArticleCard.GestureRecognizers>
                                 </cells:ArticleCard>
@@ -109,4 +119,4 @@
             </ImageButton.Behaviors>
         </ImageButton>
     </Grid>
-</ContentPage>
+</views:BasePage>

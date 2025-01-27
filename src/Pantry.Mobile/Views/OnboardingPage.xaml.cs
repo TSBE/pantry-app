@@ -2,11 +2,10 @@
 
 namespace Pantry.Mobile.Views;
 
-public partial class OnboardingPage : ContentPage
+public partial class OnboardingPage
 {
-    public OnboardingPage(OnboardingViewModel vm)
+    public OnboardingPage(OnboardingViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

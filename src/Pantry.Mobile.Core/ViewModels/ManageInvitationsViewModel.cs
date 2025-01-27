@@ -7,6 +7,7 @@ using Pantry.Mobile.Core.Infrastructure.Helpers;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Pantry.Mobile.Core.Models;
+using ZXing.Net.Maui;
 
 namespace Pantry.Mobile.Core.ViewModels;
 
@@ -23,13 +24,12 @@ public partial class ManageInvitationsViewModel : BaseViewModel
         _pantryClientApiService = pantryClientApiService;
     }
 
-    [ObservableProperty]
-    public string barcode = string.Empty;
+    [ObservableProperty] private string barcode = string.Empty;
 
-    public ObservableRangeCollection<InvitationModel> Invitations { get; set; } = new();
+    public ObservableRangeCollection<InvitationModel> Invitations { get; set; } = [];
 
     [RelayCommand]
-    public async Task Init()
+    private async Task Init()
     {
         try
         {
@@ -42,17 +42,14 @@ public partial class ManageInvitationsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Delete(InvitationModel invitation)
+    private async Task Delete(InvitationModel invitation)
     {
-        if (invitation == null)
-            return;
-
         await _pantryClientApiService.DeclineInvitationAsync(invitation.FriendsCode);
         await Load();
     }
 
     [RelayCommand]
-    public async Task Refresh()
+    private async Task Refresh()
     {
         try
         {
@@ -71,7 +68,7 @@ public partial class ManageInvitationsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Load()
+    private async Task Load()
     {
         var invitationListResponse = await _pantryClientApiService.GetInvitationAsync();
 
@@ -86,14 +83,14 @@ public partial class ManageInvitationsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Add()
+    private async Task Add()
     {
         ErrorMessage = string.Empty;
-        await _navigation.GoToAsync($"{PageConstants.SCANNER_PAGE}");
+        await _navigation.GoToAsync($"{PageConstants.ScannerPage}?ActiveBarcodeFormat={BarcodeFormat.QrCode}");
     }
 
     [RelayCommand]
-    public async Task CreateInvitation(string friendsCode)
+    private async Task CreateInvitation(string friendsCode)
     {
         try
         {

@@ -4,9 +4,8 @@ namespace Pantry.Mobile.Views;
 
 public partial class ScannerPage
 {
-    public ScannerPage(ScannerViewModel vm)
+    public ScannerPage(ScannerViewModel vm) : base(vm)
     {
         InitializeComponent();
-        BindingContext = vm;
     }
 }

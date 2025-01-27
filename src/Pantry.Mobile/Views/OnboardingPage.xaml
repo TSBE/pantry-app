@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
     x:Class="Pantry.Mobile.Views.OnboardingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     Title="Onboarding Page"
     ios:Page.UseSafeArea="true"
     x:DataType="vm:OnboardingViewModel"
+    x:TypeArguments="vm:OnboardingViewModel"
     Shell.NavBarIsVisible="False">
 
     <Grid Margin="10" RowDefinitions="*,Auto">
         <CarouselView
             Grid.Row="0"
             HorizontalOptions="FillAndExpand"
-            IndicatorView="indicatorView"
+            IndicatorView="IndicatorView"
             ItemsSource="{Binding IntroScreens}"
             Loop="False"
             Position="{Binding Position}"
@@ -50,19 +52,19 @@
             Grid.Row="1"
             Padding="20,0"
             Orientation="Horizontal">
-            <Frame
+            <Border
                 BackgroundColor="Transparent"
-                BorderColor="Transparent"
+                Stroke="Transparent"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand">
                 <IndicatorView
-                    x:Name="indicatorView"
+                    x:Name="IndicatorView"
                     HorizontalOptions="StartAndExpand"
                     IndicatorColor="LightGray"
                     IndicatorSize="10"
                     SelectedIndicatorColor="{x:StaticResource Primary}"
                     VerticalOptions="Center" />
-            </Frame>
+            </Border>
             <Button
                 x:Name="NextBtn"
                 Command="{Binding NextCommand}"
@@ -73,4 +75,4 @@
                 Text="{Binding ButtonText}" />
         </StackLayout>
     </Grid>
-</ContentPage>
+</views:BasePage>

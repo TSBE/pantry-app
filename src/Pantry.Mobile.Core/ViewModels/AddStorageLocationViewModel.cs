@@ -26,19 +26,17 @@ public partial class AddStorageLocationViewModel : BaseViewModel
 
     public long Id { get; set; }
 
-    [ObservableProperty]
-    public string name = string.Empty;
+    [ObservableProperty] private string name = string.Empty;
 
-    [ObservableProperty]
-    public string description = string.Empty;
+    [ObservableProperty] private string description = string.Empty;
 
     [RelayCommand]
-    public async Task Save()
+    private async Task Save()
     {
         ErrorMessage = string.Empty;
 
-        if (string.IsNullOrWhiteSpace(name) ||
-            string.IsNullOrWhiteSpace(description))
+        if (string.IsNullOrWhiteSpace(Name) ||
+            string.IsNullOrWhiteSpace(Description))
         {
             return;
         }

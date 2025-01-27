@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
-using Pantry.Mobile.Core.Infrastructure.Auth0;
 using Pantry.Mobile.Core.Infrastructure.Extensions;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.Models;
@@ -27,11 +26,10 @@ public partial class SettingsViewModel : BaseViewModel
         _auth0Client = client;
     }
 
-    [ObservableProperty]
-    public AccountModel? account;
+    [ObservableProperty] private AccountModel? account;
 
     [RelayCommand]
-    public async Task Init()
+    private async Task Init()
     {
         try
         {
@@ -41,17 +39,18 @@ public partial class SettingsViewModel : BaseViewModel
         }
         catch (Exception)
         {
+            // ignored
         }
         finally { IsBusy = false; }
     }
 
     [RelayCommand]
-    public async Task ManageInvitations()
+    private async Task ManageInvitations()
     {
         try
         {
             IsBusy = true;
-            await _navigation.GoToAsync($"{PageConstants.MANAGE_INVITATIONS_PAGE}");
+            await _navigation.GoToAsync($"{PageConstants.ManageInvitationsPage}");
         }
         catch (Exception ex)
         {
@@ -61,14 +60,14 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Logout()
+    private async Task Logout()
     {
         try
         {
             IsBusy = true;
             await _auth0Client.Logout();
             await _settingsService.DeleteCredentials();
-            var targetPage = await _navigation.GetNextStartupPage(new CancellationToken());
+            var targetPage = await _navigation.GetNextStartupPage(CancellationToken.None);
             await _navigation.GoToAsync(targetPage);
         }
         catch (Exception ex)

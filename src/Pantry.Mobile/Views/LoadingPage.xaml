@@ -3,8 +3,6 @@
     x:Class="Pantry.Mobile.Views.LoadingPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
-    xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     Title="Loading"
     BackgroundColor="{x:StaticResource Green}"
     Shell.NavBarIsVisible="False">

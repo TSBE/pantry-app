@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
     x:Class="Pantry.Mobile.Views.StorageLocationPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:cells="clr-namespace:Pantry.Mobile.Cells"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
+    xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     Title="Storage locations"
-    x:DataType="vm:StorageLocationViewModel">
+    x:Name="StorageLocation"
+    x:DataType="vm:StorageLocationViewModel"
+    x:TypeArguments="vm:StorageLocationViewModel">
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference StorageLocation}, x:DataType=ContentPage}"
+            Command="{Binding InitCommand}" />
     </ContentPage.Behaviors>
     <Grid RowDefinitions="*">
         <RefreshView
@@ -42,23 +49,23 @@
                         </VerticalStackLayout>
                     </CollectionView.EmptyView>
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="{x:Type models:StorageLocationModel}">
                             <SwipeView BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColor}}">
                                 <SwipeView.RightItems>
                                     <SwipeItems>
                                         <SwipeItem
                                             BackgroundColor="{StaticResource DeleteBackgroundColor}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=DeleteCommand}"
-                                            CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=DeleteCommand, x:DataType={x:Type vm:StorageLocationViewModel}}"
+                                            CommandParameter="{Binding Path=., x:DataType={x:Type models:StorageLocationModel}}"
                                             IsDestructive="True"
                                             Text="Delete" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>
-                                <cells:StorageCard Margin="{OnPlatform '0,5', Android='0,0'}">
+                                <cells:StorageCard Margin="0,5">
                                     <cells:StorageCard.GestureRecognizers>
                                         <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=TapCommand}"
-                                            CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:StorageLocationViewModel}}, Path=TapCommand, x:DataType={x:Type vm:StorageLocationViewModel}}"
+                                            CommandParameter="{Binding Path=., x:DataType={x:Type models:StorageLocationModel}}"
                                             NumberOfTapsRequired="1" />
                                     </cells:StorageCard.GestureRecognizers>
                                 </cells:StorageCard>
@@ -77,4 +84,4 @@
             </ImageButton.Behaviors>
         </ImageButton>
     </Grid>
-</ContentPage>
+</views:BasePage>

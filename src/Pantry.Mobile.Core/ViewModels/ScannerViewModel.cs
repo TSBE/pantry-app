@@ -1,5 +1,4 @@
-﻿using BarcodeScanner.Mobile;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Helpers;
@@ -8,40 +7,76 @@ using ZXing.Net.Maui;
 namespace Pantry.Mobile.Core.ViewModels;
 
 [QueryProperty(nameof(BackTargetPage), nameof(BackTargetPage))]
+[QueryProperty(nameof(ActiveBarcodeFormat), nameof(ActiveBarcodeFormat))]
 public partial class ScannerViewModel : BaseViewModel
 {
     private readonly INavigationService _navigation;
+    
+    private string _lastBarcode = string.Empty;
 
-    public ScannerViewModel(INavigationService navigation)
+    public ScannerViewModel(INavigationService navigation, IDeviceInfo deviceInfo)
     {
         _navigation = navigation;
+        IsSimulator = deviceInfo.DeviceType == DeviceType.Virtual;
     }
-    [ObservableProperty]
-    public string backTargetPage = string.Empty;
 
-    [ObservableProperty]
-    public bool isTorchOn = false;
+    [ObservableProperty] private bool isSimulator;
+    
+    [ObservableProperty] private string backTargetPage = string.Empty;
 
-    [ObservableProperty]
-    public bool isDetecting = true;
+    [ObservableProperty, NotifyCanExecuteChangedFor(nameof(InitCommand))]
+    private string? activeBarcodeFormat;
 
-    [ObservableProperty]
-    public BarcodeReaderOptions barcodeReaderOptions = new BarcodeReaderOptions
+    [ObservableProperty] private bool isTorchOn;
+
+    [ObservableProperty] private bool isDetecting = true;
+    
+    [ObservableProperty] private string simulatorBarcode = "5745000121045";
+
+    [ObservableProperty] private BarcodeReaderOptions barcodeReaderOptions = new()
     {
         Formats = BarcodeFormat.Ean13, //| BarcodeFormat.QrCode,
         AutoRotate = true,
-        Multiple = false,
+        Multiple = false
     };
 
     [RelayCommand]
-    public async Task BarcodesDetected(BarcodeDetectionEventArgs e)
+    private void Init()
+    {
+        var flag = Enum.TryParse(ActiveBarcodeFormat, out BarcodeFormat barcodeFormat);
+        BarcodeReaderOptions = new BarcodeReaderOptions
+        {
+            Formats = flag?barcodeFormat: BarcodeFormat.QrCode,
+            AutoRotate = true,
+            Multiple = false,
+        };
+        SimulatorBarcode = barcodeFormat == BarcodeFormat.Ean13 ? "5745000121045" : "fe82f4ad-ace3-4427-933c-d96cd2dca74c";
+    }
+
+    [RelayCommand]
+    private async Task SimulatorScan()
+    {
+        if (string.IsNullOrEmpty(BackTargetPage))
+        {
+            await MainThread.InvokeOnMainThreadAsync(() =>
+                _navigation.GoToAsync($"..?Barcode={SimulatorBarcode}"));
+        }
+        else
+        {
+            await MainThread.InvokeOnMainThreadAsync(() =>
+                _navigation.GoToAsync($"../{BackTargetPage}?Barcode={SimulatorBarcode}"));
+        }
+    }
+
+    [RelayCommand]
+    private async Task BarcodesDetected(BarcodeDetectionEventArgs e)
     {
         try
         {
             IsDetecting = false;
             var barcode = e.Results.FirstOrDefault();
 
-            if (lastBarcode.Equals(barcode?.Value))
+            if (_lastBarcode.Equals(barcode?.Value))
             {
                 return;
             }
@@ -56,7 +91,7 @@ public partial class ScannerViewModel : BaseViewModel
                 return;
             }
 
-            lastBarcode = barcode?.Value ?? string.Empty;
+            _lastBarcode = barcode?.Value ?? string.Empty;
 
             if (string.IsNullOrEmpty(BackTargetPage))
             {
@@ -74,46 +109,42 @@ public partial class ScannerViewModel : BaseViewModel
             IsDetecting = true;
         }
     }
-
     [RelayCommand]
-    public async Task Detected(OnDetectedEventArg e)
+    private async Task DetectionFinished(IReadOnlySet<BarcodeResult> results)
     {
         try
         {
             IsDetecting = false;
+            
+            var barcode = results.FirstOrDefault(x => x.Format.Equals(BarcodeFormat.Ean13));
 
-            List<BarcodeScanner.Mobile.BarcodeResult> obj = e.BarcodeResults;
-
-            var barcode = obj.Where(x => x.BarcodeFormat.Equals(BarcodeScanner.Mobile.BarcodeFormats.Ean13)
-            && x.BarcodeType.Equals(BarcodeTypes.Product)).FirstOrDefault();
-
-            if (lastBarcode.Equals(barcode?.DisplayValue))
+            if (_lastBarcode.Equals(barcode?.Value))
             {
                 return;
             }
 
-            if (!GtinChecker.IsValidEAN13(barcode?.DisplayValue ?? string.Empty)
-                && barcode?.BarcodeFormat == BarcodeScanner.Mobile.BarcodeFormats.Ean13)
+            if (!GtinChecker.IsValidEAN13(barcode?.Value ?? string.Empty)
+                && barcode?.Format == BarcodeFormat.Ean13)
             {
                 return;
             }
 
-            if (!Guid.TryParse(barcode?.DisplayValue, out _) && barcode?.BarcodeFormat == BarcodeScanner.Mobile.BarcodeFormats.QRCode)
-            {
-                return;
-            }
+            // if (!Guid.TryParse(barcode?.DisplayValue, out _) && barcode?.BarcodeFormat == BarcodeScanner.Mobile.BarcodeFormats.QRCode)
+            // {
+            //     return;
+            // }
 
-            lastBarcode = barcode?.DisplayValue ?? string.Empty;
+            _lastBarcode = barcode?.Value ?? string.Empty;
 
             if (string.IsNullOrEmpty(BackTargetPage))
             {
                 await MainThread.InvokeOnMainThreadAsync(() =>
-                    _navigation.GoToAsync($"..?Barcode={barcode?.DisplayValue}"));
+                    _navigation.GoToAsync($"..?Barcode={barcode?.Value}"));
             }
             else
             {
                 await MainThread.InvokeOnMainThreadAsync(() =>
-                    _navigation.GoToAsync($"../{BackTargetPage}?Barcode={barcode?.DisplayValue}"));
+                    _navigation.GoToAsync($"../{BackTargetPage}?Barcode={barcode?.Value}"));
             }
         }
         finally
@@ -121,6 +152,4 @@ public partial class ScannerViewModel : BaseViewModel
             IsDetecting = true;
         }
     }
-
-    private string lastBarcode = string.Empty;
 }

@@ -18,7 +18,11 @@ public partial class App : Application
         _navigation = navigationService;
         _settingsService = settingsService;
         AppCenter.Start($"ios={AppConstants.APPCENTER_KEY_IOS};android={AppConstants.APPCENTER_KEY_ANDROID};", typeof(Analytics), typeof(Crashes));
-        MainPage = new LoadingPage();
+    }
+    
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
     }
 
     protected override void OnStart()
@@ -29,13 +33,12 @@ public partial class App : Application
             SecureStorage.RemoveAll();
         }
 
-        var task = InitAsync();
-        task.ContinueWith(async (task) =>
+        var initTask = InitAsync();
+        initTask.ContinueWith(async (task) =>
         {
             var pageUrl = await task;
-            MainThread.BeginInvokeOnMainThread(async () =>
+            await MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                MainPage = new AppShell();
                 // Choose navigation depending on init
                 await _navigation.GoToAsync(pageUrl, false);
             });
@@ -46,6 +49,6 @@ public partial class App : Application
 
     private async Task<string> InitAsync()
     {
-        return await _navigation.GetNextStartupPage(new CancellationToken());
+        return await _navigation.GetNextStartupPage(CancellationToken.None);
     }
 }

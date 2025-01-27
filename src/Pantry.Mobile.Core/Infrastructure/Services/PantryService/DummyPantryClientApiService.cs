@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
 
@@ -122,7 +121,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
         {
             Articles = new List<ArticleResponse>
             {
-                new ArticleResponse
+                new()
                 {
                     Id = 1,
                     Name = "Milk",
@@ -133,7 +132,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Kitchen cabinet"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 2,
                     Name = "Rice",
@@ -144,7 +143,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Kitchen cabinet"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 3,
                     Name = "Honey",
@@ -155,7 +154,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 4,
                     Name = "Honey",
@@ -165,7 +164,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 5,
                     Name = "Honey",
@@ -175,7 +174,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 6,
                     Name = "Honey",
@@ -185,7 +184,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 7,
                     Name = "Honey",
@@ -195,7 +194,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 8,
                     Name = "Honey",
@@ -205,7 +204,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 9,
                     Name = "Honey",
@@ -215,7 +214,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 10,
                     Name = "Honey",
@@ -225,7 +224,7 @@ public class DummyPantryClientApiService : IPantryClientApiService
                         Name = "Basement"
                     }
                 },
-                new ArticleResponse
+                new()
                 {
                     Id = 11,
                     Name = "Honey",
@@ -246,14 +245,14 @@ public class DummyPantryClientApiService : IPantryClientApiService
         {
             Devices = new List<DeviceResponse>
             {
-                new DeviceResponse
+                new()
                 {
                     DeviceToken = null,
                     InstallationId = Guid.NewGuid(),
                     Model = "iPhone 12",
                     Platform = Enums.DevicePlatformType.IOS
                 },
-                new DeviceResponse
+                new()
                 {
                     DeviceToken = null,
                     InstallationId = Guid.NewGuid(),
@@ -270,14 +269,14 @@ public class DummyPantryClientApiService : IPantryClientApiService
         {
             StorageLocations = new List<StorageLocationResponse>
             {
-               new StorageLocationResponse
+               new()
                {
                    Id = 1,
                    Name = "Küche",
                    Description="Dummy Description"
                },
-                new StorageLocationResponse
-               {
+                new()
+                {
                     Id = 2,
                    Name = "Keller",
                    Description="Dummy Description"
@@ -334,14 +333,14 @@ public class DummyPantryClientApiService : IPantryClientApiService
         {
             Invitations = new List<InvitationResponse>
             {
-               new InvitationResponse
+               new()
                {
                    CreatorName = "Jane Doe",
-                   FriendsCode = Guid.NewGuid(),
+                   FriendsCode = Guid.Parse("fe82f4ad-ace3-4427-933c-d96cd2dca74c"),
                    HouseholdName ="Jane's Household",
                    ValidUntilDate = DateTime.UtcNow.AddDays(1)
                },
-               new InvitationResponse
+               new()
                {
                    CreatorName = "Dummy Creator",
                    FriendsCode = Guid.NewGuid(),

@@ -20,20 +20,18 @@ public partial class ArticleDetailViewModel : BaseViewModel
         _pantryClientApiService = pantryClientApiService;
     }
 
-    [ObservableProperty]
-    public long id;
+    [ObservableProperty] private long id;
 
-    [ObservableProperty]
-    public ArticleModel article = new();
+    [ObservableProperty] private ArticleModel article = new();
 
 
     [RelayCommand]
-    public async Task LoadArticle(long id)
+    private async Task LoadArticle(long articleId)
     {
         try
         {
             IsBusy = true;
-            var articleResponse = await _pantryClientApiService.GetArticleByIdAsync(id);
+            var articleResponse = await _pantryClientApiService.GetArticleByIdAsync(articleId);
             Article = articleResponse.ToArticleModel();
         }
         catch (Exception ex)
@@ -44,7 +42,7 @@ public partial class ArticleDetailViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    public async Task Back()
+    private async Task Back()
     {
         try
         {

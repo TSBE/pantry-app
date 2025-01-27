@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:BasePage
     x:Class="Pantry.Mobile.Views.HouseholdPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Pantry.Mobile.Views"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:models="clr-namespace:Pantry.Mobile.Core.Models;assembly=Pantry.Mobile.Core"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
-    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
     Title="Household"
     ios:Page.UseSafeArea="true"
+    x:Name="Household"
     x:DataType="vm:HouseholdViewModel"
+    x:TypeArguments="vm:HouseholdViewModel"
     Shell.NavBarIsVisible="true">
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding InitCommand}" EventName="Appearing" />
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            BindingContext="{Binding Path=BindingContext, Source={x:Reference Household}, x:DataType=ContentPage}"
+            Command="{Binding InitCommand}" />
     </ContentPage.Behaviors>
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -34,13 +40,13 @@
                         Source="family_home" />
                 </Grid>
                 <VerticalStackLayout
-                    x:Name="createStack"
+                    x:Name="CreateStack"
                     IsVisible="{Binding IsCreateVisible}"
                     Spacing="10">
                     <Entry Placeholder="Name" Text="{Binding Name}" />
                 </VerticalStackLayout>
                 <VerticalStackLayout
-                    x:Name="joinStack"
+                    x:Name="JoinStack"
                     IsVisible="{Binding IsJoinVisible}"
                     Spacing="10"
                     VerticalOptions="FillAndExpand">
@@ -93,8 +99,8 @@
                                             <Button
                                                 x:Name="DeclineInvitation2Btn"
                                                 Grid.Column="0"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=DeclineInvitationCommand}"
-                                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=DeclineInvitationCommand, x:DataType={x:Type vm:HouseholdViewModel}}"
+                                                CommandParameter="{Binding Path=., x:DataType={x:Type models:InvitationModel}}"
                                                 HorizontalOptions="Fill"
                                                 Style="{StaticResource DeclineButton}"
                                                 Text="Decline"
@@ -102,8 +108,8 @@
                                             <Button
                                                 x:Name="AcceptInvitation2Btn"
                                                 Grid.Column="1"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=AcceptInvitationCommand}"
-                                                CommandParameter="{Binding Source={RelativeSource Self}, Path=BindingContext}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HouseholdViewModel}}, Path=AcceptInvitationCommand, x:DataType={x:Type vm:HouseholdViewModel}}"
+                                                CommandParameter="{Binding Path=., x:DataType={x:Type models:InvitationModel}}"
                                                 HorizontalOptions="Fill"
                                                 Style="{StaticResource AcceptButton}"
                                                 Text="Accept"
@@ -145,4 +151,4 @@
                 Text="{Binding ToggleJoinText}" />
         </VerticalStackLayout>
     </Grid>
-</ContentPage>
+</views:BasePage>

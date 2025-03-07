@@ -83,6 +83,6 @@
    </ItemGroup>
    <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
      <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.10.1" />
-     <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.10.0" />
+     <PackageReference Include="Xamarin.AndroidX.Activity.Ktx" Version="1.10.1" />
    </ItemGroup>
 </Project>

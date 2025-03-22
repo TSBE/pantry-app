@@ -2,7 +2,7 @@ name: continuous
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
 #  pull_request:
 #    types: [opened, synchronize, reopened]
 
@@ -81,6 +81,7 @@ jobs:
     env:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
+    if: ${{ vars.APPLE_ENABLED != 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

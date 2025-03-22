@@ -9,7 +9,6 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNETVERSION: 9.0.x
   PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
 
 jobs:
@@ -26,10 +25,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET SDK ${{env.DOTNETVERSION}}
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "${{env.DOTNETVERSION}}"
+          global-json-file: global.json
 
       - name: Install .NET MAUI
         shell: pwsh
@@ -51,7 +50,7 @@ jobs:
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: pwsh
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net8.0-android --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:AndroidSigningKeyStore=$PWD\release.keystore /p:AndroidSigningStorePass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyPass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyAlias=appcenter
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net9.0-android --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:AndroidSigningKeyStore=$PWD\release.keystore /p:AndroidSigningStorePass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyPass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyAlias=appcenter
 
       # - name: Build and Run UnitTests
       # shell: pwsh
@@ -88,10 +87,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET SDK ${{env.DOTNETVERSION}}
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "${{env.DOTNETVERSION}}"
+          global-json-file: global.json
 
       - name: Install .NET MAUI
         shell: bash
@@ -138,13 +137,13 @@ jobs:
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: bash
-        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net8.0-ios --no-restore /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:packageApp=false
+        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net9.0-ios --no-restore /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:packageApp=false
 
       - name: Publish MAUI iOS project
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: bash
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net8.0-ios --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:ArchiveOnBuild=false /p:packageApp=true
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net9.0-ios --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:ArchiveOnBuild=false /p:packageApp=true
 
       # - name: Build and Run UnitTests
       #   shell: bash

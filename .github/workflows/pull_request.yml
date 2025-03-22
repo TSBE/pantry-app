@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNETVERSION: 9.0.x
   PROJECT_PATH: "src/Pantry.Mobile/Pantry.Mobile.csproj"
   TEST_PROJECT_PATH: "tests/Pantry.Mobile.Tests.Core/Pantry.Mobile.Tests.Core.csproj"
 
@@ -22,10 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup .NET SDK ${{env.DOTNETVERSION}}
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "${{env.DOTNETVERSION}}"
+          global-json-file: global.json
 
       - name: Install .NET MAUI
         shell: pwsh
@@ -45,10 +44,8 @@ jobs:
           dotnet build ${{ env.TEST_PROJECT_PATH }}
           dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal --logger trx
 
-      - name: Publish tests report
-        uses: dorny/test-reporter@v2.0.0
-        if: success() || failure()
+      - uses: actions/upload-artifact@v4
         with:
-          name: .NET Tests
-          path: "**/*.trx"
-          reporter: dotnet-trx
+          name: test-results
+          retention-days: 5
+          path: tests/**/TestResults/*

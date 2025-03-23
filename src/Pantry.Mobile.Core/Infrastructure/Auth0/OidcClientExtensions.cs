@@ -1,5 +1,5 @@
-﻿using IdentityModel.OidcClient.Results;
-using IdentityModel.OidcClient;
+﻿using Duende.IdentityModel.OidcClient.Results;
+using Duende.IdentityModel.OidcClient;
 
 namespace Pantry.Mobile.Core.Infrastructure.Auth0;
 

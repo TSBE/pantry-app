@@ -1,8 +1,8 @@
-﻿using IdentityModel.OidcClient.Browser;
+﻿using Duende.IdentityModel.OidcClient.Browser;
 
 namespace Pantry.Mobile.Core.Infrastructure.Auth0;
 
-public class WebViewBrowserAuthenticator : IdentityModel.OidcClient.Browser.IBrowser
+public class WebViewBrowserAuthenticator : Duende.IdentityModel.OidcClient.Browser.IBrowser
 {
     private readonly WebView _webView;
 

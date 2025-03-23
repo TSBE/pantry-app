@@ -1,5 +1,5 @@
-﻿using IdentityModel.OidcClient.Browser;
-using IdentityModel.OidcClient.Results;
+﻿using Duende.IdentityModel.OidcClient.Browser;
+using Duende.IdentityModel.OidcClient.Results;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
 
 namespace Pantry.Mobile.Core.Infrastructure.Abstractions

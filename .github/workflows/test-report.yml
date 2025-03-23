@@ -6,15 +6,20 @@ on:
     types:
       - completed
 
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
 jobs:
-  report:
-    name: Workflow test
+  test-report:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: dorny/test-reporter@v2.0.0
       with:
+        name: Generate Report
         artifact: test-results
-        name: Workflow Report
         path: '**/*.trx'
         reporter: dotnet-trx
+        token: ${{ github.token }}

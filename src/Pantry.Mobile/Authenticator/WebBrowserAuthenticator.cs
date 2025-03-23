@@ -1,9 +1,9 @@
-﻿using IdentityModel.Client;
-using IdentityModel.OidcClient.Browser;
+﻿using Duende.IdentityModel.Client;
+using Duende.IdentityModel.OidcClient.Browser;
 
-namespace Pantry.Mobile.WebAuthenticator;
+namespace Pantry.Mobile.Authenticator;
 
-public class WebBrowserAuthenticator : IdentityModel.OidcClient.Browser.IBrowser
+public class WebBrowserAuthenticator : Duende.IdentityModel.OidcClient.Browser.IBrowser
 {
     public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = default)
     {

@@ -1,4 +1,5 @@
-﻿using Pantry.Mobile.Core.Infrastructure;
+﻿using Pantry.Mobile.Authenticator;
+using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
 using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
@@ -74,7 +75,7 @@ public static class ServiceExtensions
                 ClientId = AppConstants.AUTH0_CLIENT_ID,
                 Scope = AppConstants.AUTH0_SCOPES,
                 RedirectUri = AppConstants.AUTH0_CALLBACK_URL,
-                Browser = new WebAuthenticator.WebBrowserAuthenticator()
+                Browser = new WebBrowserAuthenticator()
             }));
     }
 }

@@ -12,5 +12,5 @@ public class Auth0ClientOptions
 
     public string Scope { get; set; } = AppConstants.AUTH0_SCOPES;
 
-    public required IdentityModel.OidcClient.Browser.IBrowser Browser { get; set; }
+    public required Duende.IdentityModel.OidcClient.Browser.IBrowser Browser { get; set; }
 }

@@ -62,16 +62,6 @@ jobs:
           path: app/publish/com.vorash.pantry-Signed.apk
           retention-days: 5
 
-      - name: App Center Distribute
-        if: ${{ vars.APP_CENTER_ENABLED != 'false' }}
-        uses: Coxxs/AppCenter-Github-Action@v1
-        with:
-          appName: pantry-app/pantry-app-android
-          token: ${{secrets.APP_CENTER_TOKEN_ANDROID}}
-          group: Public
-          file: app/publish/com.vorash.pantry-Signed.apk
-          notifyTesters: false
-
   # ************************* #
   # >>>>>>> iOS Build <<<<<<< #
   # ************************* #
@@ -155,12 +145,3 @@ jobs:
           path: app/publish/Pantry.Mobile.ipa
           retention-days: 5
 
-      - name: App Center Distribute
-        if: ${{ vars.APP_CENTER_ENABLED != 'false' }}
-        uses: Coxxs/AppCenter-Github-Action@v1
-        with:
-          appName: pantry-app/pantry-app-ios
-          token: ${{secrets.APP_CENTER_TOKEN_IOS}}
-          group: Public
-          file: app/publish/Pantry.Mobile.ipa
-          notifyTesters: false

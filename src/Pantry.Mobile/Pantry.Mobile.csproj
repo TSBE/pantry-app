@@ -69,7 +69,7 @@
       <PackageReference Include="BarcodeScanning.Native.Maui" Version="2.2.1" />
       <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
       <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.70" />
-      <PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
+      <PackageReference Include="CommunityToolkit.Maui" Version="12.0.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
       <PackageReference Include="Duende.IdentityModel.OidcClient" Version="6.0.1" />
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.7" />

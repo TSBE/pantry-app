@@ -10,8 +10,8 @@
 	</PropertyGroup>
 	<ItemGroup>
       <PackageReference Include="BarcodeScanning.Native.Maui" Version="2.2.1" />
-      <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
-      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.90" />
+      <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.100" />
+      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.100" />
       <PackageReference Include="CommunityToolkit.Maui.Core" Version="12.2.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
       <PackageReference Include="Duende.IdentityModel.OidcClient" Version="6.0.1" />

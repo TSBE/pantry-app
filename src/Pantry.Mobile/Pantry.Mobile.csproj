@@ -75,7 +75,7 @@
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.7" />
       <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" />
       <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
-      <PackageReference Include="ZXing.Net.Maui" Version="0.5.0" />
+      <PackageReference Include="ZXing.Net.Maui" Version="0.5.2" />
       <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.5.1" />
    </ItemGroup>
    <ItemGroup>

@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   maui-build:
-    runs-on: self-hosted, macos
+    runs-on: [self-hosted, macOS]
     steps:
       - uses: actions/checkout@v5
 

@@ -1,0 +1,19 @@
+---
+name: runner test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  maui-build:
+    runs-on: self-hosted, macos
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Prepare NuGet packages
+        shell: bash
+        run: |
+          echo "The runners name is: $RUNNER_NAME"

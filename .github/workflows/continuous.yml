@@ -56,7 +56,7 @@ jobs:
       # dotnet build <path to unit test csproj>
       # dotnet test <path to unit test csproj> --no-build --verbosity normal
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: artifacts-android
           path: app/publish/com.vorash.pantry-Signed.apk
@@ -139,7 +139,7 @@ jobs:
       #     dotnet build <path to unit test csproj>
       #     dotnet test <path to unit test csproj> --no-build --verbosity normal
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: artifacts-ios
           path: app/publish/Pantry.Mobile.ipa

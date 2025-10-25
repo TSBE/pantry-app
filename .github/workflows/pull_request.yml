@@ -42,7 +42,7 @@ jobs:
           dotnet build ${{ env.TEST_PROJECT_PATH }}
           dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal --logger trx
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: test-results
           retention-days: 5

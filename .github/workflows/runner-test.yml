@@ -11,7 +11,7 @@ jobs:
   maui-build:
     runs-on: [self-hosted, macOS]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Prepare NuGet packages
         shell: bash

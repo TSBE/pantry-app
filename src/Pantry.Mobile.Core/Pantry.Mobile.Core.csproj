@@ -14,7 +14,7 @@
       <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
       <PackageReference Include="CommunityToolkit.Maui.Core" Version="12.3.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-      <PackageReference Include="Duende.IdentityModel.OidcClient" Version="6.0.1" />
+      <PackageReference Include="Duende.IdentityModel.OidcClient" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.11" />
       <PackageReference Include="Polly" Version="8.6.5" />
       <PackageReference Include="Refit" Version="9.0.2" />

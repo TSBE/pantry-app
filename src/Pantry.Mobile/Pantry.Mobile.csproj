@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
    <PropertyGroup>
-      <TargetFrameworks>net9.0-android;net9.0-ios</TargetFrameworks>
+      <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
       <RuntimeIdentifier Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">ios-arm64</RuntimeIdentifier>
       <OutputType>Exe</OutputType>
       <UseMaui>true</UseMaui>
@@ -27,13 +27,13 @@
    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
       <WarningLevel>4</WarningLevel>
    </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
       <CreatePackage>false</CreatePackage>
       <CodesignKey>iPhone Developer</CodesignKey>
       <MtouchDebug>true</MtouchDebug>
       <CodesignProvision>Automatic</CodesignProvision>
    </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
       <AndroidKeyStore>False</AndroidKeyStore>
    </PropertyGroup>
    <PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
@@ -47,7 +47,7 @@
       <AndroidSigningKeyAlias>appcenter</AndroidSigningKeyAlias>
    </PropertyGroup>
    <!-- ⚠️ Workaround on mac to be able to run the project on Android and iOS -->
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
       <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
       <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
    </PropertyGroup>
@@ -67,16 +67,16 @@
    </ItemGroup>
    <ItemGroup>
       <PackageReference Include="BarcodeScanning.Native.Maui" Version="2.2.1" />
-      <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
-      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
-      <PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
+      <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.20" />
+      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.20" />
+      <PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-      <PackageReference Include="Duende.IdentityModel.OidcClient" Version="6.0.1" />
+      <PackageReference Include="Duende.IdentityModel.OidcClient" Version="7.0.0" />
       <PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.7" />
       <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.11" />
-      <PackageReference Include="ZXing.Net.Maui" Version="0.6.0" />
-      <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.6.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
+      <PackageReference Include="ZXing.Net.Maui" Version="0.7.2" />
+      <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.7.2" />
    </ItemGroup>
    <ItemGroup>
       <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />

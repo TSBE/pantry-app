@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Pantry.Mobile.Tests.Core/Pantry.Mobile.Tests.Core.csproj" />
+  </Folder>
+  <Project Path="src/Pantry.Mobile.Core/Pantry.Mobile.Core.csproj" />
+  <Project Path="src/Pantry.Mobile/Pantry.Mobile.csproj">
+    <Deploy />
+  </Project>
+</Solution>

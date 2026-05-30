@@ -10,6 +10,7 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        var isMockedMode = false;
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -25,12 +26,23 @@ public static class MauiProgram
             .ConfigureEssentials(essentials =>
             {
                 essentials.UseVersionTracking();
+
+                essentials.AddAppAction("mock", "Mock Mode", "settings");
+
+                // Handle what happens when an action is clicked
+                essentials.OnAppAction(action =>
+                {
+                    if (action.Id == "mock")
+                    {
+                        isMockedMode = true;
+                    }
+                });
             })
 #if DEBUG
             .Logging.AddDebug()
 #endif
             .Services.RegisterEssentials()
-            .RegisterServices()
+            .RegisterServices(isMockedMode)
             .RegisterPages()
             .RegisterViewModels()
             .RegisterHelpers();

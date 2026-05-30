@@ -20,14 +20,18 @@ public static class ServiceExtensions
             .AddSingleton(DeviceInfo.Current);
     }
         
-    public static IServiceCollection RegisterServices(this IServiceCollection service)
+    public static IServiceCollection RegisterServices(this IServiceCollection service, bool isMockedMode)
     {
+        if (isMockedMode)
+        {
+            service.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());
+        }
+        else
+        {
+            service.AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL);
+        }
+
         return service.AddSingleton<INavigationService, ShellNavigationWrapper>()
-#if DEBUG
-            .AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService())
-#else
-            .AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL)
-#endif
             .AddSingleton<IDialogService, ToolkitDialogService>()
             .AddSingleton<ISettingsService, SettingsService>();
     }

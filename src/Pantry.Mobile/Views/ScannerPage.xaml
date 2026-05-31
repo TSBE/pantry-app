@@ -5,7 +5,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Pantry.Mobile.Views"
-    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:vm="clr-namespace:Pantry.Mobile.Core.ViewModels;assembly=Pantry.Mobile.Core"
     xmlns:scanner="clr-namespace:BarcodeScanning;assembly=BarcodeScanning.Native.Maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -13,7 +12,7 @@
     x:DataType="vm:ScannerViewModel"
     x:TypeArguments="vm:ScannerViewModel"
     Title="Scanner"
-    ios:Page.UseSafeArea="true"
+    SafeAreaEdges="None"
     Shell.PresentationMode="Animated"
     Shell.TabBarIsVisible="False">
     <ContentPage.Behaviors>
@@ -35,6 +34,7 @@
         <scanner:CameraView
             Grid.Row="0"
             VibrationOnDetected="False"
+            TorchOn="{Binding IsTorchOn}"
             CameraEnabled="{Binding IsDetecting}"
             IsVisible="{Binding IsSimulator, Converter={StaticResource InvertedBoolConverter}}"
             OnDetectionFinishedCommand="{Binding DetectionFinishedCommand}" />

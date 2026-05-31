@@ -34,6 +34,8 @@
         <!-- Border visible only on real devices -->
         <scanner:CameraView
             Grid.Row="0"
+            VibrationOnDetected="False"
+            CameraEnabled="{Binding IsDetecting}"
             IsVisible="{Binding IsSimulator, Converter={StaticResource InvertedBoolConverter}}"
             OnDetectionFinishedCommand="{Binding DetectionFinishedCommand}" />
         <!-- Border visible only on a simulator -->

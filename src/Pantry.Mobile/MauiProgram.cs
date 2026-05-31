@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Logging;
+using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using ZXing.Net.Maui.Controls;
 
 namespace Pantry.Mobile;
@@ -10,7 +11,6 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
-        var isMockedMode = false;
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -25,28 +25,28 @@ public static class MauiProgram
             })
             .ConfigureEssentials(essentials =>
             {
-                essentials.UseVersionTracking();
-
-                essentials.AddAppAction("mock", "Mock Mode", "settings");
-
-                // Handle what happens when an action is clicked
-                essentials.OnAppAction(action =>
-                {
-                    if (action.Id == "mock")
-                    {
-                        isMockedMode = true;
-                    }
-                });
+                essentials.UseVersionTracking()
+                    .AddAppAction("mock", "Mock Mode", icon: "dotnet_bot")
+                    .OnAppAction(HandleAppActions);
             })
 #if DEBUG
             .Logging.AddDebug()
 #endif
             .Services.RegisterEssentials()
-            .RegisterServices(isMockedMode)
+            .RegisterServices()
             .RegisterPages()
             .RegisterViewModels()
             .RegisterHelpers();
         
         return builder.Build();
+    }
+
+    private static void HandleAppActions(AppAction appAction)
+    {
+        var settingsService = IPlatformApplication.Current?.Services.GetRequiredService<ISettingsService>();
+        if (appAction.Id.Equals("mock") && settingsService is not null)
+        {
+            settingsService.IsMockModeEnabled = !settingsService.IsMockModeEnabled;
+        }
     }
 }

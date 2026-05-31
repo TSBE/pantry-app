@@ -2,7 +2,6 @@
 using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
-using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Pantry.Mobile.Core.ViewModels;
 using Pantry.Mobile.Interactors;
 using Pantry.Mobile.Views;
@@ -20,20 +19,12 @@ public static class ServiceExtensions
             .AddSingleton(DeviceInfo.Current);
     }
         
-    public static IServiceCollection RegisterServices(this IServiceCollection service, bool isMockedMode)
+    public static IServiceCollection RegisterServices(this IServiceCollection service)
     {
-        if (isMockedMode)
-        {
-            service.AddSingleton<IPantryClientApiService>(new DummyPantryClientApiService());
-        }
-        else
-        {
-            service.AddRefitClient<IPantryClientApiService>(AppConstants.PANTRY_BASEURL);
-        }
-
         return service.AddSingleton<INavigationService, ShellNavigationWrapper>()
             .AddSingleton<IDialogService, ToolkitDialogService>()
-            .AddSingleton<ISettingsService, SettingsService>();
+            .AddSingleton<ISettingsService, SettingsService>()
+            .AddMockedPantryClientApiServiceDecorator(AppConstants.PANTRY_BASEURL);
     }
         
     public static IServiceCollection RegisterPages(this IServiceCollection service)

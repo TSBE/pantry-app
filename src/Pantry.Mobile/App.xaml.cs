@@ -1,7 +1,4 @@
-﻿using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
-using Pantry.Mobile.Core.Infrastructure;
+﻿using Pantry.Mobile.Core.Infrastructure;
 using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Views;
 
@@ -17,7 +14,6 @@ public partial class App : Application
         InitializeComponent();
         _navigation = navigationService;
         _settingsService = settingsService;
-        AppCenter.Start($"ios={AppConstants.APPCENTER_KEY_IOS};android={AppConstants.APPCENTER_KEY_ANDROID};", typeof(Analytics), typeof(Crashes));
     }
     
     protected override Window CreateWindow(IActivationState? activationState)

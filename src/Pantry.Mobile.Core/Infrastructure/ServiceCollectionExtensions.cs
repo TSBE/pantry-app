@@ -1,11 +1,28 @@
 ﻿using Pantry.Mobile.Core.Infrastructure.Abstractions;
 using Pantry.Mobile.Core.Infrastructure.Auth0;
+using Pantry.Mobile.Core.Infrastructure.Services.PantryService;
 using Refit;
 
 namespace Pantry.Mobile.Core.Infrastructure;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddMockedPantryClientApiServiceDecorator(this IServiceCollection services, string baseUrl)
+    {
+        services.AddSingleton<IPantryClientApiService>(sp =>
+        {
+            var settings = new RefitSettings
+            {
+                HttpMessageHandlerFactory = () => sp.GetRequiredService<RefreshTokenDelegatingHandler>(),
+            };
+            var real = RestService.For<IPantryClientApiService>(baseUrl, settings);
+            var mock = new DummyPantryClientApiService();
+            return new MockedPantryClientApiServiceDecorator(sp.GetRequiredService<ISettingsService>(), real, mock);
+        });
+
+        return services;
+    }
+    
     public static IServiceCollection AddRefitClient<T>(this IServiceCollection services, string baseUrl)
         where T : class
     {

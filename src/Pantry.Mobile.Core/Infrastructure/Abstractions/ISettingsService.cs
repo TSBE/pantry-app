@@ -5,6 +5,8 @@ namespace Pantry.Mobile.Core.Infrastructure.Abstractions;
 public interface ISettingsService
 {
     Guid InstallationId { get; }
+    
+    bool IsMockModeEnabled  { get; set; } 
 
     Task<bool> GetOnboardingHasBeenFinished();
 

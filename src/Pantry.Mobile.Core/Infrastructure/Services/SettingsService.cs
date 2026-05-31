@@ -35,6 +35,14 @@ public class SettingsService : ISettingsService
         }
         private set => _preferences.Set(nameof(InstallationId), value.ToString());
     }
+    /// <summary>
+    /// Gets or sets the mock mode state.
+    /// </summary>
+    public bool IsMockModeEnabled 
+    {     
+        get => _preferences.Get(nameof(IsMockModeEnabled), false);
+        set => _preferences.Set(nameof(IsMockModeEnabled), value); 
+    }
 
     /// <summary>
     /// Gets the onboarding has been finished flag.

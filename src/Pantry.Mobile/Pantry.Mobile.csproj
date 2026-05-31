@@ -1,82 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-   <PropertyGroup>
-      <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
-      <RuntimeIdentifier Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">ios-arm64</RuntimeIdentifier>
-      <OutputType>Exe</OutputType>
-      <UseMaui>true</UseMaui>
-      <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
-      <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
-      <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
-      <SingleProject>true</SingleProject>
-      <ImplicitUsings>enable</ImplicitUsings>
-      <Nullable>enable</Nullable>
-      <WarningsAsErrors>$(WarningsAsErrors);XC0022;XC0023</WarningsAsErrors>
-      <!-- Display name -->
-      <ApplicationTitle>Pantry</ApplicationTitle>
-      <!-- App Identifier -->
-      <ApplicationId>com.vorash.pantry</ApplicationId>
-      <ApplicationIdGuid>f1f4ea3f-a2d8-4c3f-9e88-79ebec2941eb</ApplicationIdGuid>
-      <!-- Versions -->
-      <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
-      <ApplicationVersion>1</ApplicationVersion>
-      <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
-      <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
-      <LangVersion>default</LangVersion>
-   </PropertyGroup>
-   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-      <WarningLevel>4</WarningLevel>
-   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
-      <CreatePackage>false</CreatePackage>
-      <CodesignKey>iPhone Developer</CodesignKey>
-      <MtouchDebug>true</MtouchDebug>
-      <CodesignProvision>Automatic</CodesignProvision>
-   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
-      <AndroidKeyStore>False</AndroidKeyStore>
-   </PropertyGroup>
-   <PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
-      <CreatePackage>false</CreatePackage>
-      <CodesignProvision>Automatic</CodesignProvision>
-      <CodesignKey>iPhone Distribution</CodesignKey>
-      <BuildIpa>true</BuildIpa>
-   </PropertyGroup>
-   <PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
-      <AndroidKeyStore>True</AndroidKeyStore>
-      <AndroidSigningKeyAlias>appcenter</AndroidSigningKeyAlias>
-   </PropertyGroup>
-   <!-- ⚠️ Workaround on mac to be able to run the project on Android and iOS -->
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
-      <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
-      <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
-   </PropertyGroup>
-   <ItemGroup>
-      <!-- App Icon -->
-      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#6FBF72" />
-      <!-- Splash Screen -->
-      <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#6FBF72" BaseSize="128,128" />
-      <!-- Images -->
-      <MauiImage Include="Resources\Images\*" />
-      <!-- Images Tabbar workaround https://github.com/dotnet/maui/issues/8609 -->
-      <MauiImage Include="Resources\Images\TabIcons\**" BaseSize="20,20" />
-      <!-- Images Tabbar workaround end-->
-      <MauiFont Include="Resources\Fonts\*" />
-      <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-      <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-   </ItemGroup>
-   <ItemGroup>
-      <PackageReference Include="BarcodeScanning.Native.Maui" Version="3.0.4" />
-      <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.70" />
-      <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.70" />
-      <PackageReference Include="CommunityToolkit.Maui" Version="14.1.1" />
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-      <PackageReference Include="Duende.IdentityModel.OidcClient" Version="7.1.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.8" />
-      <PackageReference Include="ZXing.Net.Maui" Version="0.7.4" />
-      <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.7.4" />
-   </ItemGroup>
-   <ItemGroup>
-      <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />
-   </ItemGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
+    <RuntimeIdentifier Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">ios-arm64</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <UseMaui>true</UseMaui>
+    <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
+    <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+    <MauiStrictXamlCompilation>true</MauiStrictXamlCompilation>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <WarningsAsErrors>$(WarningsAsErrors);XC0022;XC0023</WarningsAsErrors>
+    <!-- Display name -->
+    <ApplicationTitle>Pantry</ApplicationTitle>
+    <!-- App Identifier -->
+    <ApplicationId>com.vorash.pantry</ApplicationId>
+    <ApplicationIdGuid>f1f4ea3f-a2d8-4c3f-9e88-79ebec2941eb</ApplicationIdGuid>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">12.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">29.0</SupportedOSPlatformVersion>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignProvision>Automatic</CodesignProvision>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
+    <AndroidKeyStore>False</AndroidKeyStore>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-ios')) and '$(Configuration)' == 'Release'">
+    <CreatePackage>false</CreatePackage>
+    <CodesignProvision>Automatic</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <BuildIpa>true</BuildIpa>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-android')) and '$(Configuration)' == 'Release'">
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningKeyAlias>appcenter</AndroidSigningKeyAlias>
+  </PropertyGroup>
+  <!-- ⚠️ Workaround on mac to be able to run the project on Android and iOS -->
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
+    <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
+    <ForceSimulatorX64ArchitectureInIDE>true</ForceSimulatorX64ArchitectureInIDE>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- App Icon -->
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#6FBF72" />
+    <!-- Splash Screen -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#6FBF72" BaseSize="128,128" />
+    <!-- Images -->
+    <MauiImage Include="Resources\Images\*" />
+    <!-- Images Tabbar workaround https://github.com/dotnet/maui/issues/8609 -->
+    <MauiImage Include="Resources\Images\TabIcons\**" BaseSize="20,20" />
+    <!-- Images Tabbar workaround end-->
+    <MauiFont Include="Resources\Fonts\*" />
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BarcodeScanning.Native.Maui" />
+    <PackageReference Include="Microsoft.Maui.Controls" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" />
+    <PackageReference Include="CommunityToolkit.Maui" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Duende.IdentityModel.OidcClient" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="ZXing.Net.Maui" />
+    <PackageReference Include="ZXing.Net.Maui.Controls" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pantry.Mobile.Core\Pantry.Mobile.Core.csproj" />
+  </ItemGroup>
 </Project>

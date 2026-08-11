@@ -2,6 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
+    "helpers:pinGitHubActionDigests",
     ":semanticCommits",
     ":semanticCommitTypeAll(chore)",
     ":prHourlyLimit4",
@@ -16,18 +17,16 @@
   ],
   "packageRules": [
     {
-      "groupName": "AppCenter",
-      "groupSlug": "appcenter",
-      "matchPackageNames": [
-        "Microsoft.AppCenter.{/,}**"
-      ]
-    },
-    {
       "groupName": "CommunityToolkit",
       "groupSlug": "communitytoolkit",
       "matchPackageNames": [
         "CommunityToolkit.{/,}**"
       ]
+    },
+    {
+      "description": "Re-apply bump for bare NuGet versions (overrides :preserveSemverRanges)",
+      "matchManagers": ["nuget"],
+      "rangeStrategy": "bump"
     }
   ],
   "ignorePaths": []

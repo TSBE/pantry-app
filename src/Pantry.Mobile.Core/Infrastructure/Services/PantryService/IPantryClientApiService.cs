@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
+﻿using Pantry.Mobile.Core.Infrastructure.Services.PantryService.Models;
 using Refit;
 
 namespace Pantry.Mobile.Core.Infrastructure.Services.PantryService;

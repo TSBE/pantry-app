@@ -1,8 +1,9 @@
+---
 name: Test Report
 
 on:
   workflow_run:
-    workflows: ['pull request']
+    workflows: ["pull request"]
     types:
       - completed
 
@@ -15,11 +16,11 @@ jobs:
   test-report:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-    - uses: dorny/test-reporter@v3.0.0
-      with:
-        name: Generate Report
-        artifact: test-results
-        path: '**/*.trx'
-        reporter: dotnet-trx
-        token: ${{ github.token }}
+      - uses: actions/checkout@v7
+      - uses: dorny/test-reporter@v3.0.0
+        with:
+          name: Generate Report
+          artifact: test-results
+          path: "**/*.trx"
+          reporter: dotnet-trx
+          token: ${{ github.token }}

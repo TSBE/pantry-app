@@ -13,16 +13,16 @@ public static class ServiceCollectionExtensions
         {
             var settings = new RefitSettings
             {
-                HttpMessageHandlerFactory = () => sp.GetRequiredService<RefreshTokenDelegatingHandler>(),
+                HttpMessageHandlerFactory = sp.GetRequiredService<RefreshTokenDelegatingHandler>,
             };
-            var real = RestService.For<IPantryClientApiService>(baseUrl, settings);
+            var real = RestService.ForGenerated<IPantryClientApiService>(baseUrl, settings);
             var mock = new DummyPantryClientApiService();
             return new MockedPantryClientApiServiceDecorator(sp.GetRequiredService<ISettingsService>(), real, mock);
         });
 
         return services;
     }
-    
+
     public static IServiceCollection AddRefitClient<T>(this IServiceCollection services, string baseUrl)
         where T : class
     {
@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
         {
             var settings = new RefitSettings
             {
-                HttpMessageHandlerFactory = () => sp.GetRequiredService<RefreshTokenDelegatingHandler>(),
+                HttpMessageHandlerFactory = sp.GetRequiredService<RefreshTokenDelegatingHandler>,
                 //AuthorizationHeaderValueGetter = async () => { var credential = await sp.GetRequiredService<ISettingsService>().GetCredentials(); return credential.AccessToken; }
             };
             return RestService.For<T>(baseUrl, settings);

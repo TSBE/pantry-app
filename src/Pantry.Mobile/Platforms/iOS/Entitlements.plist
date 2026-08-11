@@ -4,7 +4,7 @@
 <dict>
     <key>keychain-access-groups</key>
     <array>
-        <string>$(AppIdentifierPrefix)com.vorash.pantrydev</string>
+        <string>$(AppIdentifierPrefix)ch.post.it.PostApp.dev</string>
     </array>
 </dict>
 </plist>

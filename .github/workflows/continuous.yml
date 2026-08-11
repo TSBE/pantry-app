@@ -1,10 +1,11 @@
+---
 name: continuous
 
 on:
   push:
     branches: [main]
-#  pull_request:
-#    types: [opened, synchronize, reopened]
+  #  pull_request:
+  #    types: [opened, synchronize, reopened]
 
   workflow_dispatch:
 
@@ -27,10 +28,7 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
-
-      - name: Install .NET MAUI
-        shell: pwsh
-        run: dotnet workload install maui --source https://api.nuget.org/v3/index.json
+          workloads: maui
 
       # Store Android Signing Keystore and password in Secrets using base64 encoding
       - name: Extract Android signing key from env
@@ -47,8 +45,20 @@ jobs:
       - name: Build Android App
         env:
           NEW_VERSION: ${{ github.run_number }}
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+
         shell: pwsh
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net10.0-android --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:AndroidSigningKeyStore=$PWD\release.keystore /p:AndroidSigningStorePass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyPass=${{ secrets.RELEASE_KEYSTORE_PASSWORD }} /p:AndroidSigningKeyAlias=appcenter
+        run: |
+          dotnet publish ${{ env.PROJECT_PATH }} `
+            -c Release `
+            -f net10.0-android `
+            --no-restore `
+            -o app/publish `
+            /p:ApplicationVersion=${{ env.NEW_VERSION }} `
+            /p:AndroidSigningKeyStore=$PWD\release.keystore `
+            /p:AndroidSigningStorePass=${{ env.RELEASE_KEYSTORE_PASSWORD }} `
+            /p:AndroidSigningKeyPass=${{ env.RELEASE_KEYSTORE_PASSWORD }} `
+            /p:AndroidSigningKeyAlias=appcenter
 
       # - name: Build and Run UnitTests
       # shell: pwsh
@@ -79,12 +89,7 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           global-json-file: global.json
-
-      - name: Install .NET MAUI
-        shell: bash
-        run: |
-          dotnet nuget locals all --clear 
-          dotnet workload install maui --source https://api.nuget.org/v3/index.json
+          workloads: maui
 
       # https://docs.github.com/en/actions/deployment/deploying-xcode-applications/installing-an-apple-certificate-on-macos-runners-for-xcode-development
       - name: Install the Apple certificate and provisioning profile
@@ -100,21 +105,21 @@ jobs:
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 -D -o $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 -D -o $PP_PATH
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 -D -o "$CERTIFICATE_PATH"
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 -D -o "$PP_PATH"
 
           # create temporary keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
 
           # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
+          security import "$CERTIFICATE_PATH" -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security list-keychain -d user -s "$KEYCHAIN_PATH"
 
           # apply provisioning profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          cp "$PP_PATH" ~/Library/MobileDevice/Provisioning\ Profiles
 
       - name: Restore NuGet packages
         shell: bash
@@ -125,13 +130,27 @@ jobs:
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: bash
-        run: dotnet build ${{ env.PROJECT_PATH }} -c Release -f net10.0-ios --no-restore /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:packageApp=false
+        run: |
+          dotnet build ${{ env.PROJECT_PATH }} \
+            -c Release \
+            -f net10.0-ios \
+            --no-restore \
+            /p:ApplicationVersion=${{ env.NEW_VERSION }} \
+            /p:packageApp=false
 
       - name: Publish MAUI iOS project
         env:
           NEW_VERSION: ${{ github.run_number }}
         shell: bash
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -f net10.0-ios --no-restore -o app/publish /p:ApplicationVersion=${{ env.NEW_VERSION }} /p:ArchiveOnBuild=false /p:packageApp=true
+        run: |
+          dotnet publish ${{ env.PROJECT_PATH }} \
+            -c Release \
+            -f net10.0-ios \
+            --no-restore \
+            -o app/publish \
+            /p:ApplicationVersion=${{ env.NEW_VERSION }} \
+            /p:ArchiveOnBuild=false \
+            /p:packageApp=true
 
       # - name: Build and Run UnitTests
       #   shell: bash
@@ -144,4 +163,3 @@ jobs:
           name: artifacts-ios
           path: app/publish/Pantry.Mobile.ipa
           retention-days: 5
-

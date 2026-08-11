@@ -15,7 +15,7 @@
     <!-- Display name -->
     <ApplicationTitle>Pantry</ApplicationTitle>
     <!-- App Identifier -->
-    <ApplicationId>com.vorash.pantry</ApplicationId>
+      <ApplicationId>ch.post.it.PostApp.dev</ApplicationId>
     <ApplicationIdGuid>f1f4ea3f-a2d8-4c3f-9e88-79ebec2941eb</ApplicationIdGuid>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
@@ -29,9 +29,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
     <CreatePackage>false</CreatePackage>
-    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision>Automatic</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
     <AndroidKeyStore>False</AndroidKeyStore>

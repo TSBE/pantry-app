@@ -18,10 +18,10 @@ jobs:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v6
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         with:
           global-json-file: global.json
           workloads: maui
@@ -40,7 +40,7 @@ jobs:
           dotnet build ${{ env.TEST_PROJECT_PATH }}
           dotnet test ${{ env.TEST_PROJECT_PATH }} --no-build --verbosity normal --logger trx
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: test-results
           retention-days: 5
